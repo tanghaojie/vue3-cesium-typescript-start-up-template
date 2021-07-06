@@ -46,7 +46,7 @@ export default defineComponent({
           },
         },
         {
-          name: '简单全球地形',
+          name: '全球简略地形',
           terrainProvider: Cesium.createWorldTerrain({
             // required for water effects
             requestWaterMask: true,
@@ -58,7 +58,7 @@ export default defineComponent({
           name: '测试001-地形(12m)',
           terrainProviderName: 'CesiumTerrainProvider',
           options: {
-            url: 'http://117.139.247.104:60002/GisData/terrains/12m_terrain_lod/',
+            url: 'https://sample-data-terrain.vercel.app/',
           },
           afterReady: function (viewer: Cesium.Viewer, success: boolean) {
             if (viewer && success) {

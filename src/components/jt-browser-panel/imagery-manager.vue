@@ -181,7 +181,7 @@ export default defineComponent({
           iconImageUrl: 'img_c.jpg',
           name: '天地图影像底图',
           options: {
-            url: 'http://{s}.tianditu.gov.cn/img_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+            url: 'https://{s}.tianditu.gov.cn/img_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
             layer: 'img',
             style: 'default',
             format: 'tiles',
@@ -218,7 +218,7 @@ export default defineComponent({
           iconImageUrl: 'cia_c.png',
           name: '天地图影像注记',
           options: {
-            url: 'http://{s}.tianditu.gov.cn/cia_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+            url: 'https://{s}.tianditu.gov.cn/cia_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
             layer: 'img',
             style: 'default',
             format: 'tiles',
@@ -255,7 +255,7 @@ export default defineComponent({
           iconImageUrl: 'vec_c.jpg',
           name: '天地图矢量底图',
           options: {
-            url: 'http://{s}.tianditu.gov.cn/vec_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+            url: 'https://{s}.tianditu.gov.cn/vec_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
             layer: 'vec',
             style: 'default',
             format: 'image/jpeg',
@@ -292,7 +292,7 @@ export default defineComponent({
           iconImageUrl: 'cva_c.png',
           name: '天地图矢量注记',
           options: {
-            url: 'http://{s}.tianditu.gov.cn/cva_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+            url: 'https://{s}.tianditu.gov.cn/cva_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
             layer: 'vec',
             style: 'default',
             format: 'image/jpeg',
@@ -401,7 +401,7 @@ export default defineComponent({
         iconImageUrl: 'img_c.jpg',
         name: '测试001-影像',
         options: {
-          url: 'http://117.139.247.104:60002/GisData/images/google_satellite/{z}/{x}/{y}.png',
+          url: 'https://sample-data-satellite.vercel.app/{z}/{x}/{y}.png',
           fileExtension: 'png',
           rectangle: Cesium.Rectangle.fromRadians(
             1.8735054237781372,

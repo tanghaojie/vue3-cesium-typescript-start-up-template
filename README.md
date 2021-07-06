@@ -1,6 +1,6 @@
 # Vue3 Cesium Typescipt Start up template
 
-This is a project template for Vue3+Cesium+Typescript apps. [//]: # It lives at []()
+This is a project template for Vue3+Cesium+Typescript apps with test datas. [//]: # It lives at []()
 
 ## how to use
 
@@ -34,7 +34,18 @@ npm run build
   - [tailwindcss](https://tailwindcss.com/) for rapid UI development.
   - [ECharts](https://echarts.apache.org/)
 
-![](https://github.com/tanghaojie/bigscreen/blob/master/screenshot.min.jpg)
+## next step
+
+- Options API -> Composition API
+- dark mode
+- timeline
+- more test data
+
+## screenshots
+
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot.png)
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot2_compressed.png)
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot3_compressed.png)
 
 ---
 

@@ -9,6 +9,7 @@ const cesiumSource = debug
 
 module.exports = {
   publicPath: './',
+  assetsDir: './',
   chainWebpack: (config) => {
     config.module
       .rule('svg')
@@ -33,29 +34,29 @@ module.exports = {
         patterns: [
           {
             from: cesiumSource,
-            to: 'js/Cesium',
+            to: './js/Cesium',
           },
           // {
           //   from: 'node_modules/cesium/Build/Cesium/Workers',
-          //   to: 'js/Cesium/Workers',
+          //   to: './js/Cesium/Workers',
           // },
           // {
           //   from: 'node_modules/cesium/Build/Cesium/ThirdParty',
-          //   to: 'js/Cesium/ThirdParty',
+          //   to: './js/Cesium/ThirdParty',
           // },
           // {
           //   from: 'node_modules/cesium/Build/Cesium/Assets',
-          //   to: 'js/Cesium/Assets',
+          //   to: './js/Cesium/Assets',
           // },
           // {
           //   from: 'node_modules/cesium/Build/Cesium/Widgets',
-          //   to: 'js/Cesium/Widgets',
+          //   to: './js/Cesium/Widgets',
           // },
         ],
       }),
       new webpack.DefinePlugin({
         // Define relative base path in cesium for loading assets
-        CESIUM_BASE_URL: JSON.stringify('/js/Cesium'),
+        CESIUM_BASE_URL: JSON.stringify('./js/Cesium'),
       }),
     ],
     module: {

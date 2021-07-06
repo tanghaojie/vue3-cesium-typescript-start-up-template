@@ -265,8 +265,8 @@ export default defineComponent({
       viewer.scene.primitives.removeAll()
 
       this.addGltf({
-        name: '精模',
-        url: 'http://117.139.247.104:60001/models/gltfs/rc/rc.gltf',
+        name: '精模(适配全球地形)',
+        url: 'https://sample-data-jt.vercel.app/rc/rc.gltf',
         modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
           Cesium.Cartesian3.fromDegrees(103.6144, 30.95525207451468, 665.0),
           new Cesium.HeadingPitchRoll(Cesium.Math.PI_OVER_TWO, 0, 0)
@@ -282,13 +282,13 @@ export default defineComponent({
 
       this.add3DTileset({
         name: 'iPad Pro Lidar(point cloud)',
-        url: 'http://117.139.247.104:60002/GisData/models/home/tileset.json',
+        url: 'https://sample-data-jt.vercel.app/my-home/3dtile/tileset.json',
         show: false,
       })
 
       this.add3DTileset({
         name: '成都建筑群',
-        url: 'http://117.139.247.104:60002/GisData/models/cd-buildings/tileset.json',
+        url: 'https://sample-data-jt.vercel.app/cd-buildings/3dtile/tileset.json',
         show: true,
         // debugColorizeTiles: true,
         // debugWireframe: true,
@@ -300,13 +300,13 @@ export default defineComponent({
       })
 
       this.add3DTileset({
-        name: '简模001',
-        url: 'http://117.139.247.104:60001/models/3dtiles/shp_factory/tileset.json',
+        name: '简模001(适配全球地形)',
+        url: 'https://sample-data-jt.vercel.app/shp_factory/tileset.json',
       })
 
       this.add3DTileset({
-        name: '简模002',
-        url: 'http://117.139.247.104:60001/models/3dtiles/apartment/tileset.json',
+        name: '简模002(适配全球地形)',
+        url: 'https://sample-data-jt.vercel.app/apartment/tileset.json',
       })
     },
   },
