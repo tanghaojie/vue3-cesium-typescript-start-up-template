@@ -1,6 +1,6 @@
 # Vue3 Cesium Typescipt Start up template
 
-This is a project template for Vue3 + Cesium + Typescript apps with lots of test datas. It lives at [https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
+This is a project template for Vue3 + Cesium + Typescript apps with lots of test datas. Preview: [https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
 
 ## How to use
 
@@ -52,7 +52,7 @@ npm run build
 
 ### Cesium vue
 
-cesium is hook on vue global properties, you can get cesium anywhere in vue instance:
+cesium mounted on vue global properties, you can get cesium anywhere in vue instance:
 
 ```typescript
 const { viewer, viewerContainer } = this.$cv // type CesiumVue
@@ -74,12 +74,20 @@ event -> data -> render
 event -> data -> vue data(or vuex) -> render
 ```
 
+## Sample Datas
+
+- [Tiled satellite data](https://sample-data-satellite.vercel.app/)
+- [Tiled terrain data](https://sample-data-terrain.vercel.app/)
+- [3D tile buildings](https://sample-data-jt.vercel.app/cd-buildings/3dtile)
+- [3D tile point cloud collected with ipad pro lidar](https://sample-data-jt.vercel.app/my-home/3dtile)
+
 ## Next
 
 - Options API -> Composition API
 - Dark mode
 - Timeline and time data
 - More test data
+- i18n
 
 ## Screenshots
 
