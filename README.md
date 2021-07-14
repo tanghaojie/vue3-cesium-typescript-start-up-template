@@ -175,7 +175,7 @@ const { viewer, viewerContainer } = this.$cv // type CesiumVue
 
 - 另一种情况，当项目很庞大，需要用到 cesium 各个模块时，随着用 vue 封装 cesium 的组件越来越多以后，你会发现，其本质上又回到了代理整个 cesium 实例来实现响应式的模式，这个时候，性能又是不得不考虑的问题。
 
-## 使用的示例数据
+## 示例数据
 
 - [Tiled satellite data](https://sample-data-satellite.vercel.app/)
 - [Tiled terrain data](https://sample-data-terrain.vercel.app/)
