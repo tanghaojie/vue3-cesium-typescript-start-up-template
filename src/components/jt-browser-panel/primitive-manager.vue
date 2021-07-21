@@ -73,6 +73,7 @@ import { defineComponent } from 'vue'
 import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
+import sampleData from '@/resources/sample-data'
 import {
   PRIMITIVE_MANAGER_FLAG_VALUE,
   PRIMITIVE_MANAGER_FLAG_KEY,
@@ -266,7 +267,7 @@ export default defineComponent({
 
       this.addGltf({
         name: '精模(适配全球地形)',
-        url: 'https://sample-data-jt.vercel.app/rc/rc.gltf',
+        url: sampleData.rc,
         modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
           Cesium.Cartesian3.fromDegrees(103.6144, 30.95525207451468, 665.0),
           new Cesium.HeadingPitchRoll(Cesium.Math.PI_OVER_TWO, 0, 0)
@@ -282,13 +283,13 @@ export default defineComponent({
 
       this.add3DTileset({
         name: 'iPad Pro Lidar(point cloud)',
-        url: 'https://sample-data-jt.vercel.app/my-home/3dtile/tileset.json',
+        url: sampleData['my-home'],
         show: false,
       })
 
       this.add3DTileset({
         name: '成都建筑群',
-        url: 'https://sample-data-jt.vercel.app/cd-buildings/3dtile/tileset.json',
+        url: sampleData['cd-buildings'],
         show: true,
         // debugColorizeTiles: true,
         // debugWireframe: true,
@@ -301,12 +302,12 @@ export default defineComponent({
 
       this.add3DTileset({
         name: '简模001(适配全球地形)',
-        url: 'https://sample-data-jt.vercel.app/shp_factory/tileset.json',
+        url: sampleData['shp-factory'],
       })
 
       this.add3DTileset({
         name: '简模002(适配全球地形)',
-        url: 'https://sample-data-jt.vercel.app/apartment/tileset.json',
+        url: sampleData.apartment,
       })
     },
   },

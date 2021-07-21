@@ -144,9 +144,8 @@ import { defineComponent } from 'vue'
 
 import { ElIcon, ElCheckbox, ElDialog } from 'element-plus'
 import imageryLayerOperate from './imagery-layer-operate.vue'
-
+import sampleData from '@/resources/sample-data'
 import * as Cesium from 'cesium'
-
 import uuid from '@/libs/utils/uuid'
 
 type Imagery = {
@@ -401,7 +400,7 @@ export default defineComponent({
         iconImageUrl: 'img_c.jpg',
         name: '测试001-影像',
         options: {
-          url: 'https://sample-data-satellite.vercel.app/{z}/{x}/{y}.png',
+          url: sampleData.satellite,
           fileExtension: 'png',
           rectangle: Cesium.Rectangle.fromRadians(
             1.8735054237781372,

@@ -29,6 +29,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import * as Cesium from 'cesium'
+import sampleData from '@/resources/sample-data'
 
 import { ElSelect, ElOption } from 'element-plus'
 
@@ -58,7 +59,7 @@ export default defineComponent({
           name: '测试001-地形(12m)',
           terrainProviderName: 'CesiumTerrainProvider',
           options: {
-            url: 'https://sample-data-terrain.vercel.app/',
+            url: sampleData.terrain,
           },
           afterReady: function (viewer: Cesium.Viewer, success: boolean) {
             if (viewer && success) {
