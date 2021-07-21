@@ -13,7 +13,6 @@ const sampleDataConfigDefault: SampleDataConfig = {
 const sampleDataConfigStr = process.env.VUE_APP_SAMPLE_DATA_CONFIG as string
 let sampleDataConfig: SampleDataConfig
 try {
-  console.log(sampleDataConfigStr)
   sampleDataConfig = JSON.parse(sampleDataConfigStr) as SampleDataConfig
 } catch (e) {
   console.warn('Sample data config error.', e)

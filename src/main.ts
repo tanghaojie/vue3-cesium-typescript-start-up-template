@@ -16,9 +16,6 @@ import cesiumVue from './libs/cesium/cesium-vue'
 
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
-const x = process.env
-console.log(x)
-
 const app = createApp(App)
 
 app.use(store).use(router).use(cesiumVue)
