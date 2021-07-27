@@ -16,7 +16,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'jt-overlay',
-  components: {},
   props: {
     zIndex: {
       type: Number,
@@ -32,16 +31,5 @@ export default defineComponent({
       default: 'absolute',
     },
   },
-  data() {
-    return {}
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {},
-  setup() {},
-  methods: {},
 })
 </script>
-
-<style scoped lang="scss"></style>

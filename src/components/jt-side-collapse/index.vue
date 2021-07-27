@@ -56,11 +56,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
 
 export default defineComponent({
   name: '',
-  components: {},
   props: {
     defaultPin: {
       type: Boolean,
@@ -82,24 +81,24 @@ export default defineComponent({
       required: false,
     },
   },
-  data() {
+  setup(props) {
+    const hover = ref<boolean>(false)
+    const pin = ref<boolean>(false)
+
+    const visible = computed((): boolean => {
+      return pin.value || hover.value
+    })
+
+    onMounted(() => {
+      pin.value = props.defaultPin
+    })
+
     return {
-      hover: false,
-      pin: false,
+      hover,
+      pin,
+      visible,
     }
   },
-  computed: {
-    visible(): boolean {
-      return this.pin || this.hover
-    },
-  },
-  watch: {},
-  created() {},
-  mounted() {
-    this.pin = this.defaultPin
-  },
-  setup() {},
-  methods: {},
 })
 </script>
 

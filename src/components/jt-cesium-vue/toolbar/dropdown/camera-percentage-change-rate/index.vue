@@ -12,13 +12,14 @@
           return ((0.5 - val) * 200).toFixed(0) + '%'
         }
       "
-      @change="afterChage"
+      @change="afterChange"
     ></el-slider>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted, inject } from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import {
   getPercentageChange,
   setPercentageChange,
@@ -29,33 +30,29 @@ import { ElSlider } from 'element-plus'
 export default defineComponent({
   name: 'camera-percentage-change-rate',
   components: { ElSlider },
-  props: {},
-  data() {
-    return {}
-  },
-  computed: {},
-  watch: {},
-  created() {},
   setup() {
     const value = ref<number>(0)
-    return {
-      value,
-    }
-  },
-  mounted() {
-    const { viewer } = this.$cv
-    if (viewer) {
-      this.value = getPercentageChange(viewer)
-    }
-  },
-  methods: {
-    afterChage(val: number) {
-      console.log(val)
-      const { viewer } = this.$cv
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const afterChange = (val: number) => {
+      const { viewer } = cesiumRef || {}
       if (viewer) {
         setPercentageChange(viewer, val)
       }
-    },
+    }
+
+    onMounted(() => {
+      const { viewer } = cesiumRef || {}
+      if (viewer) {
+        value.value = getPercentageChange(viewer)
+      }
+    })
+
+    return {
+      value,
+      afterChange,
+    }
   },
 })
 </script>

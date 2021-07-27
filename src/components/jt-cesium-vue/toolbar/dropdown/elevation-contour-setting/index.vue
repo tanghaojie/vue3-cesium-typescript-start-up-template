@@ -71,7 +71,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, computed, inject } from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import { ElSlider, ElInputNumber, ElColorPicker } from 'element-plus'
 import store from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
@@ -79,27 +80,25 @@ import { rgbaStringToStruct } from '@/libs/utils/rgb'
 export default defineComponent({
   name: '',
   components: { ElSlider, ElInputNumber, ElColorPicker },
-  data() {
-    return {
-      contourDistance: 100,
-      contourMinDistance: 30,
-      contourMaxDistance: 1000,
+  setup() {
+    const contourDistance = ref(100)
+    const contourMinDistance = ref(30)
+    const contourMaxDistance = ref(1000)
 
-      contourWidth: 1,
-      contourMinWidth: 1,
-      contourMaxWidth: 10,
+    const contourWidth = ref(1)
+    const contourMinWidth = ref(1)
+    const contourMaxWidth = ref(10)
 
-      contourColor: 'rgba(255, 0, 0, 1)',
-    }
-  },
-  computed: {
-    elevationContourActive(): boolean {
+    const contourColor = ref('rgba(255, 0, 0, 1)')
+
+    const elevationContourActive = computed((): boolean => {
       return store.state.jtCesiumVue.toolbar.elevationContourActive
-    },
-  },
-  methods: {
-    contourDistanceChange(val: number): void {
-      const { viewer } = this.$cv
+    })
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const contourDistanceChange = (val: number): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -110,11 +109,11 @@ export default defineComponent({
         return
       }
       const uniforms = viewer.scene.globe.material.uniforms
-      uniforms.spacing = this.contourDistance
-    },
+      uniforms.spacing = contourDistance.value
+    }
 
-    contourWidthChange(val: number): void {
-      const { viewer } = this.$cv
+    const contourWidthChange = (val: number): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -125,11 +124,11 @@ export default defineComponent({
         return
       }
       const uniforms = viewer.scene.globe.material.uniforms
-      uniforms.width = this.contourWidth
-    },
+      uniforms.width = contourWidth.value
+    }
 
-    contourColorChange(val: string): void {
-      const { viewer } = this.$cv
+    const contourColorChange = (val: string): void => {
+      const { viewer } = cesiumRef || {}
       if (!val || !viewer) {
         return
       }
@@ -145,7 +144,21 @@ export default defineComponent({
       uniforms.color.green = green / 255
       uniforms.color.blue = blue / 255
       //   uniforms.color.alpha = rgba.a
-    },
+    }
+
+    return {
+      contourDistance,
+      contourMinDistance,
+      contourMaxDistance,
+      contourWidth,
+      contourMinWidth,
+      contourMaxWidth,
+      contourColor,
+      elevationContourActive,
+      contourDistanceChange,
+      contourWidthChange,
+      contourColorChange,
+    }
   },
 })
 </script>

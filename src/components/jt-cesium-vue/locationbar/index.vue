@@ -57,29 +57,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  ref,
+  watch,
+  computed,
+  onMounted,
+  onUnmounted,
+  inject,
+} from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import store from '@/store'
 import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import * as Cesium from 'cesium'
 import { setPercentageChange } from '@/libs/cesium/libs/percentage-change'
-
-type RemoveCallback = () => void
-interface IData {
-  cameraLocation: {
-    longitude: number
-    latitude: number
-    height: number
-  }
-  unbindCameraLocation: RemoveCallback
-  mouseLocation: {
-    longitude: number
-    latitude: number
-    height: number
-  }
-  unbindMouseLocation: RemoveCallback
-  fps: number
-  unbindFps: RemoveCallback
-}
 
 export default defineComponent({
   name: '',
@@ -96,159 +88,95 @@ export default defineComponent({
       default: 1000,
     },
   },
-  data(): IData {
-    return {
-      cameraLocation: {
-        longitude: 0,
-        latitude: 0,
-        height: 0,
-      },
-      unbindCameraLocation: () => {},
-      mouseLocation: {
-        longitude: 0,
-        latitude: 0,
-        height: 0,
-      },
-      unbindMouseLocation: () => {},
-      fps: 0,
-      unbindFps: () => {},
-    }
-  },
-  computed: {
-    cameraLocationVisible(): boolean {
+  setup(props) {
+    const cameraLocation = reactive({
+      longitude: 0,
+      latitude: 0,
+      height: 0,
+    })
+
+    const mouseLocation = reactive({
+      longitude: 0,
+      latitude: 0,
+      height: 0,
+    })
+
+    const fps = ref(0)
+    const unbindCameraLocation = ref(function () {})
+    const unbindMouseLocation = ref(function () {})
+    const unbindFps = ref(function () {})
+
+    const cameraLocationVisible = computed((): boolean => {
       return store.state.jtCesiumVue.locationbar.showCameraLocation
-    },
+    })
 
-    mouseLocationVisible(): boolean {
+    const mouseLocationVisible = computed((): boolean => {
       return store.state.jtCesiumVue.locationbar.showMouseLocation
-    },
+    })
 
-    fpsVisible(): boolean {
+    const fpsVisible = computed((): boolean => {
       return store.state.jtCesiumVue.locationbar.showFPS
-    },
+    })
 
-    cameraLocationHeightFix0(): string {
-      return this.cameraLocation.height.toFixed(0)
-    },
+    const cameraLocationHeightFix0 = computed((): string => {
+      return cameraLocation.height.toFixed(0)
+    })
 
-    cameraLocationLongitudeFix5(): string {
-      return this.cameraLocation.longitude.toFixed(5)
-    },
+    const cameraLocationLongitudeFix5 = computed((): string => {
+      return cameraLocation.longitude.toFixed(5)
+    })
 
-    cameraLocationLatitudeFix5(): string {
-      return this.cameraLocation.latitude.toFixed(5)
-    },
+    const cameraLocationLatitudeFix5 = computed((): string => {
+      return cameraLocation.latitude.toFixed(5)
+    })
 
-    mouseLocationHeightFix0(): string {
-      return this.mouseLocation.height.toFixed(0)
-    },
+    const mouseLocationHeightFix0 = computed((): string => {
+      return mouseLocation.height.toFixed(0)
+    })
 
-    mouseLocationLongitudeFix5(): string {
-      return this.mouseLocation.longitude.toFixed(5)
-    },
+    const mouseLocationLongitudeFix5 = computed((): string => {
+      return mouseLocation.longitude.toFixed(5)
+    })
 
-    mouseLocationLatitudeFix5(): string {
-      return this.mouseLocation.latitude.toFixed(5)
-    },
+    const mouseLocationLatitudeFix5 = computed((): string => {
+      return mouseLocation.latitude.toFixed(5)
+    })
 
-    fpxFix0(): string {
-      return this.fps.toFixed(0)
-    },
-  },
-  watch: {
-    percentageChanged() {
-      this.setViewerPercentageChange()
-    },
+    const fpxFix0 = computed((): string => {
+      return fps.value.toFixed(0)
+    })
 
-    fpsRate() {
-      const { fpsVisible, bindFPS, unbindFps } = this
-      if (fpsVisible) {
-        unbindFps && unbindFps()
-        bindFPS()
-      } else {
-        unbindFps && unbindFps()
-      }
-    },
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
 
-    cameraLocationVisible(val) {
-      if (!val) {
-        return
-      }
-      const { bindCameraLocation, unbindCameraLocation } = this
-      if (val) {
-        unbindCameraLocation && unbindCameraLocation()
-        bindCameraLocation()
-      } else {
-        unbindCameraLocation && unbindCameraLocation()
-      }
-    },
-
-    mouseLocationVisible(val) {
-      if (!val) {
-        return
-      }
-      const { bindMouseLocation, unbindMouseLocation } = this
-      if (val) {
-        unbindMouseLocation && unbindMouseLocation()
-        bindMouseLocation()
-      } else {
-        unbindMouseLocation && unbindMouseLocation()
-      }
-    },
-
-    fpsVisible(val) {
-      if (!val) {
-        return
-      }
-      const { bindFPS, unbindFps } = this
-
-      if (val) {
-        unbindFps && unbindFps()
-        bindFPS()
-      } else {
-        unbindFps && unbindFps()
-      }
-    },
-  },
-  created() {},
-  mounted() {
-    this.bindAll()
-  },
-  unmounted() {
-    this.unbindAll()
-  },
-  setup() {},
-  methods: {
-    setViewerPercentageChange() {
-      if (!this.$cv.viewer) {
-        return
-      }
-      setPercentageChange(this.$cv.viewer, this.percentageChanged)
-    },
-
-    bindCameraLocation() {
-      const viewer = this.$cv.viewer
+    const setViewerPercentageChange = () => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      this.setViewerPercentageChange()
-      const self = this
-      this.unbindCameraLocation = viewer.camera.changed.addEventListener(
+      setPercentageChange(viewer, props.percentageChanged)
+    }
+
+    const bindCameraLocation = (): void => {
+      const { viewer } = cesiumRef || {}
+      if (!viewer) {
+        return
+      }
+      setViewerPercentageChange()
+      unbindCameraLocation.value = viewer.camera.changed.addEventListener(
         function () {
           const pos = viewer.camera.positionCartographic
-          self.cameraLocation.height = viewer.camera.positionCartographic.height
-          self.cameraLocation.longitude = Cesium.Math.toDegrees(pos.longitude)
-          self.cameraLocation.latitude = Cesium.Math.toDegrees(pos.latitude)
+          cameraLocation.height = viewer.camera.positionCartographic.height
+          cameraLocation.longitude = Cesium.Math.toDegrees(pos.longitude)
+          cameraLocation.latitude = Cesium.Math.toDegrees(pos.latitude)
         }
       )
-    },
+    }
 
-    bindMouseLocation() {
-      const viewer = this.$cv.viewer
+    const bindMouseLocation = (): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      const self = this
       const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
       const hasDepthTest = viewer.scene.globe.depthTestAgainstTerrain
       handler.setInputAction(function (e) {
@@ -266,59 +194,135 @@ export default defineComponent({
           return
         }
         const cartographic = Cesium.Cartographic.fromCartesian(position)
-        self.mouseLocation.longitude = Cesium.Math.toDegrees(
-          cartographic.longitude
-        )
-        self.mouseLocation.latitude = Cesium.Math.toDegrees(
-          cartographic.latitude
-        )
-        self.mouseLocation.height = cartographic.height
+        mouseLocation.longitude = Cesium.Math.toDegrees(cartographic.longitude)
+        mouseLocation.latitude = Cesium.Math.toDegrees(cartographic.latitude)
+        mouseLocation.height = cartographic.height
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 
-      this.unbindMouseLocation = () => {
+      unbindMouseLocation.value = () => {
         handler.destroy()
       }
-    },
+    }
 
-    bindFPS() {
-      const viewer = this.$cv.viewer
+    const bindFPS = (): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
       const frameRateMonitor = Cesium.FrameRateMonitor.fromScene(viewer.scene)
       const self = this
-      this.fps = frameRateMonitor.lastFramesPerSecond || 0
+      fps.value = frameRateMonitor.lastFramesPerSecond || 0
 
       const intervalId = setInterval(() => {
-        self.fps = frameRateMonitor.lastFramesPerSecond || 0
-      }, this.fpsRate)
+        fps.value = frameRateMonitor.lastFramesPerSecond || 0
+      }, props.fpsRate)
 
-      this.unbindFps = () => {
+      unbindFps.value = () => {
         clearInterval(intervalId)
         frameRateMonitor.destroy()
       }
-    },
+    }
 
-    bindAll() {
-      const {
-        cameraLocationVisible,
-        mouseLocationVisible,
-        fpsVisible,
-        bindCameraLocation,
-        bindMouseLocation,
-        bindFPS,
-      } = this
-      cameraLocationVisible && bindCameraLocation()
-      mouseLocationVisible && bindMouseLocation()
-      fpsVisible && bindFPS()
-    },
+    const bindAll = (): void => {
+      cameraLocationVisible.value && bindCameraLocation()
+      mouseLocationVisible.value && bindMouseLocation()
+      fpsVisible.value && bindFPS()
+    }
 
-    unbindAll() {
-      const { unbindCameraLocation, unbindMouseLocation, unbindFps } = this
-      unbindCameraLocation && unbindCameraLocation()
-      unbindMouseLocation && unbindMouseLocation()
-      unbindFps && unbindFps()
-    },
+    const unbindAll = (): void => {
+      unbindCameraLocation.value && unbindCameraLocation.value()
+      unbindMouseLocation.value && unbindMouseLocation.value()
+      unbindFps.value && unbindFps.value()
+    }
+
+    watch(
+      () => props.fpsRate,
+      (): void => {
+        if (fpsVisible.value) {
+          unbindFps.value && unbindFps.value()
+          bindFPS()
+        } else {
+          unbindFps.value && unbindFps.value()
+        }
+      }
+    )
+
+    watch(
+      () => props.percentageChanged,
+      (): void => {
+        setViewerPercentageChange()
+      }
+    )
+
+    watch(cameraLocationVisible, (val) => {
+      if (!val) {
+        return
+      }
+      if (val) {
+        unbindCameraLocation.value && unbindCameraLocation.value()
+        bindCameraLocation()
+      } else {
+        unbindCameraLocation.value && unbindCameraLocation.value()
+      }
+    })
+
+    watch(mouseLocationVisible, (val) => {
+      if (!val) {
+        return
+      }
+      if (val) {
+        unbindMouseLocation.value && unbindMouseLocation.value()
+        bindMouseLocation()
+      } else {
+        unbindMouseLocation.value && unbindMouseLocation.value()
+      }
+    })
+
+    watch(fpsVisible, (val) => {
+      if (!val) {
+        return
+      }
+
+      if (val) {
+        unbindFps.value && unbindFps.value()
+        bindFPS()
+      } else {
+        unbindFps.value && unbindFps.value()
+      }
+    })
+
+    onMounted(() => {
+      bindAll()
+    })
+
+    onUnmounted(() => {
+      unbindAll()
+    })
+
+    return {
+      cameraLocation,
+      mouseLocation,
+      fps,
+      unbindCameraLocation,
+      unbindMouseLocation,
+      unbindFps,
+      cameraLocationVisible,
+      mouseLocationVisible,
+      fpsVisible,
+      cameraLocationHeightFix0,
+      cameraLocationLongitudeFix5,
+      cameraLocationLatitudeFix5,
+      mouseLocationHeightFix0,
+      mouseLocationLongitudeFix5,
+      mouseLocationLatitudeFix5,
+      fpxFix0,
+      setViewerPercentageChange,
+      bindCameraLocation,
+      bindMouseLocation,
+      bindFPS,
+      bindAll,
+      unbindAll,
+    }
   },
 })
 </script>

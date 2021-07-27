@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, reactive, ref, computed, watch } from 'vue'
 
 import { ElIcon } from 'element-plus'
 
@@ -41,36 +41,23 @@ import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolba
 export default defineComponent({
   name: '',
   components: { ElIcon },
-  data() {
-    let chart: echarts.ECharts | undefined
-    return {
-      chart,
+  setup() {
+    const sampleChart = ref<HTMLElement | null>(null)
+    const chart = ref<echarts.ECharts | undefined>(undefined)
+
+    const initChart = (): void => {
+      chart.value = echarts.init(sampleChart.value as HTMLElement)
     }
-  },
-  computed: {
-    terrainSampling() {
+
+    const terrainSampling = computed(() => {
       return store.state.jtCesiumVue.toolbar.terrainSampling
-    },
-  },
-  watch: {
-    terrainSampling() {
-      this.buildChart()
-    },
-  },
-  mounted() {
-    this.initChart()
-    this.buildChart()
-  },
-  methods: {
-    buildChart() {
-      const { chart, terrainSampling } = this
-      if (!chart) {
+    })
+
+    const buildChart = () => {
+      if (!chart.value || !terrainSampling.value.show) {
         return
       }
-      if (!terrainSampling.show) {
-        return
-      }
-      const datas = terrainSampling.datas
+      const datas = terrainSampling.value.datas
       if (!datas || !datas.length) {
         return
       }
@@ -83,7 +70,7 @@ export default defineComponent({
         seriesData.push(height)
       }
 
-      chart.clear()
+      chart.value.clear()
       const option = {
         xAxis: [
           {
@@ -137,14 +124,10 @@ export default defineComponent({
           },
         ],
       }
-      chart.setOption(option)
-    },
+      chart.value.setOption(option)
+    }
 
-    initChart() {
-      this.chart = echarts.init(this.$refs.sampleChart as HTMLElement)
-    },
-
-    close() {
+    const close = (): void => {
       store.dispatch(
         `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_TERRAIN_SAMPLING}`,
         {
@@ -152,7 +135,25 @@ export default defineComponent({
           datas: [],
         }
       )
-    },
+    }
+
+    onMounted(() => {
+      initChart()
+      buildChart()
+    })
+
+    watch(terrainSampling, () => {
+      buildChart()
+    })
+
+    return {
+      sampleChart,
+      chart,
+      buildChart,
+      terrainSampling,
+      initChart,
+      close,
+    }
   },
 })
 </script>

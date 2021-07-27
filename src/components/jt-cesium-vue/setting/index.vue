@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { ElCheckbox } from 'element-plus'
 import store from '@/store'
 import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
@@ -14,8 +14,8 @@ import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/settin
 export default defineComponent({
   name: '',
   components: { ElCheckbox },
-  computed: {
-    toolbarShow: {
+  setup() {
+    const toolbarShow = computed({
       get(): boolean {
         return store.state.jtCesiumVue.setting.showToolbar
       },
@@ -25,9 +25,9 @@ export default defineComponent({
           val
         )
       },
-    },
+    })
 
-    browserPanelShow: {
+    const browserPanelShow = computed({
       get(): boolean {
         return store.state.jtCesiumVue.setting.showBrowserPanel
       },
@@ -37,10 +37,12 @@ export default defineComponent({
           val
         )
       },
-    },
-  },
-  data() {
-    return {}
+    })
+
+    return {
+      toolbarShow,
+      browserPanelShow,
+    }
   },
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-bar-group-item">
+  <div ref="el" class="tool-bar-group-item">
     <div class="item flex justify-center items-center mx-1 px-2">
       <div
         @click="itemClicked"
@@ -42,8 +42,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { mapActions } from 'vuex'
+import {
+  defineComponent,
+  PropType,
+  computed,
+  ref,
+  inject,
+  onMounted,
+} from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { mapActions, useStore } from 'vuex'
 
 import Store from '@/store'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
@@ -65,65 +73,87 @@ export default defineComponent({
       required: true,
     },
   },
-  computed: {
-    active(): boolean {
-      const { item } = this
+  setup(props) {
+    const el = ref<HTMLElement | null>(null)
+    const icon = ref<HTMLElement | null>(null)
+
+    const active = computed((): boolean => {
+      const { item } = props
       return !!item.active && item.active()
-    },
+    })
 
-    dropdown() {
+    const dropdown = computed(() => {
       return Store.state.jtCesiumVue.toolbar.dropdown
-    },
+    })
 
-    dropdownActive(): boolean {
-      const { item, dropdown } = this
+    const dropdownActive = computed((): boolean => {
+      const { item } = props
       if (item.dropdown) {
-        return dropdown.componentName === item.dropdown.componentName
+        return dropdown.value.componentName === item.dropdown.componentName
       }
       return false
-    },
+    })
 
-    dropdownVisible(): boolean {
-      const { item } = this
+    const dropdownVisible = computed((): boolean => {
+      const { item } = props
       return !!item.dropdown
-    },
-  },
-  mounted() {
-    const { item } = this
-    const option: OnMountedOption = {
-      viewer: this.$cv.viewer,
-      iconEl: this.$refs.icon as HTMLElement,
-    }
-    item.onMounted && item.onMounted(option)
-  },
-  methods: {
-    itemClicked() {
-      const { item } = this
+    })
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const itemClicked = () => {
+      const { item } = props
+      const { viewer } = cesiumRef || {}
+      if (!viewer) {
+        return
+      }
       const option: ClickHandlerOption = {
-        viewer: this.$cv.viewer,
+        viewer: viewer,
         item: item,
       }
       const result = item.clickHandler && item.clickHandler(option)
       item.clickHandlerResult = result
-    },
+    }
 
-    dropdownClicked() {
-      const { item, $el, dropdown } = this
+    const dropdownClicked = () => {
+      const { item } = props
       if (!item || !item.dropdown) {
         return
       }
-      const left = $el.offsetLeft
+      const left = (el.value! as HTMLElement).offsetLeft
       const val: DropdownState = {
-        ...dropdown,
+        ...dropdown.value,
         show: true,
         left,
         componentName: item.dropdown.componentName,
-        iconEl: this.$refs.icon as HTMLElement,
+        iconEl: icon.value! as HTMLElement,
       }
-      this[ToolbarActionTypes.SET_DROP_DOWN](val)
-    },
+      Store.dispatch(
+        `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
+        val
+      )
+    }
 
-    ...mapActions('jtCesiumVue/toolbar', [ToolbarActionTypes.SET_DROP_DOWN]),
+    onMounted(() => {
+      const { item } = props
+      const { viewer } = cesiumRef || {}
+      const option: OnMountedOption = {
+        viewer: viewer,
+        iconEl: icon.value as HTMLElement,
+      }
+      item.onMounted && item.onMounted(option)
+    })
+
+    return {
+      el,
+      icon,
+      active,
+      dropdown,
+      dropdownActive,
+      dropdownVisible,
+      itemClicked,
+      dropdownClicked,
+    }
   },
 })
 </script>

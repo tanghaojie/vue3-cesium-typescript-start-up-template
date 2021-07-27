@@ -69,7 +69,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, inject, onMounted } from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
@@ -102,28 +103,19 @@ export default defineComponent({
       default: true,
     },
   },
-  data() {
-    let primitives: Primitive[] = []
-    return {
-      primitives,
-      add3DTilesetDialog: {
-        dialogVisible: false,
-        name: '',
-        url: '',
-      },
-    }
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {
-    this.init()
-  },
-  setup() {},
-  methods: {
-    syncPrimitives(): void {
-      this.primitives.splice(0, this.primitives.length)
-      const { viewer } = this.$cv
+  setup(props) {
+    const primitives = reactive<Primitive[]>([])
+    const add3DTilesetDialog = reactive({
+      dialogVisible: false,
+      name: '',
+      url: '',
+    })
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const syncPrimitives = (): void => {
+      primitives.splice(0, primitives.length)
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -133,39 +125,36 @@ export default defineComponent({
         const model = pris.get(i)
         const flag = model[PRIMITIVE_MANAGER_FLAG_KEY]
         if (
-          this.inManagedPrimitiveOnly &&
+          props.inManagedPrimitiveOnly &&
           flag !== PRIMITIVE_MANAGER_FLAG_VALUE
         ) {
           continue
         }
-        this.primitives.push({
+        primitives.push({
           name: model.name || '<NoneName>',
           uuid: model.uuid || '<NoneUuid>',
           show: model.show,
           cesiumPrimitiveIndex: i,
         })
       }
-    },
+    }
 
-    changePrimitiveVisible(index: number, show: boolean): void {
-      const { viewer } = this.$cv
+    const changePrimitiveVisible = (index: number, show: boolean): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      const { primitives } = this
 
       primitives[index].show = viewer.scene.primitives.get(
         primitives[index].cesiumPrimitiveIndex
       ).show = show
-    },
+    }
 
-    showAdd3DTilesetDialog(): void {
-      this.add3DTilesetDialog.dialogVisible = true
-    },
+    const showAdd3DTilesetDialog = (): void => {
+      add3DTilesetDialog.dialogVisible = true
+    }
 
-    add3DTilsetConfirm() {
-      const { add3DTilesetDialog, add3DTileset } = this
-
+    const add3DTilsetConfirm = (): void => {
       add3DTileset({
         name: add3DTilesetDialog.name,
         url: add3DTilesetDialog.url,
@@ -174,17 +163,16 @@ export default defineComponent({
       add3DTilesetDialog.dialogVisible = false
       add3DTilesetDialog.name = ''
       add3DTilesetDialog.url = ''
-    },
+    }
 
-    add3DTilsetDialogClose() {
-      const { add3DTilesetDialog } = this
+    const add3DTilsetDialogClose = (): void => {
       add3DTilesetDialog.dialogVisible = false
       add3DTilesetDialog.name = ''
       add3DTilesetDialog.url = ''
-    },
+    }
 
-    add3DTileset(option: any): void {
-      const { viewer } = this.$cv
+    const add3DTileset = (option: any): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -200,11 +188,11 @@ export default defineComponent({
       c3Dtileset.show = option.show
 
       viewer.scene.primitives.add(c3Dtileset)
-      this.syncPrimitives()
-    },
+      syncPrimitives()
+    }
 
-    addGltf(option: any): void {
-      const { viewer } = this.$cv
+    const addGltf = (option: any): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -218,28 +206,28 @@ export default defineComponent({
       gltfObj.uuid = uuid()
       gltf.show = option.show
       viewer.scene.primitives.add(gltf)
-      this.syncPrimitives()
-    },
+      syncPrimitives()
+    }
 
-    removePrimitive(index: number): void {
-      const { viewer } = this.$cv
+    const removePrimitive = (index: number): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
 
-      const primitives = viewer.scene.primitives
-      const pri = primitives.get(this.primitives[index].cesiumPrimitiveIndex)
-      primitives.remove(pri)
-      this.syncPrimitives()
-    },
+      const ps = viewer.scene.primitives
+      const pri = ps.get(primitives[index].cesiumPrimitiveIndex)
+      ps.remove(pri)
+      syncPrimitives()
+    }
 
-    primitiveNameDoubleClick(index: number): void {
-      const { viewer } = this.$cv
+    const primitiveNameDoubleClick = (index: number): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      const primitives = viewer.scene.primitives
-      const pri = primitives.get(this.primitives[index].cesiumPrimitiveIndex)
+      const ps = viewer.scene.primitives
+      const pri = ps.get(primitives[index].cesiumPrimitiveIndex)
       const location = calculatePrimitiveCenter(pri)
 
       viewer.camera.flyTo({
@@ -255,17 +243,17 @@ export default defineComponent({
           roll: 0.0,
         },
       })
-    },
+    }
 
-    init(): void {
-      const { viewer } = this.$cv
+    const init = (): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
 
       viewer.scene.primitives.removeAll()
 
-      this.addGltf({
+      addGltf({
         name: '精模(适配全球地形)',
         url: sampleData.rc,
         modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
@@ -281,13 +269,13 @@ export default defineComponent({
       //   show: false,
       // })
 
-      this.add3DTileset({
+      add3DTileset({
         name: 'iPad Pro Lidar(point cloud)',
         url: sampleData['my-home'],
         show: false,
       })
 
-      this.add3DTileset({
+      add3DTileset({
         name: '成都建筑群',
         url: sampleData['cd-buildings'],
         show: true,
@@ -300,16 +288,36 @@ export default defineComponent({
         // debugShowMemoryUsage: true,
       })
 
-      this.add3DTileset({
+      add3DTileset({
         name: '简模001(适配全球地形)',
         url: sampleData['shp-factory'],
       })
 
-      this.add3DTileset({
+      add3DTileset({
         name: '简模002(适配全球地形)',
         url: sampleData.apartment,
       })
-    },
+    }
+
+    onMounted(() => {
+      init()
+    })
+
+    return {
+      primitives,
+      add3DTilesetDialog,
+
+      syncPrimitives,
+      changePrimitiveVisible,
+      showAdd3DTilesetDialog,
+      add3DTilsetConfirm,
+      add3DTilsetDialogClose,
+      add3DTileset,
+      addGltf,
+      removePrimitive,
+      primitiveNameDoubleClick,
+      init,
+    }
   },
 })
 </script>

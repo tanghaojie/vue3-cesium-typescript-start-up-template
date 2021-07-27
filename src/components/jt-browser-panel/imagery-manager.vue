@@ -140,8 +140,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { defineComponent, reactive, ref, inject, onMounted } from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import { ElIcon, ElCheckbox, ElDialog } from 'element-plus'
 import imageryLayerOperate from './imagery-layer-operate.vue'
 import sampleData from '@/resources/sample-data'
@@ -172,9 +172,9 @@ export default defineComponent({
     ElDialog,
     imageryLayerOperate,
   },
-  data() {
-    let imageries: Imagery[] = []
-    let imagerySources: (ImagerySource | ImagerySource[])[] = [
+  setup() {
+    const imageries: Imagery[] = reactive([])
+    const imagerySources: (ImagerySource | ImagerySource[])[] = reactive([
       [
         {
           iconImageUrl: 'img_c.jpg',
@@ -429,31 +429,25 @@ export default defineComponent({
           }
         },
       },
-    ]
-    return {
-      imageries,
-      addImageryDialogVisible: false,
-      imagerySources,
-      imageryLayerOperate: {
-        dialogVisible: false,
-        props: {
-          alpha: 0,
-          brightness: 0,
-          contrast: 0,
-          hue: 0,
-          saturation: 0,
-        },
-        cesiumLayerIndex: -1,
+    ])
+    const addImageryDialogVisible = ref(false)
+    const imageryLayerOperate = reactive({
+      dialogVisible: false,
+      props: {
+        alpha: 0,
+        brightness: 0,
+        contrast: 0,
+        hue: 0,
+        saturation: 0,
       },
-    }
-  },
-  mounted() {
-    this.init()
-  },
-  methods: {
-    syncImageries() {
-      this.imageries.splice(0, this.imageries.length)
-      const { viewer } = this.$cv
+      cesiumLayerIndex: -1,
+    })
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const syncImageries = (): void => {
+      imageries.splice(0, imageries.length)
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -461,7 +455,7 @@ export default defineComponent({
       const len = ils.length
       for (let i = len - 1; i >= 0; --i) {
         const layer: Cesium.ImageryLayer = ils.get(i)
-        this.imageries.push({
+        imageries.push({
           name: layer.name || '<Unknown>',
           uuid: layer.uuid || '<Unknown>',
           providerName: layer.imageryProvider.constructor.name,
@@ -469,24 +463,26 @@ export default defineComponent({
           cesiumLayerIndex: i,
         })
       }
-    },
+    }
 
-    changeImageryShow(index: number, show: boolean) {
-      const { viewer } = this.$cv
+    const changeImageryShow = (index: number, show: boolean): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      this.imageries[index].show = viewer.imageryLayers.get(
-        this.imageries[index].cesiumLayerIndex
+      imageries[index].show = viewer.imageryLayers.get(
+        imageries[index].cesiumLayerIndex
       ).show = show
-    },
+    }
 
-    plusImageries() {
-      this.addImageryDialogVisible = true
-    },
+    const plusImageries = (): void => {
+      addImageryDialogVisible.value = true
+    }
 
-    addImagery(item: ImagerySource): Cesium.ImageryLayer | undefined {
-      const { viewer } = this.$cv
+    const addImagery = (
+      item: ImagerySource
+    ): Cesium.ImageryLayer | undefined => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return undefined
       }
@@ -502,67 +498,88 @@ export default defineComponent({
 
       const ils = viewer.imageryLayers
       ils.add(layer)
-      this.syncImageries()
+      syncImageries()
       return layer
-    },
+    }
 
-    removeImagery(index: number) {
-      const { viewer } = this.$cv
+    const removeImagery = (index: number): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
       const ils = viewer.imageryLayers
-      const layer = ils.get(this.imageries[index].cesiumLayerIndex)
+      const layer = ils.get(imageries[index].cesiumLayerIndex)
       ils.remove(layer)
-      this.syncImageries()
-    },
+      syncImageries()
+    }
 
-    settingImagery(index: number) {
-      const { viewer } = this.$cv
+    const settingImagery = (index: number): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
       const ils = viewer.imageryLayers
-      const cesiumLayerIndex = this.imageries[index].cesiumLayerIndex
+      const cesiumLayerIndex = imageries[index].cesiumLayerIndex
       const layer = ils.get(cesiumLayerIndex)
-      this.imageryLayerOperate.cesiumLayerIndex = cesiumLayerIndex
-      this.imageryLayerOperate.props.alpha = layer.alpha
-      this.imageryLayerOperate.props.brightness = layer.brightness
-      this.imageryLayerOperate.props.contrast = layer.contrast
-      this.imageryLayerOperate.props.hue = layer.hue
-      this.imageryLayerOperate.props.saturation = layer.saturation
-      this.imageryLayerOperate.dialogVisible = true
-    },
+      imageryLayerOperate.cesiumLayerIndex = cesiumLayerIndex
+      imageryLayerOperate.props.alpha = layer.alpha
+      imageryLayerOperate.props.brightness = layer.brightness
+      imageryLayerOperate.props.contrast = layer.contrast
+      imageryLayerOperate.props.hue = layer.hue
+      imageryLayerOperate.props.saturation = layer.saturation
+      imageryLayerOperate.dialogVisible = true
+    }
 
-    init() {
-      const { viewer } = this.$cv
+    const init = (): void => {
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
       const ils = viewer.imageryLayers
       ils.removeAll()
-      this.addImagery((this.imagerySources[0] as ImagerySource[])[0])
-      this.addImagery((this.imagerySources[0] as ImagerySource[])[1])
-      this.syncImageries()
-    },
+      addImagery((imagerySources[0] as ImagerySource[])[0])
+      addImagery((imagerySources[0] as ImagerySource[])[1])
+      syncImageries()
+    }
 
-    imageryLayerChange(key: string, val: number) {
-      const cesiumLayerIndex = this.imageryLayerOperate.cesiumLayerIndex
+    const imageryLayerChange = (key: string, val: number): void => {
+      const cesiumLayerIndex = imageryLayerOperate.cesiumLayerIndex
       if (cesiumLayerIndex < 0) {
         return
       }
-      const { viewer } = this.$cv
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
       const layer = viewer.imageryLayers.get(cesiumLayerIndex)
       ;(layer as any)[key] = val
-    },
+    }
 
-    imageryLayerOperateClose() {
-      this.imageryLayerOperate.cesiumLayerIndex = -1
-      this.imageryLayerOperate.dialogVisible = false
-    },
+    const imageryLayerOperateClose = (): void => {
+      imageryLayerOperate.cesiumLayerIndex = -1
+      imageryLayerOperate.dialogVisible = false
+    }
+
+    onMounted(() => {
+      init()
+    })
+
+    return {
+      imageries,
+      imagerySources,
+      addImageryDialogVisible,
+      imageryLayerOperate,
+
+      syncImageries,
+      changeImageryShow,
+      plusImageries,
+      addImagery,
+      removeImagery,
+      settingImagery,
+      init,
+      imageryLayerChange,
+      imageryLayerOperateClose,
+    }
   },
 })
 </script>

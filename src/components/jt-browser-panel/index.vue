@@ -18,17 +18,5 @@ import primitiveManager from './primitive-manager.vue'
 export default defineComponent({
   name: '',
   components: { ElScrollbar, imageryManager, terrainManager, primitiveManager },
-  props: {},
-  data() {
-    return {}
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {},
-  setup() {},
-  methods: {},
 })
 </script>
-
-<style scoped lang="scss"></style>

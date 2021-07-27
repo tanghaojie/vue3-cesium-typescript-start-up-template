@@ -34,8 +34,5 @@ export default defineComponent({
       required: true,
     },
   },
-  methods: {},
 })
 </script>
-
-<style scoped lang="scss"></style>

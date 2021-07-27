@@ -27,7 +27,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, ref, inject } from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import * as Cesium from 'cesium'
 import sampleData from '@/resources/sample-data'
 
@@ -36,55 +37,55 @@ import { ElSelect, ElOption } from 'element-plus'
 export default defineComponent({
   name: '',
   components: { ElSelect, ElOption },
-  data() {
-    return {
-      terrains: [
-        {
-          name: '无地形',
-          terrainProviderName: 'EllipsoidTerrainProvider',
-          options: {
-            tilingScheme: new Cesium.GeographicTilingScheme(),
-          },
+  setup() {
+    const terrains = reactive([
+      {
+        name: '无地形',
+        terrainProviderName: 'EllipsoidTerrainProvider',
+        options: {
+          tilingScheme: new Cesium.GeographicTilingScheme(),
         },
-        {
-          name: '全球简略地形',
-          terrainProvider: Cesium.createWorldTerrain({
-            // required for water effects
-            requestWaterMask: true,
-            // required for terrain lighting
-            requestVertexNormals: true,
-          }),
+      },
+      {
+        name: '全球简略地形',
+        terrainProvider: Cesium.createWorldTerrain({
+          // required for water effects
+          requestWaterMask: true,
+          // required for terrain lighting
+          requestVertexNormals: true,
+        }),
+      },
+      {
+        name: '测试001-地形(12m)',
+        terrainProviderName: 'CesiumTerrainProvider',
+        options: {
+          url: sampleData.terrain,
         },
-        {
-          name: '测试001-地形(12m)',
-          terrainProviderName: 'CesiumTerrainProvider',
-          options: {
-            url: sampleData.terrain,
-          },
-          afterReady: function (viewer: Cesium.Viewer, success: boolean) {
-            if (viewer && success) {
-              viewer.camera.flyTo({
-                destination: Cesium.Cartesian3.fromDegrees(107.55, 33.6, 20000),
-                orientation: {
-                  heading: Cesium.Math.toRadians(0),
-                  pitch: Cesium.Math.toRadians(-30),
-                  roll: 0.0,
-                },
-              })
-            }
-          },
+        afterReady: function (viewer: Cesium.Viewer, success: boolean) {
+          if (viewer && success) {
+            viewer.camera.flyTo({
+              destination: Cesium.Cartesian3.fromDegrees(107.55, 33.6, 20000),
+              orientation: {
+                heading: Cesium.Math.toRadians(0),
+                pitch: Cesium.Math.toRadians(-30),
+                roll: 0.0,
+              },
+            })
+          }
         },
-      ],
-      currentTerrainName: '无地形',
-    }
-  },
-  methods: {
-    selectChange(val: string) {
-      const terrain = this.terrains.find((x) => x.name === val)
+      },
+    ])
+
+    const currentTerrainName = ref<string>('无地形')
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const selectChange = (val: string): void => {
+      const terrain = terrains.find((x) => x.name === val)
       if (!terrain) {
         return
       }
-      const { viewer } = this.$cv
+      const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
@@ -103,8 +104,14 @@ export default defineComponent({
         }
         viewer.terrainProvider = provider
       }
-      this.currentTerrainName = terrain.name || '<Unknown>'
-    },
+      currentTerrainName.value = terrain.name || '<Unknown>'
+    }
+
+    return {
+      terrains,
+      currentTerrainName,
+      selectChange,
+    }
   },
 })
 </script>

@@ -4,7 +4,8 @@
 
 # Introduction
 
-This is a project template for Vue3 + Cesium + Typescript apps with lots of sample datas. Preview: [https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
+This is a project template for Vue3 + Cesium + Typescript apps with lots of sample datas. Preview:
+[https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
 
 ## How to use
 
@@ -56,13 +57,32 @@ npm run build
 
 ### Cesium vue
 
-Cesium mounted on vue global properties, you can get cesium anywhere in vue instance:
+Cesium mounted on both global properties and `provide/inject` on main vue instance, for both composition or options API use.
+you can get cesium anywhere in vue instance:
 
 ```typescript
-const { viewer, viewerContainer } = this.$cv // type CesiumVue
+// global property
+const { viewer, viewerContainer } = this.$cesiumRef // type CesiumRef
+
+// provide/inject
+// Options API
+export default defineComponent({
+  inject: ['cesiumRef'],
+  mounted() {
+    console.log(this.cesiumRef)
+  },
+})
+// or Composition API
+import { CesiumRef } from '@/@types/shims-cesium-ref'
+setup() {
+  const cesiumRef = inject<CesiumRef>('cesiumRef')
+    onMounted(() => {
+      console.log(cesiumRef?.viewer)
+    })
+}
 ```
 
-If you want other properties, you can add anything to `CesiumVue` _(src/libs/cesium/cesium-vue.ts)_
+If you want other properties, you can add anything to `CesiumRef` _(src/@types/shims-cesium-ref.d.ts)_
 
 ### Not React
 
@@ -79,11 +99,11 @@ For better performance, `cesium instance` is not reactive! Different as vue data
 
 ## Next
 
-- Options API -> Composition API
-- Dark mode
-- Timeline and time data
-- More sample data
-- i18n
+- [x] Options API -> Composition API
+- [ ] Dark mode
+- [ ] Timeline and time data
+- [ ] More sample data
+- [ ] i18n
 
 ## Screenshots
 
@@ -99,9 +119,12 @@ _Note: do not use cesium versions from 1.81.0 to 1.82.1, it exists a [bug](https
 
 # 简介
 
-本项目是一个整合了 Vue3 + Cesium + Typescript 的启动模板，同时还包含了各种不同类型的示例数据。在线预览地址： [https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
+本项目是一个整合了 Vue3 + Cesium + Typescript 的启动模板，同时还包含了各种不同类型的示例数据。在线预览地址：
+[https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
 
 _可能需要跨过[墙]才能访问_
+
+国内访问不了可以试试[这里](http://117.139.247.104:60080/vue3-cesium-typescript-start-up-template/)
 
 ## 用法说明
 
@@ -153,13 +176,31 @@ npm run build
 
 ### Cesium vue
 
-Cesium 实例挂载在 vue 实例的全局属性上（vue3 支持多个 vue 实例，你可以自定义选择），然后就可以在 vue 实例中的任何地方拿到 cesium：
+Cesium 实例同时挂载在 vue 实例的全局属性上（vue3 支持多个 vue 实例，你可以自定义选择）和`provide/inject`，以方便 Composition 或者 Options API 语法都可以方便使用，然后就可以在 vue 实例中的任何地方拿到 cesium：
 
 ```typescript
-const { viewer, viewerContainer } = this.$cv // type CesiumVue
+// global property
+const { viewer, viewerContainer } = this.$cesiumRef // type CesiumRef
+
+// provide/inject
+// Options API
+export default defineComponent({
+  inject: ['cesiumRef'],
+  mounted() {
+    console.log(this.cesiumRef)
+  },
+})
+// or Composition API
+import { CesiumRef } from '@/@types/shims-cesium-ref'
+setup() {
+  const cesiumRef = inject<CesiumRef>('cesiumRef')
+    onMounted(() => {
+      console.log(cesiumRef?.viewer)
+    })
+}
 ```
 
-如果需要附件一些其他的属性，可以添加到`CesiumVue` _(src/libs/cesium/cesium-vue.ts)_ 上来扩展。
+如果需要附件一些其他的属性，可以添加到`CesiumRef` _(src/@types/shims-cesium-ref.d.ts)_ 上来扩展。
 
 ### 非响应式
 
@@ -186,11 +227,11 @@ const { viewer, viewerContainer } = this.$cv // type CesiumVue
 
 ## 后续计划
 
-- Options API -> Composition API
-- Dark mode
-- Timeline and time data
-- More sample data
-- i18n
+- [x] Options API -> Composition API
+- [ ] Dark mode
+- [ ] Timeline and time data
+- [ ] More sample data
+- [ ] i18n
 
 _注意: 不要使用 1.81.0 - 1.82.1 版本的 cesium, 它包含一个已知的[bug](https://github.com/CesiumGS/cesium/issues/9590)._
 

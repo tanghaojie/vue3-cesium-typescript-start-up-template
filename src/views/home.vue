@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import store from '@/store'
 import overlay from '../components/jt-overlay/index.vue'
 
@@ -97,29 +97,26 @@ export default defineComponent({
     jtTerrainSampleChart,
     ElDialog,
   },
-  data() {
-    return {}
-  },
-  computed: {
-    locationBarShow(): boolean {
+  setup() {
+    const locationBarShow = computed((): boolean => {
       return store.getters[
         `jtCesiumVue/locationbar/${LocationBarGetterTypes.ALL_SHOW}`
       ]
-    },
+    })
 
-    terrianSampleChartShow(): boolean {
+    const terrianSampleChartShow = computed((): boolean => {
       return store.state.jtCesiumVue.toolbar.terrainSampling.show
-    },
+    })
 
-    browserPanelShow(): boolean {
+    const browserPanelShow = computed((): boolean => {
       return store.state.jtCesiumVue.setting.showBrowserPanel
-    },
+    })
 
-    toolbarShow(): boolean {
+    const toolbarShow = computed((): boolean => {
       return store.state.jtCesiumVue.setting.showToolbar
-    },
+    })
 
-    settingShow: {
+    const settingShow = computed({
       get(): boolean {
         return store.state.jtCesiumVue.setting.showSetting
       },
@@ -129,19 +126,23 @@ export default defineComponent({
           val
         )
       },
-    },
-  },
-  mounted() {},
-  setup() {
+    })
+
     const cesiumLoaded = ref<boolean>(false)
+
+    const loaded = (): void => {
+      cesiumLoaded.value = true
+    }
+
     return {
       cesiumLoaded,
+      loaded,
+      locationBarShow,
+      terrianSampleChartShow,
+      browserPanelShow,
+      toolbarShow,
+      settingShow,
     }
-  },
-  methods: {
-    loaded() {
-      this.cesiumLoaded = true
-    },
   },
 })
 </script>

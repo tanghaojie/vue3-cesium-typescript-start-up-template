@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="el"
     class="tool-bar relative bg-gray-500 pointer-events-auto"
     :style="{
       '--dropdown-panel-p-left': dropdown.left + 'px',
@@ -34,74 +35,76 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
 import { mapActions } from 'vuex'
 
-import store from '@/store'
+import Store from '@/store'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 import type { DropdownState } from '@/store/modules/jt-cesium-vue/modules/toolbar/state'
 
-import toolbarConfig from './config'
+import tbConfig from './config'
 
-import group from './components/group.vue'
-import item from './components/item.vue'
 import menus from './components/menus.vue'
 import groups from './components/groups.vue'
 
 // dropdown components
-import cameraPercentageChangeRate from './dropdown/camera-percentage-change-rate/index.vue'
-import earthSurfaceColorPicker from './dropdown/earth-surface-color-picker/index.vue'
-import elevationContourSetting from './dropdown/elevation-contour-setting/index.vue'
+import dropdowns from './dropdown'
 
 export default defineComponent({
   name: '',
   components: {
-    group,
-    item,
     menus,
     groups,
-    cameraPercentageChangeRate,
-    earthSurfaceColorPicker,
-    elevationContourSetting,
+    ...dropdowns,
   },
-  props: {},
-  data() {
-    return {
-      currentSelectIndex: 0,
-    }
-  },
-  computed: {
-    toolbarConfig() {
-      return toolbarConfig
-    },
+  setup() {
+    const currentSelectIndex = ref(0)
+    const el = ref<HTMLElement | null>(null)
 
-    dropdown() {
-      return store.state.jtCesiumVue.toolbar.dropdown
-    },
-  },
-  mounted() {
-    const val: DropdownState = {
-      ...this.dropdown,
-      top: this.$el.offsetHeight,
-    }
-    this[ToolbarActionTypes.SET_DROP_DOWN](val)
-  },
-  methods: {
-    selectChange(val: number) {
-      this.currentSelectIndex = val
-    },
+    const toolbarConfig = computed(() => {
+      return tbConfig
+    })
 
-    clearDropdown() {
+    const dropdown = computed(() => {
+      return Store.state.jtCesiumVue.toolbar.dropdown
+    })
+
+    const selectChange = (val: number) => {
+      currentSelectIndex.value = val
+    }
+
+    const clearDropdown = () => {
       const val: DropdownState = {
-        ...this.dropdown,
+        ...dropdown.value,
         show: false,
         componentName: '',
         iconEl: undefined,
       }
-      this[ToolbarActionTypes.SET_DROP_DOWN](val)
-    },
+      Store.dispatch(
+        `jtCesiumVue/toolbar/ToolbarActionTypes.SET_DROP_DOWN`,
+        val
+      )
+    }
 
-    ...mapActions('jtCesiumVue/toolbar', [ToolbarActionTypes.SET_DROP_DOWN]),
+    onMounted(() => {
+      const val: DropdownState = {
+        ...dropdown.value,
+        top: (el.value as HTMLElement).offsetHeight,
+      }
+      Store.dispatch(
+        `jtCesiumVue/toolbar/ToolbarActionTypes.SET_DROP_DOWN`,
+        val
+      )
+    })
+
+    return {
+      currentSelectIndex,
+      el,
+      toolbarConfig,
+      dropdown,
+      selectChange,
+      clearDropdown,
+    }
   },
 })
 </script>

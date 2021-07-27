@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, computed, onMounted, inject } from 'vue'
+import { CesiumRef } from '@/@types/shims-cesium-ref'
 import { ElColorPicker } from 'element-plus'
 import store from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
@@ -19,34 +20,20 @@ import * as Cesium from 'cesium'
 export default defineComponent({
   name: '',
   components: { ElColorPicker },
-  props: {},
-  data() {
-    return {
-      color: 'rgba(19, 206, 102, 0.8)',
-    }
-  },
-  computed: {
-    dropdown() {
+  setup() {
+    const color = ref<string>('rgba(19, 206, 102, 0.8)')
+
+    const colorPicker = ref(null)
+
+    const dropdown = computed(() => {
       return store.state.jtCesiumVue.toolbar.dropdown
-    },
-  },
-  watch: {},
-  created() {},
-  mounted() {
-    const { viewer } = this.$cv
-    if (viewer) {
-      const c = viewer.scene.globe.baseColor
-      this.color = `rgba(${c.red * 255},${c.green * 255},${c.blue * 255},${
-        c.alpha
-      })`
-    }
-    ;(this.$refs.colorPicker as any).showPicker = true
-  },
-  setup() {},
-  methods: {
-    earthSurfaceColorChange(val: string): void {
+    })
+
+    const cesiumRef = inject<CesiumRef>('cesiumRef')
+
+    const earthSurfaceColorChange = (val: string): void => {
       const { red, green, blue, alpha } = rgbaStringToStruct(val)
-      const { viewer } = this.$cv
+      const { viewer } = cesiumRef || {}
       if (viewer) {
         viewer.scene.globe.baseColor = new Cesium.Color(
           red / 255,
@@ -55,11 +42,29 @@ export default defineComponent({
           alpha
         )
       }
-      const { iconEl } = this.dropdown
+      const { iconEl } = dropdown.value
       if (iconEl) {
         iconEl.style.color = `rgba(${red},${green},${blue},${alpha})`
       }
-    },
+    }
+
+    onMounted(() => {
+      const { viewer } = cesiumRef || {}
+      if (viewer) {
+        const c = viewer.scene.globe.baseColor
+        color.value = `rgba(${c.red * 255},${c.green * 255},${c.blue * 255},${
+          c.alpha
+        })`
+      }
+      ;(colorPicker.value as any).showPicker = true
+    })
+
+    return {
+      color,
+      colorPicker,
+      dropdown,
+      earthSurfaceColorChange,
+    }
   },
 })
 </script>

@@ -1,21 +1,21 @@
 import { App } from 'vue'
-import * as Cesium from 'cesium'
+
+type CesiumRef = import('@/@types/shims-cesium-ref').CesiumRef
 
 declare module '@vue/runtime-core' {
-  interface CesiumVue {
-    viewer: Cesium.Viewer | undefined
-    viewerContainer: HTMLElement | undefined
-  }
   interface ComponentCustomProperties {
-    readonly $cv: CesiumVue
+    readonly $cesiumRef: CesiumRef
+    readonly cesiumRef: CesiumRef
   }
 }
 
 export default {
   install: function (app: App<Element>): void {
-    app.config.globalProperties.$cv = {
+    const cr = {
       viewer: undefined,
       viewerContainer: undefined,
     }
+    app.config.globalProperties.$cesiumRef = cr
+    app.provide<CesiumRef>('cesiumRef', cr)
   },
 }

@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import type { Content } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 
 export default defineComponent({
@@ -46,25 +46,29 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      currentIndex: 0,
-    }
-  },
-  watch: {
-    currentIndex() {
-      this.$emit('selectChange', this.currentIndex)
-    },
-  },
-  methods: {
-    setCurrent(index: number, content: Content) {
+  setup(props, context) {
+    const currentIndex = ref(0)
+
+    watch(currentIndex, () => {
+      context.emit('selectChange', currentIndex.value)
+    })
+
+    const setCurrent = (index: number, content: Content) => {
       if (!!content.invisible || !!content.disable) {
         return
       }
-      this.currentIndex = index
+      currentIndex.value = index
+    }
+
+    return {
+      currentIndex,
+      setCurrent,
+    }
+  },
+  emits: {
+    selectChange(index: number) {
+      return true
     },
   },
 })
 </script>
-
-<style scoped lang="scss"></style>

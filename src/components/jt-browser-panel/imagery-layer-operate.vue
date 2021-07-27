@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { ElSlider } from 'element-plus'
 
 export default defineComponent({
@@ -70,25 +70,37 @@ export default defineComponent({
     s: Number,
     cb: Function,
   },
-  data() {
+  setup(props, context) {
+    const alpha = ref(0)
+    const brightness = ref(0)
+    const contrast = ref(0)
+    const hue = ref(0)
+    const saturation = ref(0)
+
+    const afterChange = (key: string, val: number): void => {
+      context.emit('change', key, val)
+    }
+
+    onMounted(() => {
+      alpha.value = props.a || 0
+      brightness.value = props.b || 0
+      contrast.value = props.c || 0
+      hue.value = props.h || 0
+      saturation.value = props.s || 0
+    })
+
     return {
-      alpha: 0,
-      brightness: 0,
-      contrast: 0,
-      hue: 0,
-      saturation: 0,
+      alpha,
+      brightness,
+      contrast,
+      hue,
+      saturation,
+      afterChange,
     }
   },
-  mounted() {
-    this.alpha = this.a || 0
-    this.brightness = this.b || 0
-    this.contrast = this.c || 0
-    this.hue = this.h || 0
-    this.saturation = this.s || 0
-  },
-  methods: {
-    afterChange(key: string, val: number) {
-      this.$emit('change', key, val)
+  emits: {
+    change(key: string, val: number) {
+      return true
     },
   },
 })
