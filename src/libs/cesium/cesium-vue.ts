@@ -1,6 +1,8 @@
 import { App } from 'vue'
 
-type CesiumRef = import('@/@types/shims-cesium-ref').CesiumRef
+export type CesiumRef = import('@/@types/shims-cesium-ref').CesiumRef
+
+export const CESIUM_REF_KEY = Symbol('cesiumRef')
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -11,11 +13,11 @@ declare module '@vue/runtime-core' {
 
 export default {
   install: function (app: App<Element>): void {
-    const cr = {
+    const cr: CesiumRef = {
       viewer: undefined,
       viewerContainer: undefined,
     }
     app.config.globalProperties.$cesiumRef = cr
-    app.provide<CesiumRef>('cesiumRef', cr)
+    app.provide<CesiumRef>(CESIUM_REF_KEY, cr)
   },
 }

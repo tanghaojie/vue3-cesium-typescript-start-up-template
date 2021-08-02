@@ -61,21 +61,21 @@ Cesium mounted on both global properties and `provide/inject` on main vue instan
 you can get cesium anywhere in vue instance:
 
 ```typescript
+import { CesiumRef, CESIUM_REF_KEY} from '@/libs/cesium/cesium-vue'
 // global property
 const { viewer, viewerContainer } = this.$cesiumRef // type CesiumRef
 
 // provide/inject
 // Options API
 export default defineComponent({
-  inject: ['cesiumRef'],
+  inject: [CESIUM_REF_KEY],
   mounted() {
     console.log(this.cesiumRef)
   },
 })
 // or Composition API
-import { CesiumRef } from '@/@types/shims-cesium-ref'
 setup() {
-  const cesiumRef = inject<CesiumRef>('cesiumRef')
+  const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
     onMounted(() => {
       console.log(cesiumRef?.viewer)
     })
@@ -179,21 +179,21 @@ npm run build
 Cesium 实例同时挂载在 vue 实例的全局属性上（vue3 支持多个 vue 实例，你可以自定义选择）和`provide/inject`，以方便 Composition 或者 Options API 语法都可以方便使用，然后就可以在 vue 实例中的任何地方拿到 cesium：
 
 ```typescript
+import { CesiumRef, CESIUM_REF_KEY} from '@/libs/cesium/cesium-vue'
 // global property
 const { viewer, viewerContainer } = this.$cesiumRef // type CesiumRef
 
 // provide/inject
 // Options API
 export default defineComponent({
-  inject: ['cesiumRef'],
+  inject: [CESIUM_REF_KEY],
   mounted() {
     console.log(this.cesiumRef)
   },
 })
 // or Composition API
-import { CesiumRef } from '@/@types/shims-cesium-ref'
 setup() {
-  const cesiumRef = inject<CesiumRef>('cesiumRef')
+  const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
     onMounted(() => {
       console.log(cesiumRef?.viewer)
     })

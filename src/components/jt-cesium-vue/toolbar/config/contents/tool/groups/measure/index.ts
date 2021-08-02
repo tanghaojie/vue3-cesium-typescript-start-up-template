@@ -21,7 +21,7 @@ const view: Group = {
   items: [
     {
       name: '点',
-      icon: 'point',
+      icon: 'ruler-point',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
         if (!option) {
           return
@@ -55,7 +55,7 @@ const view: Group = {
     },
     {
       name: '线',
-      icon: 'line',
+      icon: 'ruler-line',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
         if (!option) {
           return
@@ -90,7 +90,7 @@ const view: Group = {
     },
     {
       name: '面',
-      icon: 'polygon',
+      icon: 'polygon2',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
         if (!option) {
           return

@@ -142,7 +142,7 @@ const view: Group = {
   items: [
     {
       name: '高亮',
-      icon: 'tiled',
+      icon: 'classification',
       clickHandler: (option: ClickHandlerOption | undefined): any => {
         if (!option) {
           return

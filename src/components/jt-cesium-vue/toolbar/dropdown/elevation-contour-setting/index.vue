@@ -72,7 +72,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, inject } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElSlider, ElInputNumber, ElColorPicker } from 'element-plus'
 import store from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
@@ -95,7 +95,7 @@ export default defineComponent({
       return store.state.jtCesiumVue.toolbar.elevationContourActive
     })
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const contourDistanceChange = (val: number): void => {
       const { viewer } = cesiumRef || {}

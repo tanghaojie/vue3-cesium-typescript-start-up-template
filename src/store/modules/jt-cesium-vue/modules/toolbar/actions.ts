@@ -98,6 +98,24 @@ export const actions: ActionTree<State, RootState> = {
     commit(ToolbarMutationTypes.SET_SHOW_SKY_BOX, switchTo)
   },
 
+  async [ToolbarActionTypes.SWITCH_SHOW_SHADOW](
+    { commit, state },
+    options: ClickHandlerOption
+  ) {
+    const { viewer } = options
+    if (!viewer) {
+      return
+    }
+    const switchTo = !state.nature.showShadow
+    viewer.shadows = switchTo
+    if (switchTo) {
+      viewer.terrainShadows = Cesium.ShadowMode.ENABLED
+    } else {
+      viewer.terrainShadows = Cesium.ShadowMode.RECEIVE_ONLY
+    }
+    commit(ToolbarMutationTypes.SET_SHOW_SHADOW, switchTo)
+  },
+
   // other
   async [ToolbarActionTypes.SWITCH_DEPTH_TEST_AGAINST_TERRAIN](
     { commit, state },

@@ -6,10 +6,24 @@
           <toolBar />
         </div>
 
-        <div v-if="browserPanelShow" class="relative flex-grow">
+        <div v-if="browserPanelShow" class="relative flex flex-row flex-grow">
           <jtSideCollapse :default-pin="true" width="300px">
             <jtBrowserPanel />
           </jtSideCollapse>
+          <!-- <jtDraggerResizable
+            :parent="true"
+            :drag-handle="'.drag-handle'"
+            class="pointer-events-auto"
+            style="background-color: red"
+          >
+            <div
+              class="drag-handle"
+              style="background-color: black; color: white"
+            >
+              Drag Only Here
+            </div>
+            123
+          </jtDraggerResizable> -->
         </div>
       </div>
       <div
@@ -84,6 +98,8 @@ import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/settin
 
 import { ElDialog } from 'element-plus'
 
+import jtDraggerResizable from '@/components/jt-draggable-resizable/index.vue'
+
 export default defineComponent({
   name: 'Home',
   components: {
@@ -96,6 +112,7 @@ export default defineComponent({
     jtBrowserPanel,
     jtTerrainSampleChart,
     ElDialog,
+    jtDraggerResizable,
   },
   setup() {
     const locationBarShow = computed((): boolean => {

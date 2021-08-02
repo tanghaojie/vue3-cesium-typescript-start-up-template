@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, inject, onMounted, onUnmounted } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import logMousePositionMixin from '@/libs/cesium/mixins/logMousePositionMixin'
@@ -87,6 +87,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    shadows: {
+      type: Boolean,
+      default: false,
+    },
+    terrainShadows: {
+      type: Number,
+      default: Cesium.ShadowMode.RECEIVE_ONLY,
+    },
   },
   setup(props, context) {
     const jtVueCesium = ref<HTMLElement | null>(null)
@@ -144,6 +152,8 @@ export default defineComponent({
         sceneMode: props.sceneMode, // 初始场景模式
         // mapProjection: new Cesium.WebMercatorProjection(), //地 图投影体系
         // dataSources: new Cesium.DataSourceCollection() // 需要进行可视化的数据源的集合
+        shadows: props.shadows,
+        terrainShadows: props.terrainShadows,
       }
 
       const el = jtVueCesium.value as HTMLElement
@@ -158,7 +168,7 @@ export default defineComponent({
       //eslint-disable-next-line
       ;(viewer.cesiumWidget.creditContainer as any).style.display = 'none'
 
-      const cesiumRef = inject<CesiumRef>('cesiumRef')
+      const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
       if (!cesiumRef) {
         throw new Error('No cesium reference exist.')
       }
@@ -175,7 +185,7 @@ export default defineComponent({
       initializeCesiumDefault()
 
       const viewer = initializeCesium('cesiumContainer')
-      viewer.extend(logMousePositionMixin, { withHeight: true })
+      // viewer.extend(logMousePositionMixin, { withHeight: true })
       // viewer.extend(Cesium.viewerCesiumInspectorMixin)
 
       return viewer
@@ -187,7 +197,7 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
-      const cesiumRef = inject<CesiumRef>('cesiumRef')
+      const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
       if (cesiumRef) {
         cesiumRef.viewer = undefined
       }

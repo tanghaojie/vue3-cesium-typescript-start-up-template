@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import {
   getPercentageChange,
   setPercentageChange,
@@ -33,7 +33,7 @@ export default defineComponent({
   setup() {
     const value = ref<number>(0)
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const afterChange = (val: number) => {
       const { viewer } = cesiumRef || {}

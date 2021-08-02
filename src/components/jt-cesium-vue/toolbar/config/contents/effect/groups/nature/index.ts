@@ -11,7 +11,7 @@ const view: Group = {
   items: [
     {
       name: '太阳',
-      icon: 'earth',
+      icon: 'sun',
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
@@ -29,7 +29,7 @@ const view: Group = {
     },
     {
       name: '月亮',
-      icon: 'earth',
+      icon: 'moon',
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
@@ -47,7 +47,7 @@ const view: Group = {
     },
     {
       name: '大气层',
-      icon: 'earth',
+      icon: 'atmosphere',
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
@@ -64,8 +64,8 @@ const view: Group = {
       },
     },
     {
-      name: '日照阴影',
-      icon: 'earth',
+      name: '日照',
+      icon: 'shadow2',
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
@@ -77,13 +77,20 @@ const view: Group = {
       active: () => store.state.jtCesiumVue.toolbar.nature.enableLighting,
 
       onMounted: (options: OnMountedOption | undefined): void => {
-        store.state.jtCesiumVue.toolbar.nature.enableLighting =
-          !!options?.viewer?.scene.globe?.enableLighting
+        if (options) {
+          const { viewer } = options
+          store.state.jtCesiumVue.toolbar.nature.enableLighting =
+            !!viewer?.scene.globe?.enableLighting
+        }
+      },
+
+      dropdown: {
+        componentName: 'earth-light-setting',
       },
     },
     {
       name: '天空盒',
-      icon: 'earth',
+      icon: 'universe',
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
@@ -97,6 +104,26 @@ const view: Group = {
       onMounted: (options: OnMountedOption | undefined): void => {
         store.state.jtCesiumVue.toolbar.nature.showSkyBox =
           !!options?.viewer?.scene.skyBox?.show
+      },
+    },
+
+    {
+      name: '阴影',
+      icon: 'shadow3',
+      disable: false,
+
+      clickHandler: (options: ClickHandlerOption | undefined): void => {
+        store.dispatch(
+          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_SHOW_SHADOW}`,
+          options
+        )
+      },
+
+      active: () => store.state.jtCesiumVue.toolbar.nature.showShadow,
+
+      onMounted: (options: OnMountedOption | undefined): void => {
+        store.state.jtCesiumVue.toolbar.nature.showShadow =
+          !!options?.viewer?.shadows
       },
     },
   ],

@@ -11,7 +11,7 @@ const view: Group = {
   items: [
     {
       name: '深度检测(地形遮挡实体)',
-      icon: 'earth',
+      icon: '360',
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(

@@ -1,10 +1,9 @@
 <template>
-  <div ref="el" class="tool-bar-group-item">
-    <div class="item flex justify-center items-center mx-1 px-2">
+  <div ref="el">
+    <div class="flex justify-center items-center mx-1 px-2">
       <div
         @click="itemClicked"
         class="
-          item-container
           flex flex-col
           justify-center
           items-center
@@ -13,10 +12,10 @@
         "
         :class="active ? 'text-blue-400' : ''"
       >
-        <div ref="icon" class="icon text-4xl">
+        <div ref="icon" class="text-4xl">
           <jt-icon :name="item.icon" />
         </div>
-        <div class="name text-sm text-white">
+        <div class="text-sm text-white">
           <slot></slot>
         </div>
       </div>
@@ -25,15 +24,7 @@
         v-if="dropdownVisible"
         :class="dropdownActive ? 'text-blue-400' : ''"
         @click.stop="dropdownClicked"
-        class="
-          dropdown
-          flex
-          justify-center
-          items-center
-          ml-2
-          h-full
-          hover:text-blue-400
-        "
+        class="flex justify-center items-center ml-2 h-full hover:text-blue-400"
       >
         <jt-icon name="arrow-down" />
       </div>
@@ -50,7 +41,7 @@ import {
   inject,
   onMounted,
 } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { mapActions, useStore } from 'vuex'
 
 import Store from '@/store'
@@ -99,7 +90,7 @@ export default defineComponent({
       return !!item.dropdown
     })
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const itemClicked = () => {
       const { item } = props

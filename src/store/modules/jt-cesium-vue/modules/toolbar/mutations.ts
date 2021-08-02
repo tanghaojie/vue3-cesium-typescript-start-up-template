@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex'
 import { defaultState } from './state'
-import type { DropdownState, TerrainSamplingState, State } from './state'
+import type { TerrainSamplingState, State, DropdownState } from './state'
 import { ToolbarMutationTypes } from './mutation-types'
 
 export const mutations: MutationTree<State> = {
@@ -10,6 +10,10 @@ export const mutations: MutationTree<State> = {
 
   [ToolbarMutationTypes.SET_VISIBLE](state: State, payload: boolean) {
     state.visible = payload
+  },
+
+  [ToolbarMutationTypes.SET_DROP_DOWN](state: State, payload: DropdownState) {
+    state.dropdown = payload
   },
 
   [ToolbarMutationTypes.SET_DROP_DOWN](state: State, payload: DropdownState) {
@@ -38,6 +42,10 @@ export const mutations: MutationTree<State> = {
 
   [ToolbarMutationTypes.SET_SHOW_SKY_BOX](state: State, payload: boolean) {
     state.nature.showSkyBox = payload
+  },
+
+  [ToolbarMutationTypes.SET_SHOW_SHADOW](state: State, payload: boolean) {
+    state.nature.showShadow = payload
   },
 
   // other

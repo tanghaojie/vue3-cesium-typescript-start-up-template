@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, inject } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElColorPicker } from 'element-plus'
 import store from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
@@ -29,7 +29,7 @@ export default defineComponent({
       return store.state.jtCesiumVue.toolbar.dropdown
     })
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const earthSurfaceColorChange = (val: string): void => {
       const { red, green, blue, alpha } = rgbaStringToStruct(val)

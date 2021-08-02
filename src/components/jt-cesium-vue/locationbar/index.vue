@@ -67,7 +67,7 @@ import {
   onUnmounted,
   inject,
 } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import store from '@/store'
 import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import * as Cesium from 'cesium'
@@ -146,7 +146,7 @@ export default defineComponent({
       return fps.value.toFixed(0)
     })
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const setViewerPercentageChange = () => {
       const { viewer } = cesiumRef || {}

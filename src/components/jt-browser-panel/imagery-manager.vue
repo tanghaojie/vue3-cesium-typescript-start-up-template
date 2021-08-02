@@ -141,7 +141,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, inject, onMounted } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElIcon, ElCheckbox, ElDialog } from 'element-plus'
 import imageryLayerOperate from './imagery-layer-operate.vue'
 import sampleData from '@/resources/sample-data'
@@ -443,7 +443,7 @@ export default defineComponent({
       cesiumLayerIndex: -1,
     })
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const syncImageries = (): void => {
       imageries.splice(0, imageries.length)

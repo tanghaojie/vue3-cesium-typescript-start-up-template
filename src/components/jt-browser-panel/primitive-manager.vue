@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, inject, onMounted } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
@@ -111,7 +111,7 @@ export default defineComponent({
       url: '',
     })
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const syncPrimitives = (): void => {
       primitives.splice(0, primitives.length)

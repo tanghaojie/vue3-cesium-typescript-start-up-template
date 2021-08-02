@@ -81,7 +81,7 @@ export default defineComponent({
         iconEl: undefined,
       }
       Store.dispatch(
-        `jtCesiumVue/toolbar/ToolbarActionTypes.SET_DROP_DOWN`,
+        `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )
     }
@@ -92,7 +92,7 @@ export default defineComponent({
         top: (el.value as HTMLElement).offsetHeight,
       }
       Store.dispatch(
-        `jtCesiumVue/toolbar/ToolbarActionTypes.SET_DROP_DOWN`,
+        `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )
     })

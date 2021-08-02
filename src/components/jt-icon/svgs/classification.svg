@@ -1,0 +1,17 @@
+<svg id="Layer_3" enable-background="new 0 0 64 64" height="512" viewBox="0 0 64 64" width="512" xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <g>
+            <path d="m17 36h-14v-8h14z" />
+            <path d="m36 18h-14v-8h14z" />
+            <path d="m60 11h-14v-8h14z" />
+            <path d="m60 25h-14v-8h14z" />
+            <path d="m36 54h-14v-8h14z" />
+            <path d="m60 47h-14v-8h14z" />
+            <path d="m60 61h-14v-8h14z" />
+        </g>
+        <path d="m11 26v-11h9v-2h-10c-.553 0-1 .448-1 1v12z" />
+        <path d="m20 49h-9v-11h-2v12c0 .552.447 1 1 1h10z" />
+        <path d="m44 20h-2v-12h2v-2h-3c-.553 0-1 .448-1 1v6h-2v2h2v6c0 .552.447 1 1 1h3z" />
+        <path d="m44 56h-2v-12h2v-2h-3c-.553 0-1 .448-1 1v6h-2v2h2v6c0 .552.447 1 1 1h3z" />
+    </g>
+</svg>

@@ -3,7 +3,11 @@
     <div class="pb-4">
       <div class="text-lg text-white flex flex-row">
         <div class="flex-1">地形管理</div>
-        <div class="flex flex-row flex-grow-0 flex-shrink-0"></div>
+        <div class="flex flex-row flex-grow-0 flex-shrink-0">
+          <div class="plus cursor-pointer" @click="showTerrainSettingDialog">
+            <i class="el-icon-setting"></i>
+          </div>
+        </div>
       </div>
 
       <div class="py-2">
@@ -23,20 +27,38 @@
         </el-select>
       </div>
     </div>
+
+    <el-dialog
+      v-model="terrainSettingDialog.dialogVisible"
+      title="地形设置"
+      destroyOnClose
+      @close="terrainSettingDialog.dialogVisible = false"
+    >
+      <p>地形缩放</p>
+      <el-slider
+        :min="0"
+        :max="10"
+        :step="0.01"
+        v-model="terrainSettingDialog.exaggeration"
+        show-input
+        @change="terrainExaggerationChange"
+      >
+      </el-slider>
+    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, inject } from 'vue'
-import { CesiumRef } from '@/@types/shims-cesium-ref'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import sampleData from '@/resources/sample-data'
 
-import { ElSelect, ElOption } from 'element-plus'
+import { ElSelect, ElOption, ElDialog, ElSlider } from 'element-plus'
 
 export default defineComponent({
   name: '',
-  components: { ElSelect, ElOption },
+  components: { ElSelect, ElOption, ElDialog, ElSlider },
   setup() {
     const terrains = reactive([
       {
@@ -60,6 +82,8 @@ export default defineComponent({
         terrainProviderName: 'CesiumTerrainProvider',
         options: {
           url: sampleData.terrain,
+          // required for terrain lighting
+          requestVertexNormals: true,
         },
         afterReady: function (viewer: Cesium.Viewer, success: boolean) {
           if (viewer && success) {
@@ -76,9 +100,14 @@ export default defineComponent({
       },
     ])
 
+    const terrainSettingDialog = reactive({
+      dialogVisible: false,
+      exaggeration: 1,
+    })
+
     const currentTerrainName = ref<string>('无地形')
 
-    const cesiumRef = inject<CesiumRef>('cesiumRef')
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const selectChange = (val: string): void => {
       const terrain = terrains.find((x) => x.name === val)
@@ -107,10 +136,30 @@ export default defineComponent({
       currentTerrainName.value = terrain.name || '<Unknown>'
     }
 
+    const showTerrainSettingDialog = (): void => {
+      const { viewer } = cesiumRef || {}
+      if (!viewer) {
+        return
+      }
+      terrainSettingDialog.exaggeration = viewer.scene.globe.terrainExaggeration
+      terrainSettingDialog.dialogVisible = true
+    }
+
+    const terrainExaggerationChange = (val: number): void => {
+      const { viewer } = cesiumRef || {}
+      if (!viewer) {
+        return
+      }
+      viewer.scene.globe.terrainExaggeration = val
+    }
+
     return {
       terrains,
+      terrainSettingDialog,
       currentTerrainName,
       selectChange,
+      showTerrainSettingDialog,
+      terrainExaggerationChange,
     }
   },
 })

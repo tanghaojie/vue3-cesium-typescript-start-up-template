@@ -24,6 +24,7 @@ export type NatureState = {
   showSkyAtmosphere: boolean
   enableLighting: boolean
   showSkyBox: boolean
+  showShadow: boolean
 }
 
 export type OtherState = {
@@ -68,6 +69,7 @@ export const defaultState = (): State => {
       showSkyAtmosphere: true,
       enableLighting: false,
       showSkyBox: true,
+      showShadow: false,
     },
     other: {
       depthTestAgainstTerrain: true,
