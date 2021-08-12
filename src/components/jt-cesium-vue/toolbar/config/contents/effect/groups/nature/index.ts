@@ -4,7 +4,7 @@ import {
   ClickHandlerOption,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
-import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
+import { NatureActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/nature/action-types'
 
 const view: Group = {
   name: '自然环境',
@@ -15,7 +15,7 @@ const view: Group = {
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
-          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_SHOW_SUN}`,
+          `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SUN}`,
           options
         )
       },
@@ -33,7 +33,7 @@ const view: Group = {
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
-          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_SHOW_MOON}`,
+          `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_MOON}`,
           options
         )
       },
@@ -51,7 +51,7 @@ const view: Group = {
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
-          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_SHOW_SKY_ATMOSPHERE}`,
+          `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SKY_ATMOSPHERE}`,
           options
         )
       },
@@ -69,7 +69,7 @@ const view: Group = {
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
-          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_ENABLE_LIGHT}`,
+          `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_ENABLE_LIGHT}`,
           options
         )
       },
@@ -94,7 +94,7 @@ const view: Group = {
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
-          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_SHOW_SKY_BOX}`,
+          `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SKY_BOX}`,
           options
         )
       },
@@ -114,7 +114,7 @@ const view: Group = {
 
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         store.dispatch(
-          `jtCesiumVue/toolbar/${ToolbarActionTypes.SWITCH_SHOW_SHADOW}`,
+          `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SHADOW}`,
           options
         )
       },

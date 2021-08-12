@@ -1,0 +1,5 @@
+export enum OtherMutationTypes {
+  RESET_STATE = 'RESET_STATE',
+  // other
+  SET_DEPTH_TEST_AGAINST_TERRAIN = 'SET_DEPTH_TEST_AGAINST_TERRAIN',
+}

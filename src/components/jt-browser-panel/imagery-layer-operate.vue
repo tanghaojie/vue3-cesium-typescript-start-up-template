@@ -56,6 +56,8 @@
 </template>
 
 <script lang="ts">
+const CHANGE_EVENT = 'change'
+
 import { defineComponent, ref, onMounted } from 'vue'
 import { ElSlider } from 'element-plus'
 
@@ -78,7 +80,7 @@ export default defineComponent({
     const saturation = ref(0)
 
     const afterChange = (key: string, val: number): void => {
-      context.emit('change', key, val)
+      context.emit(CHANGE_EVENT, key, val)
     }
 
     onMounted(() => {
@@ -99,7 +101,7 @@ export default defineComponent({
     }
   },
   emits: {
-    change(key: string, val: number) {
+    [CHANGE_EVENT](key: string, val: number) {
       return true
     },
   },

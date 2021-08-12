@@ -5,7 +5,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, inject, onMounted, onUnmounted } from 'vue'
+const LOADED_EVENT = 'loaded'
+
+import {
+  defineComponent,
+  ref,
+  shallowRef,
+  inject,
+  onMounted,
+  onUnmounted,
+} from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
@@ -97,7 +106,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const jtVueCesium = ref<HTMLElement | null>(null)
+    const jtVueCesium = shallowRef<HTMLElement | null>(null)
 
     const initializeCesiumDefault = (): void => {
       const west = 94
@@ -193,7 +202,7 @@ export default defineComponent({
 
     onMounted(() => {
       const viewer = init()
-      context.emit('loaded', { viewer })
+      context.emit(LOADED_EVENT, { viewer })
     })
 
     onUnmounted(() => {
@@ -213,7 +222,7 @@ export default defineComponent({
     }
   },
   emits: {
-    loaded(payload: { viewer: Cesium.Viewer }) {
+    [LOADED_EVENT](payload: { viewer: Cesium.Viewer }) {
       return true
     },
   },

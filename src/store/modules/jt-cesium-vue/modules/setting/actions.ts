@@ -10,17 +10,6 @@ export const actions: ActionTree<State, RootState> = {
     commit(SettingMutationTypes.RESET_STATE)
   },
 
-  async [SettingActionTypes.SET_SHOW_BROWSER_PANEL](
-    { commit },
-    payload: boolean
-  ) {
-    commit(SettingMutationTypes.SET_SHOW_BROWSER_PANEL, payload)
-  },
-
-  async [SettingActionTypes.SET_SHOW_TOOLBAR]({ commit }, payload: boolean) {
-    commit(SettingMutationTypes.SET_SHOW_TOOLBAR, payload)
-  },
-
   async [SettingActionTypes.SET_SHOW_SETTING]({ commit }, payload: boolean) {
     commit(SettingMutationTypes.SET_SHOW_SETTING, payload)
   },

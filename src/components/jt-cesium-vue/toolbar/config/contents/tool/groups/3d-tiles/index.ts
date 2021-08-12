@@ -17,7 +17,7 @@ import {
   ClickHandlerOption,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
-import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
+import { Tool3DTileActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/tool3DTile/action-types'
 
 const YIN_TAI_IN_99_ID: string = 'YIN_TAI_IN_99_ID'
 const YIN_TAI_IN_99_COORDINATE: number[] = [
@@ -163,13 +163,13 @@ const view: Group = {
             item.clickHandlerResult = undefined
           }
           store.dispatch(
-            `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
+            `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
             false
           )
           return
         } else {
           store.dispatch(
-            `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
+            `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
             true
           )
           return highlight3DTileFeature({
@@ -206,14 +206,14 @@ const view: Group = {
             item.clickHandlerResult = undefined
           }
           store.dispatch(
-            `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
+            `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
             false
           )
           removeYinTaiIn99ClassificationPrimitive(viewer)
           return
         } else {
           store.dispatch(
-            `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
+            `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
             true
           )
           addYinTaiIn99ClassificationPrimitive(viewer)
@@ -257,7 +257,7 @@ const view: Group = {
             item.clickHandlerResult = undefined
           }
           store.dispatch(
-            `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
+            `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
             false
           )
           removeYinTaiIn99ClassificationPrimitive(viewer)
@@ -265,7 +265,7 @@ const view: Group = {
         } else {
           // start
           store.dispatch(
-            `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
+            `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
             true
           )
           addYinTaiIn99ClassificationPrimitive(viewer)

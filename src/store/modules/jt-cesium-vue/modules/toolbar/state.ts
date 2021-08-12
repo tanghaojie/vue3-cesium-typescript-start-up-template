@@ -1,11 +1,25 @@
-export type State = {
+import type { NatureState } from './modules/nature'
+import type { Tool3DTileState } from './modules/tool3DTile'
+import type { OtherState } from './modules/other'
+import type { DrawState } from './modules/draw'
+import type { MeasureState } from './modules/measure'
+
+export type ToolbarStateAndModule = {
   visible: boolean
   dropdown: DropdownState
+  elevationContourActive: boolean
+  terrainSampling: TerrainSamplingState
+
   nature: NatureState
+  tool3DTile: Tool3DTileState
   other: OtherState
   draw: DrawState
   measure: MeasureState
-  tool3DTile: Tool3DTileState
+}
+
+export type State = {
+  visible: boolean
+  dropdown: DropdownState
   elevationContourActive: boolean
   terrainSampling: TerrainSamplingState
 }
@@ -16,37 +30,6 @@ export type DropdownState = {
   top: number
   left: number
   iconEl?: HTMLElement
-}
-
-export type NatureState = {
-  showSun: boolean
-  showMoon: boolean
-  showSkyAtmosphere: boolean
-  enableLighting: boolean
-  showSkyBox: boolean
-  showShadow: boolean
-}
-
-export type OtherState = {
-  depthTestAgainstTerrain: boolean
-}
-
-export type DrawState = {
-  drawPointActive: boolean
-  drawPolylineActive: boolean
-  drawPolygonActive: boolean
-}
-
-export type MeasureState = {
-  measurePointActive: boolean
-  measurePolylineActive: boolean
-  measurePolygonActive: boolean
-}
-
-export type Tool3DTileState = {
-  highlight3DTileFeatureActive: boolean
-  hoverClassificationActive: boolean
-  clickClassificationActive: boolean
 }
 
 export type TerrainSamplingData = {
@@ -63,32 +46,6 @@ export const defaultState = (): State => {
   return {
     visible: true,
     dropdown: { show: false, componentName: '', top: 0, left: 0 },
-    nature: {
-      showSun: true,
-      showMoon: false,
-      showSkyAtmosphere: true,
-      enableLighting: false,
-      showSkyBox: true,
-      showShadow: false,
-    },
-    other: {
-      depthTestAgainstTerrain: true,
-    },
-    draw: {
-      drawPointActive: false,
-      drawPolylineActive: false,
-      drawPolygonActive: false,
-    },
-    measure: {
-      measurePointActive: false,
-      measurePolylineActive: false,
-      measurePolygonActive: false,
-    },
-    tool3DTile: {
-      highlight3DTileFeatureActive: false,
-      hoverClassificationActive: false,
-      clickClassificationActive: false,
-    },
     elevationContourActive: false,
     terrainSampling: {
       show: false,

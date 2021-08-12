@@ -1,31 +1,18 @@
 <template>
-  <div class="home">
+  <div>
     <overlay v-if="cesiumLoaded">
       <div class="flex flex-col h-full">
-        <div v-if="toolbarShow">
+        <div v-if="toolbarShow" ref="toolbar">
           <toolBar />
         </div>
 
         <div v-if="browserPanelShow" class="relative flex flex-row flex-grow">
-          <jtSideCollapse :default-pin="true" width="300px">
+          <jtSideCollapse ref="browserPanel" :default-pin="true" width="300px">
             <jtBrowserPanel />
           </jtSideCollapse>
-          <!-- <jtDraggerResizable
-            :parent="true"
-            :drag-handle="'.drag-handle'"
-            class="pointer-events-auto"
-            style="background-color: red"
-          >
-            <div
-              class="drag-handle"
-              style="background-color: black; color: white"
-            >
-              Drag Only Here
-            </div>
-            123
-          </jtDraggerResizable> -->
         </div>
       </div>
+
       <div
         v-if="!toolbarShow"
         class="
@@ -46,41 +33,29 @@
       >
         <jt-icon name="setting" class="text-3xl text-gray-300" />
       </div>
+
+      <locationbar v-if="cesiumLoaded && locationBarShow" />
     </overlay>
 
-    <overlay
-      v-if="cesiumLoaded && locationBarShow"
-      position-mode="fixed"
-      class="over flex flex-col"
-    >
-      <locationbar />
-    </overlay>
-
-    <overlay
-      v-if="cesiumLoaded && terrianSampleChartShow"
-      position-mode="fixed"
-      class="over flex flex-col"
-    >
+    <overlay :top="toolbarHeight">
+      <setting />
       <jtTerrainSampleChart />
     </overlay>
 
-    <div class="h-screen">
+    <div class="h-screen bg-green-200">
       <jt-vue-cesium @loaded="loaded" />
     </div>
-
-    <el-dialog
-      title="设置"
-      v-model="settingShow"
-      width="600px"
-      destroy-on-close
-    >
-      <setting />
-    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import {
+  defineComponent,
+  ref,
+  shallowRef,
+  computed,
+  ComponentPublicInstance,
+} from 'vue'
 import store from '@/store'
 import overlay from '../components/jt-overlay/index.vue'
 
@@ -91,14 +66,9 @@ import setting from '../components/jt-cesium-vue/setting/index.vue'
 import jtSideCollapse from '../components/jt-side-collapse/index.vue'
 import jtBrowserPanel from '../components/jt-browser-panel/index.vue'
 import jtTerrainSampleChart from '../components/jt-terrain-sample-chart/index.vue'
+import jtDraggableResizable from '../components/jt-draggable-resizable/index.vue'
 
 import { LocationBarGetterTypes } from '@/store/modules/jt-cesium-vue/modules/locationbar/getter-types'
-
-import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
-
-import { ElDialog } from 'element-plus'
-
-import jtDraggerResizable from '@/components/jt-draggable-resizable/index.vue'
 
 export default defineComponent({
   name: 'Home',
@@ -111,41 +81,31 @@ export default defineComponent({
     jtSideCollapse,
     jtBrowserPanel,
     jtTerrainSampleChart,
-    ElDialog,
-    jtDraggerResizable,
+    jtDraggableResizable,
   },
   setup() {
+    const cesiumLoaded = ref<boolean>(false)
+    const toolbar = shallowRef<HTMLElement | null>(null)
+    const browserPanel = ref<ComponentPublicInstance | null>(null)
+
     const locationBarShow = computed((): boolean => {
       return store.getters[
         `jtCesiumVue/locationbar/${LocationBarGetterTypes.ALL_SHOW}`
       ]
     })
 
-    const terrianSampleChartShow = computed((): boolean => {
-      return store.state.jtCesiumVue.toolbar.terrainSampling.show
-    })
-
     const browserPanelShow = computed((): boolean => {
-      return store.state.jtCesiumVue.setting.showBrowserPanel
+      return store.state.jtCesiumVue.layout.showBrowserPanel
     })
 
     const toolbarShow = computed((): boolean => {
-      return store.state.jtCesiumVue.setting.showToolbar
+      return store.state.jtCesiumVue.layout.showToolbar
     })
 
-    const settingShow = computed({
-      get(): boolean {
-        return store.state.jtCesiumVue.setting.showSetting
-      },
-      set(val: boolean): void {
-        store.dispatch(
-          `jtCesiumVue/setting/${SettingActionTypes.SET_SHOW_SETTING}`,
-          val
-        )
-      },
+    const toolbarHeight = computed((): string => {
+      const h = toolbar.value ? (toolbar.value as HTMLElement).clientHeight : 0
+      return `${h}px`
     })
-
-    const cesiumLoaded = ref<boolean>(false)
 
     const loaded = (): void => {
       cesiumLoaded.value = true
@@ -155,10 +115,11 @@ export default defineComponent({
       cesiumLoaded,
       loaded,
       locationBarShow,
-      terrianSampleChartShow,
       browserPanelShow,
       toolbarShow,
-      settingShow,
+      toolbarHeight,
+      toolbar,
+      browserPanel,
     }
   },
 })

@@ -35,6 +35,7 @@
 </template>
 
 <script lang="ts">
+const SELECTCHANGE_EVENT = 'selectChange'
 import { defineComponent, PropType, ref, watch } from 'vue'
 import type { Content } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 
@@ -50,7 +51,7 @@ export default defineComponent({
     const currentIndex = ref(0)
 
     watch(currentIndex, () => {
-      context.emit('selectChange', currentIndex.value)
+      context.emit(SELECTCHANGE_EVENT, currentIndex.value)
     })
 
     const setCurrent = (index: number, content: Content) => {
@@ -66,7 +67,7 @@ export default defineComponent({
     }
   },
   emits: {
-    selectChange(index: number) {
+    [SELECTCHANGE_EVENT](index: number) {
       return true
     },
   },

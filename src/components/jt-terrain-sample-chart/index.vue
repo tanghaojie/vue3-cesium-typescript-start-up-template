@@ -1,30 +1,47 @@
 <template>
-  <div
-    class="
-      px-5
-      py-2
-      bg-gray-800 bg-opacity-70
-      pointer-events-auto
-      absolute
-      bottom-0
-      left-0
-      right-0
-    "
+  <jtDraggableResizable
+    v-model="terrianSampleChartShow"
+    :resizable="true"
+    :w="900"
+    :h="360"
+    :initialPosition="'bm'"
+    class="pointer-events-auto"
+    @resizing="terrainSampleChartResizing"
   >
-    <div class="flex flex-row px-3">
-      <div class="flex-auto"></div>
-      <div class="flex-none">
-        <div @click="close">
-          <i class="el-icon-close text-white cursor-pointer" />
-        </div>
+    <template v-slot:title>地形采样</template>
+    <div
+      class="
+        w-full
+        h-full
+        flex
+        justify-center
+        items-center
+        px-5
+        py-2
+        bg-gray-800 bg-opacity-70
+      "
+    >
+      <div class="relative w-full h-full">
+        <div
+          ref="sampleChart"
+          class="absolute bottom-0 left-0 right-0 top-0"
+        ></div>
       </div>
     </div>
-    <div ref="sampleChart" class="" style="height: 300px"></div>
-  </div>
+  </jtDraggableResizable>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref, computed, watch } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  shallowRef,
+  computed,
+  watch,
+  nextTick,
+  inject,
+} from 'vue'
 
 import { ElIcon } from 'element-plus'
 
@@ -32,30 +49,69 @@ import * as echarts from 'echarts/core'
 import { GridComponent } from 'echarts/components'
 import { LineChart } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
+import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
+import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
+import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
+import { removeAll } from '@/libs/cesium/libs/terrain-sampling'
+
 echarts.use([GridComponent, LineChart, CanvasRenderer])
 
 import store from '@/store'
 
-import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
-
 export default defineComponent({
-  name: '',
-  components: { ElIcon },
+  components: { ElIcon, jtDraggableResizable },
   setup() {
-    const sampleChart = ref<HTMLElement | null>(null)
-    const chart = ref<echarts.ECharts | undefined>(undefined)
+    const sampleChart = shallowRef<HTMLElement | null>(null)
+    const chart = shallowRef<echarts.ECharts | undefined>(undefined)
+    const timer = ref<number | null>(null)
+    const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const initChart = (): void => {
+      if (!terrainSampling.value.show) {
+        return
+      }
       chart.value = echarts.init(sampleChart.value as HTMLElement)
     }
+
+    const terrianSampleChartShow = computed({
+      get() {
+        return terrainSampling.value.show
+      },
+      set(val: boolean): void {
+        cesiumRef?.viewer && removeAll(cesiumRef?.viewer)
+        store.dispatch(
+          `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_TERRAIN_SAMPLING}`,
+          {
+            show: val,
+            datas: [],
+          }
+        )
+      },
+    })
 
     const terrainSampling = computed(() => {
       return store.state.jtCesiumVue.toolbar.terrainSampling
     })
 
+    const debounce = (fn: any, delay: number) => {
+      if (timer.value !== null) {
+        clearTimeout(timer.value)
+      }
+      timer.value = window.setTimeout(fn, delay)
+    }
+
+    const terrainSampleChartResizing = () => {
+      debounce(() => {
+        chart.value?.resize()
+      }, 200)
+    }
+
     const buildChart = () => {
-      if (!chart.value || !terrainSampling.value.show) {
+      if (!terrainSampling.value.show) {
         return
+      }
+      if (!chart.value) {
+        initChart()
       }
       const datas = terrainSampling.value.datas
       if (!datas || !datas.length) {
@@ -70,7 +126,7 @@ export default defineComponent({
         seriesData.push(height)
       }
 
-      chart.value.clear()
+      chart.value?.clear()
       const option = {
         xAxis: [
           {
@@ -86,6 +142,7 @@ export default defineComponent({
           scale: true,
           axisLabel: {
             formatter: '{value} m',
+            color: '#fff',
           },
           axisPointer: {
             type: 'line',
@@ -124,35 +181,31 @@ export default defineComponent({
           },
         ],
       }
-      chart.value.setOption(option)
-    }
-
-    const close = (): void => {
-      store.dispatch(
-        `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_TERRAIN_SAMPLING}`,
-        {
-          show: false,
-          datas: [],
-        }
-      )
+      chart.value?.setOption(option)
     }
 
     onMounted(() => {
-      initChart()
-      buildChart()
+      nextTick(() => {
+        initChart()
+        buildChart()
+      })
     })
 
     watch(terrainSampling, () => {
-      buildChart()
+      nextTick(() => {
+        buildChart()
+      })
     })
 
     return {
       sampleChart,
       chart,
+      timer,
       buildChart,
       terrainSampling,
       initChart,
-      close,
+      terrianSampleChartShow,
+      terrainSampleChartResizing,
     }
   },
 })

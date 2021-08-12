@@ -14,7 +14,7 @@ import {
   ClickHandlerOption,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
-import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
+import { MeasureActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/measure/action-types'
 
 const view: Group = {
   name: '测量',
@@ -37,13 +37,13 @@ const view: Group = {
           viewer,
           started: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_MEASURE_POINT_ACTIVE}`,
+              `jtCesiumVue/toolbar/measure/${MeasureActionTypes.SET_MEASURE_POINT_ACTIVE}`,
               true
             )
           },
           stoped: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_MEASURE_POINT_ACTIVE}`,
+              `jtCesiumVue/toolbar/measure/${MeasureActionTypes.SET_MEASURE_POINT_ACTIVE}`,
               false
             )
           },
@@ -72,13 +72,13 @@ const view: Group = {
           measureMode: MeasureMode.Polyline,
           started: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_MEASURE_POLYLINE_ACTIVE}`,
+              `jtCesiumVue/toolbar/measure/${MeasureActionTypes.SET_MEASURE_POLYLINE_ACTIVE}`,
               true
             )
           },
           stoped: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_MEASURE_POLYLINE_ACTIVE}`,
+              `jtCesiumVue/toolbar/measure/${MeasureActionTypes.SET_MEASURE_POLYLINE_ACTIVE}`,
               false
             )
           },
@@ -107,13 +107,13 @@ const view: Group = {
           measureMode: MeasureMode.Polygon,
           started: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
+              `jtCesiumVue/toolbar/measure/${MeasureActionTypes.SET_MEASURE_POLYGON_ACTIVE}`,
               true
             )
           },
           stoped: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
+              `jtCesiumVue/toolbar/measure/${MeasureActionTypes.SET_MEASURE_POLYGON_ACTIVE}`,
               false
             )
           },

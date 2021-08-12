@@ -1,11 +1,8 @@
 <template>
   <div
     class="overlay inset-0"
-    :style="{
-      'z-index': zIndex,
-      'pointer-events': acceptPointerEvents ? 'all' : 'none',
-      position: positionMode,
-    }"
+    :class="acceptPointerEvents ? 'pointer-events-auto' : 'pointer-events-none'"
+    :style="{ ...style }"
   >
     <slot />
   </div>
@@ -29,6 +26,25 @@ export default defineComponent({
     positionMode: {
       type: String,
       default: 'absolute',
+    },
+    left: {
+      type: [Number, String],
+      default: 0,
+    },
+    top: {
+      type: [Number, String],
+      default: 0,
+    },
+  },
+  computed: {
+    style(): any {
+      const { zIndex, positionMode, left, top } = this
+      return {
+        'z-index': zIndex,
+        position: positionMode,
+        left: left,
+        top: top,
+      }
     },
   },
 })

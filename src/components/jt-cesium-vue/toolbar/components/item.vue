@@ -38,6 +38,7 @@ import {
   PropType,
   computed,
   ref,
+  shallowRef,
   inject,
   onMounted,
 } from 'vue'
@@ -65,8 +66,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const el = ref<HTMLElement | null>(null)
-    const icon = ref<HTMLElement | null>(null)
+    const el = shallowRef<HTMLElement | null>(null)
+    const icon = shallowRef<HTMLElement | null>(null)
 
     const active = computed((): boolean => {
       const { item } = props

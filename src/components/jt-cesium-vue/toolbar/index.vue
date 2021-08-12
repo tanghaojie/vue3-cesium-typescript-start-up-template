@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, shallowRef, computed, onMounted } from 'vue'
 import { mapActions } from 'vuex'
 
 import Store from '@/store'
@@ -59,7 +59,7 @@ export default defineComponent({
   },
   setup() {
     const currentSelectIndex = ref(0)
-    const el = ref<HTMLElement | null>(null)
+    const el = shallowRef<HTMLElement | null>(null)
 
     const toolbarConfig = computed(() => {
       return tbConfig

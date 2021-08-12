@@ -11,7 +11,7 @@ import {
   ClickHandlerOption,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
-import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
+import { DrawActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/draw/action-types'
 
 const view: Group = {
   name: '绘制(左键开始，右键结束)',
@@ -34,13 +34,13 @@ const view: Group = {
           viewer,
           started: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POINT_ACTIVE}`,
+              `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POINT_ACTIVE}`,
               true
             )
           },
           stoped: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POINT_ACTIVE}`,
+              `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POINT_ACTIVE}`,
               false
             )
           },
@@ -69,13 +69,13 @@ const view: Group = {
           drawMode: DrawMode.Polyline,
           started: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POLYLINE_ACTIVE}`,
+              `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POLYLINE_ACTIVE}`,
               true
             )
           },
           stoped: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POLYLINE_ACTIVE}`,
+              `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POLYLINE_ACTIVE}`,
               false
             )
           },
@@ -104,13 +104,13 @@ const view: Group = {
           drawMode: DrawMode.Polygon,
           started: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
+              `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
               true
             )
           },
           stoped: () => {
             store.dispatch(
-              `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
+              `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
               false
             )
           },
