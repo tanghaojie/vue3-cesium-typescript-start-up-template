@@ -48,22 +48,16 @@
       </div>
     </div>
 
-    <el-dialog
-      title="影像配置"
+    <imageryLayerOperate
+      :a="imageryLayerOperate.props.alpha"
+      :b="imageryLayerOperate.props.brightness"
+      :c="imageryLayerOperate.props.contrast"
+      :h="imageryLayerOperate.props.hue"
+      :s="imageryLayerOperate.props.saturation"
+      :imageryLayerName="imageryLayerOperate.imageryLayerName"
       v-model="imageryLayerOperate.dialogVisible"
-      width="600px"
-      destroy-on-close
-      @close="imageryLayerOperateClose"
-    >
-      <imageryLayerOperate
-        :a="imageryLayerOperate.props.alpha"
-        :b="imageryLayerOperate.props.brightness"
-        :c="imageryLayerOperate.props.contrast"
-        :h="imageryLayerOperate.props.hue"
-        :s="imageryLayerOperate.props.saturation"
-        @change="imageryLayerChange"
-      />
-    </el-dialog>
+      @change="imageryLayerChange"
+    />
 
     <el-dialog
       title="添加影像"
@@ -140,13 +134,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, inject, onMounted } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  shallowReactive,
+  ref,
+  inject,
+  computed,
+  onMounted,
+  watch,
+} from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElIcon, ElCheckbox, ElDialog } from 'element-plus'
 import imageryLayerOperate from './imagery-layer-operate.vue'
 import sampleData from '@/resources/sample-data'
 import * as Cesium from 'cesium'
 import uuid from '@/libs/utils/uuid'
+import overlay from '@/components/jt-overlay/index.vue'
+import store from '@/store'
+import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 
 type Imagery = {
   name: string
@@ -171,265 +177,269 @@ export default defineComponent({
     ElCheckbox,
     ElDialog,
     imageryLayerOperate,
+    overlay,
+    jtDraggableResizable,
   },
   setup() {
     const imageries: Imagery[] = reactive([])
-    const imagerySources: (ImagerySource | ImagerySource[])[] = reactive([
+    const imagerySources: (ImagerySource | ImagerySource[])[] = shallowReactive(
       [
+        [
+          {
+            iconImageUrl: 'img_c.jpg',
+            name: '天地图影像底图',
+            options: {
+              url: 'https://{s}.tianditu.gov.cn/img_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+              layer: 'img',
+              style: 'default',
+              format: 'tiles',
+              tileMatrixSetID: 'c',
+              tileMatrixLabels: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+              ],
+              tilingScheme: new Cesium.GeographicTilingScheme(),
+              credit: new Cesium.Credit('天地图全球影像服务'),
+              subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+              maximumLevel: 18,
+              show: true,
+            },
+            providerName: 'WebMapTileServiceImageryProvider',
+          },
+          {
+            iconImageUrl: 'cia_c.png',
+            name: '天地图影像注记',
+            options: {
+              url: 'https://{s}.tianditu.gov.cn/cia_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+              layer: 'img',
+              style: 'default',
+              format: 'tiles',
+              tileMatrixSetID: 'c',
+              tileMatrixLabels: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+              ],
+              tilingScheme: new Cesium.GeographicTilingScheme(),
+              credit: new Cesium.Credit('天地图全球影像服务'),
+              subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+              maximumLevel: 18,
+              show: true,
+            },
+            providerName: 'WebMapTileServiceImageryProvider',
+          },
+          {
+            iconImageUrl: 'vec_c.jpg',
+            name: '天地图矢量底图',
+            options: {
+              url: 'https://{s}.tianditu.gov.cn/vec_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+              layer: 'vec',
+              style: 'default',
+              format: 'image/jpeg',
+              tileMatrixSetID: 'c',
+              tileMatrixLabels: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+              ],
+              tilingScheme: new Cesium.GeographicTilingScheme(),
+              credit: new Cesium.Credit('天地图全球影像服务'),
+              subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+              maximumLevel: 18,
+              show: true,
+            },
+            providerName: 'WebMapTileServiceImageryProvider',
+          },
+          {
+            iconImageUrl: 'cva_c.png',
+            name: '天地图矢量注记',
+            options: {
+              url: 'https://{s}.tianditu.gov.cn/cva_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
+              layer: 'vec',
+              style: 'default',
+              format: 'image/jpeg',
+              tileMatrixSetID: 'c',
+              tileMatrixLabels: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+              ],
+              tilingScheme: new Cesium.GeographicTilingScheme(),
+              credit: new Cesium.Credit('天地图全球影像服务'),
+              subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+              maximumLevel: 18,
+              show: true,
+            },
+            providerName: 'WebMapTileServiceImageryProvider',
+          },
+        ],
+        [
+          {
+            iconImageUrl: 'amap_img.png',
+            name: '高德影像底图',
+            options: {
+              url: 'https://webst{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+              subdomains: ['01', '02', '03', '04'],
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+          {
+            iconImageUrl: 'amap_img.png',
+            name: '高德影像注记',
+            options: {
+              url: 'https://webst{s}.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}',
+              subdomains: ['01', '02', '03', '04'],
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+          {
+            iconImageUrl: 'amap_img.png',
+            name: '高德矢量',
+            options: {
+              url: 'https://webrd{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+              subdomains: ['01', '02', '03', '04'],
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+        ],
+        [
+          {
+            iconImageUrl: 'google_hybrid.jpg',
+            name: 'google混合',
+            options: {
+              url: 'https://mt1.google.cn/vt/lyrs=y&hl=zh-CN&x={x}&y={y}&z={z}',
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+          {
+            iconImageUrl: 'google_satellite.jpg',
+            name: 'google影像',
+            options: {
+              url: 'https://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}',
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+          {
+            iconImageUrl: 'google_label.png',
+            name: 'google注记',
+            options: {
+              url: 'https://mt1.google.cn/vt/lyrs=h&hl=zh-CN&x={x}&y={y}&z={z}',
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+          {
+            iconImageUrl: 'google_road.jpg',
+            name: 'google道路',
+            options: {
+              url: 'https://mt1.google.com/vt/lyrs=m&hl=zh-CN&x={x}&y={y}&z={z}',
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+          {
+            iconImageUrl: 'google_terrain.jpg',
+            name: 'google地形',
+            options: {
+              url: 'https://mt1.google.com/vt/lyrs=p&hl=zh-CN&x={x}&y={y}&z={z}',
+            },
+            providerName: 'UrlTemplateImageryProvider',
+          },
+        ],
         {
           iconImageUrl: 'img_c.jpg',
-          name: '天地图影像底图',
+          name: '测试001-影像',
           options: {
-            url: 'https://{s}.tianditu.gov.cn/img_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
-            layer: 'img',
-            style: 'default',
-            format: 'tiles',
-            tileMatrixSetID: 'c',
-            tileMatrixLabels: [
-              '1',
-              '2',
-              '3',
-              '4',
-              '5',
-              '6',
-              '7',
-              '8',
-              '9',
-              '10',
-              '11',
-              '12',
-              '13',
-              '14',
-              '15',
-              '16',
-              '17',
-              '18',
-            ],
-            tilingScheme: new Cesium.GeographicTilingScheme(),
-            credit: new Cesium.Credit('天地图全球影像服务'),
-            subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-            maximumLevel: 18,
-            show: true,
-          },
-          providerName: 'WebMapTileServiceImageryProvider',
-        },
-        {
-          iconImageUrl: 'cia_c.png',
-          name: '天地图影像注记',
-          options: {
-            url: 'https://{s}.tianditu.gov.cn/cia_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
-            layer: 'img',
-            style: 'default',
-            format: 'tiles',
-            tileMatrixSetID: 'c',
-            tileMatrixLabels: [
-              '1',
-              '2',
-              '3',
-              '4',
-              '5',
-              '6',
-              '7',
-              '8',
-              '9',
-              '10',
-              '11',
-              '12',
-              '13',
-              '14',
-              '15',
-              '16',
-              '17',
-              '18',
-            ],
-            tilingScheme: new Cesium.GeographicTilingScheme(),
-            credit: new Cesium.Credit('天地图全球影像服务'),
-            subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-            maximumLevel: 18,
-            show: true,
-          },
-          providerName: 'WebMapTileServiceImageryProvider',
-        },
-        {
-          iconImageUrl: 'vec_c.jpg',
-          name: '天地图矢量底图',
-          options: {
-            url: 'https://{s}.tianditu.gov.cn/vec_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
-            layer: 'vec',
-            style: 'default',
-            format: 'image/jpeg',
-            tileMatrixSetID: 'c',
-            tileMatrixLabels: [
-              '1',
-              '2',
-              '3',
-              '4',
-              '5',
-              '6',
-              '7',
-              '8',
-              '9',
-              '10',
-              '11',
-              '12',
-              '13',
-              '14',
-              '15',
-              '16',
-              '17',
-              '18',
-            ],
-            tilingScheme: new Cesium.GeographicTilingScheme(),
-            credit: new Cesium.Credit('天地图全球影像服务'),
-            subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-            maximumLevel: 18,
-            show: true,
-          },
-          providerName: 'WebMapTileServiceImageryProvider',
-        },
-        {
-          iconImageUrl: 'cva_c.png',
-          name: '天地图矢量注记',
-          options: {
-            url: 'https://{s}.tianditu.gov.cn/cva_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=c&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=feff991159823907566acaa7273472ea',
-            layer: 'vec',
-            style: 'default',
-            format: 'image/jpeg',
-            tileMatrixSetID: 'c',
-            tileMatrixLabels: [
-              '1',
-              '2',
-              '3',
-              '4',
-              '5',
-              '6',
-              '7',
-              '8',
-              '9',
-              '10',
-              '11',
-              '12',
-              '13',
-              '14',
-              '15',
-              '16',
-              '17',
-              '18',
-            ],
-            tilingScheme: new Cesium.GeographicTilingScheme(),
-            credit: new Cesium.Credit('天地图全球影像服务'),
-            subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-            maximumLevel: 18,
-            show: true,
-          },
-          providerName: 'WebMapTileServiceImageryProvider',
-        },
-      ],
-      [
-        {
-          iconImageUrl: 'amap_img.png',
-          name: '高德影像底图',
-          options: {
-            url: 'https://webst{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
-            subdomains: ['01', '02', '03', '04'],
+            url: sampleData.satellite,
+            fileExtension: 'png',
+            rectangle: Cesium.Rectangle.fromRadians(
+              1.8735054237781372,
+              0.5907873200661897,
+              1.8824726243189496,
+              0.5956433152060476
+            ),
           },
           providerName: 'UrlTemplateImageryProvider',
-        },
-        {
-          iconImageUrl: 'amap_img.png',
-          name: '高德影像注记',
-          options: {
-            url: 'https://webst{s}.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}',
-            subdomains: ['01', '02', '03', '04'],
+          afterReady: function (viewer: Cesium.Viewer, success: boolean) {
+            const rect = Cesium.Rectangle.fromRadians(
+              1.8735054237781372,
+              0.5907873200661897,
+              1.8824726243189496,
+              0.5956433152060476
+            )
+            if (viewer && success) {
+              viewer.camera.flyTo({
+                destination: rect,
+                orientation: {
+                  heading: Cesium.Math.toRadians(0),
+                  pitch: Cesium.Math.toRadians(-90),
+                  roll: 0.0,
+                },
+              })
+            }
           },
-          providerName: 'UrlTemplateImageryProvider',
         },
-        {
-          iconImageUrl: 'amap_img.png',
-          name: '高德矢量',
-          options: {
-            url: 'https://webrd{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
-            subdomains: ['01', '02', '03', '04'],
-          },
-          providerName: 'UrlTemplateImageryProvider',
-        },
-      ],
-      [
-        {
-          iconImageUrl: 'google_hybrid.jpg',
-          name: 'google混合',
-          options: {
-            url: 'https://mt1.google.cn/vt/lyrs=y&hl=zh-CN&x={x}&y={y}&z={z}',
-          },
-          providerName: 'UrlTemplateImageryProvider',
-        },
-        {
-          iconImageUrl: 'google_satellite.jpg',
-          name: 'google影像',
-          options: {
-            url: 'https://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}',
-          },
-          providerName: 'UrlTemplateImageryProvider',
-        },
-        {
-          iconImageUrl: 'google_label.png',
-          name: 'google注记',
-          options: {
-            url: 'https://mt1.google.cn/vt/lyrs=h&hl=zh-CN&x={x}&y={y}&z={z}',
-          },
-          providerName: 'UrlTemplateImageryProvider',
-        },
-        {
-          iconImageUrl: 'google_road.jpg',
-          name: 'google道路',
-          options: {
-            url: 'https://mt1.google.com/vt/lyrs=m&hl=zh-CN&x={x}&y={y}&z={z}',
-          },
-          providerName: 'UrlTemplateImageryProvider',
-        },
-        {
-          iconImageUrl: 'google_terrain.jpg',
-          name: 'google地形',
-          options: {
-            url: 'https://mt1.google.com/vt/lyrs=p&hl=zh-CN&x={x}&y={y}&z={z}',
-          },
-          providerName: 'UrlTemplateImageryProvider',
-        },
-      ],
-      {
-        iconImageUrl: 'img_c.jpg',
-        name: '测试001-影像',
-        options: {
-          url: sampleData.satellite,
-          fileExtension: 'png',
-          rectangle: Cesium.Rectangle.fromRadians(
-            1.8735054237781372,
-            0.5907873200661897,
-            1.8824726243189496,
-            0.5956433152060476
-          ),
-        },
-        providerName: 'UrlTemplateImageryProvider',
-        afterReady: function (viewer: Cesium.Viewer, success: boolean) {
-          const rect = Cesium.Rectangle.fromRadians(
-            1.8735054237781372,
-            0.5907873200661897,
-            1.8824726243189496,
-            0.5956433152060476
-          )
-          if (viewer && success) {
-            viewer.camera.flyTo({
-              destination: rect,
-              orientation: {
-                heading: Cesium.Math.toRadians(0),
-                pitch: Cesium.Math.toRadians(-90),
-                roll: 0.0,
-              },
-            })
-          }
-        },
-      },
-    ])
+      ]
+    )
     const addImageryDialogVisible = ref(false)
     const imageryLayerOperate = reactive({
       dialogVisible: false,
@@ -440,6 +450,7 @@ export default defineComponent({
         hue: 0,
         saturation: 0,
       },
+      imageryLayerName: '',
       cesiumLayerIndex: -1,
     })
 
@@ -527,6 +538,7 @@ export default defineComponent({
       imageryLayerOperate.props.contrast = layer.contrast
       imageryLayerOperate.props.hue = layer.hue
       imageryLayerOperate.props.saturation = layer.saturation
+      imageryLayerOperate.imageryLayerName = layer.name
       imageryLayerOperate.dialogVisible = true
     }
 
@@ -555,10 +567,14 @@ export default defineComponent({
       ;(layer as any)[key] = val
     }
 
-    const imageryLayerOperateClose = (): void => {
-      imageryLayerOperate.cesiumLayerIndex = -1
-      imageryLayerOperate.dialogVisible = false
-    }
+    watch(
+      () => imageryLayerOperate.dialogVisible,
+      (val) => {
+        if (!val) {
+          imageryLayerOperate.cesiumLayerIndex = -1
+        }
+      }
+    )
 
     onMounted(() => {
       init()
@@ -578,7 +594,6 @@ export default defineComponent({
       settingImagery,
       init,
       imageryLayerChange,
-      imageryLayerOperateClose,
     }
   },
 })

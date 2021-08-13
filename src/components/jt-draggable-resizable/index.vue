@@ -1,7 +1,8 @@
 <template>
   <vue3DraggableResizable
     v-if="modelValue"
-    class="container"
+    ref="v3dr"
+    class="v3dr-container"
     :dragHandle="'.header'"
     :parent="true"
     :w="'auto'"
@@ -36,7 +37,17 @@
 <script lang="ts">
 const UPDATE_MODEL_EVENT = 'update:modelValue'
 
-import { defineComponent, ref, reactive, computed, watch, onMounted } from 'vue'
+import {
+  defineComponent,
+  ref,
+  reactive,
+  computed,
+  watch,
+  nextTick,
+  onMounted,
+  ComponentPublicInstance,
+} from 'vue'
+import store from '@/store'
 import vue3DraggableResizable from './vue3-draggable-resizable.vue'
 
 export default defineComponent({
@@ -50,12 +61,31 @@ export default defineComponent({
   },
   components: { vue3DraggableResizable },
   setup(props, context) {
+    const v3dr = ref<ComponentPublicInstance | null>(null)
+
     const onClose = () => {
       context.emit(UPDATE_MODEL_EVENT, false)
     }
 
+    const parentResized = () => {
+      v3dr.value && (v3dr.value as any).checkParentSize()
+    }
+
+    watch(
+      () => {
+        return store.state.jtCesiumVue.layout.toolbarHeight
+      },
+      () => {
+        nextTick(() => {
+          parentResized()
+        })
+      }
+    )
+
     return {
+      v3dr,
       onClose,
+      parentResized,
     }
   },
   emits: {
@@ -67,7 +97,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.container {
+.v3dr-container {
   --header-height: 2rem;
   .header {
     height: var(--header-height);

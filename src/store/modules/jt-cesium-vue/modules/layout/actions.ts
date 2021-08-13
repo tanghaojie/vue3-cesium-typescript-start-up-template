@@ -20,4 +20,8 @@ export const actions: ActionTree<State, RootState> = {
   async [LayoutActionTypes.SET_SHOW_TOOLBAR]({ commit }, payload: boolean) {
     commit(LayoutMutationTypes.SET_SHOW_TOOLBAR, payload)
   },
+
+  async [LayoutActionTypes.SET_TOOLBAR_HEIGHT]({ commit }, payload: number) {
+    commit(LayoutMutationTypes.SET_TOOLBAR_HEIGHT, payload)
+  },
 }

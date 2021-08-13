@@ -14,6 +14,7 @@ import {
   inject,
   onMounted,
   onUnmounted,
+  nextTick,
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'

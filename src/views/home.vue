@@ -1,49 +1,48 @@
 <template>
   <div>
-    <overlay v-if="cesiumLoaded">
-      <div class="flex flex-col h-full">
-        <div v-if="toolbarShow" ref="toolbar">
-          <toolBar />
-        </div>
+    <div class="h-screen bg-green-200">
+      <toolBar v-if="toolbarShow" ref="toolbar" />
 
-        <div v-if="browserPanelShow" class="relative flex flex-row flex-grow">
-          <jtSideCollapse ref="browserPanel" :default-pin="true" width="300px">
+      <div class="relative" :style="jtCesiumVueContainerStyle">
+        <overlay v-if="cesiumLoaded">
+          <setting class="z-50" />
+          <jtTerrainSampleChart class="z-50" />
+
+          <jtSideCollapse
+            v-if="browserPanelShow"
+            ref="browserPanel"
+            :default-pin="true"
+            width="300px"
+          >
             <jtBrowserPanel />
           </jtSideCollapse>
-        </div>
+
+          <div
+            v-if="!toolbarShow"
+            class="
+              absolute
+              top-8
+              right-8
+              bg-gray-700
+              w-10
+              h-10
+              rounded-lg
+              flex
+              justify-center
+              items-center
+              border
+              pointer-events-auto
+            "
+            @click.stop="settingShow = true"
+          >
+            <jt-icon name="setting" class="text-3xl text-gray-300" />
+          </div>
+
+          <locationbar v-if="cesiumLoaded && locationBarShow" />
+        </overlay>
+
+        <jt-vue-cesium @loaded="loaded" />
       </div>
-
-      <div
-        v-if="!toolbarShow"
-        class="
-          absolute
-          top-8
-          right-8
-          bg-gray-700
-          w-10
-          h-10
-          rounded-lg
-          flex
-          justify-center
-          items-center
-          border
-          pointer-events-auto
-        "
-        @click.stop="settingShow = true"
-      >
-        <jt-icon name="setting" class="text-3xl text-gray-300" />
-      </div>
-
-      <locationbar v-if="cesiumLoaded && locationBarShow" />
-    </overlay>
-
-    <overlay :top="toolbarHeight">
-      <setting />
-      <jtTerrainSampleChart />
-    </overlay>
-
-    <div class="h-screen bg-green-200">
-      <jt-vue-cesium @loaded="loaded" />
     </div>
   </div>
 </template>
@@ -54,7 +53,10 @@ import {
   ref,
   shallowRef,
   computed,
+  watch,
   ComponentPublicInstance,
+  onMounted,
+  nextTick,
 } from 'vue'
 import store from '@/store'
 import overlay from '../components/jt-overlay/index.vue'
@@ -67,6 +69,8 @@ import jtSideCollapse from '../components/jt-side-collapse/index.vue'
 import jtBrowserPanel from '../components/jt-browser-panel/index.vue'
 import jtTerrainSampleChart from '../components/jt-terrain-sample-chart/index.vue'
 import jtDraggableResizable from '../components/jt-draggable-resizable/index.vue'
+import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
+import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 import { LocationBarGetterTypes } from '@/store/modules/jt-cesium-vue/modules/locationbar/getter-types'
 
@@ -85,7 +89,7 @@ export default defineComponent({
   },
   setup() {
     const cesiumLoaded = ref<boolean>(false)
-    const toolbar = shallowRef<HTMLElement | null>(null)
+    const toolbar = shallowRef<ComponentPublicInstance | null>(null)
     const browserPanel = ref<ComponentPublicInstance | null>(null)
 
     const locationBarShow = computed((): boolean => {
@@ -102,14 +106,51 @@ export default defineComponent({
       return store.state.jtCesiumVue.layout.showToolbar
     })
 
-    const toolbarHeight = computed((): string => {
-      const h = toolbar.value ? (toolbar.value as HTMLElement).clientHeight : 0
-      return `${h}px`
+    const jtCesiumVueContainerStyle = computed(() => {
+      return {
+        height: `calc(100% - ${store.state.jtCesiumVue.layout.toolbarHeight}px)`,
+      }
+    })
+
+    const settingShow = computed({
+      get(): boolean {
+        return store.state.jtCesiumVue.setting.showSetting
+      },
+      set(val: boolean): void {
+        store.dispatch(
+          `jtCesiumVue/setting/${SettingActionTypes.SET_SHOW_SETTING}`,
+          val
+        )
+      },
     })
 
     const loaded = (): void => {
       cesiumLoaded.value = true
     }
+
+    const calcToolbarHeight = () => {
+      const oldH = store.state.jtCesiumVue.layout.toolbarHeight
+      const h = toolbar.value
+        ? ((toolbar.value as ComponentPublicInstance).$el as HTMLElement)
+            .clientHeight
+        : 0
+      if (oldH !== h) {
+        store.dispatch(
+          `jtCesiumVue/layout/${LayoutActionTypes.SET_TOOLBAR_HEIGHT}`,
+          h
+        )
+      }
+    }
+
+    watch(toolbar, () => {
+      calcToolbarHeight()
+    })
+
+    onMounted(() => {
+      nextTick(() => {
+        calcToolbarHeight()
+      })
+    })
 
     return {
       cesiumLoaded,
@@ -117,9 +158,11 @@ export default defineComponent({
       locationBarShow,
       browserPanelShow,
       toolbarShow,
-      toolbarHeight,
+      jtCesiumVueContainerStyle,
+      settingShow,
       toolbar,
       browserPanel,
+      calcToolbarHeight,
     }
   },
 })

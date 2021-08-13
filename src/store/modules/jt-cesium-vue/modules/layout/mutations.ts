@@ -15,4 +15,8 @@ export const mutations: MutationTree<State> = {
   [LayoutMutationTypes.SET_SHOW_TOOLBAR](state: State, payload: boolean) {
     state.showToolbar = payload
   },
+
+  [LayoutMutationTypes.SET_TOOLBAR_HEIGHT](state: State, payload: number) {
+    state.toolbarHeight = payload
+  },
 }
