@@ -41,7 +41,7 @@
           <locationbar v-if="cesiumLoaded && locationBarShow" />
         </overlay>
 
-        <jt-vue-cesium @loaded="loaded" />
+        <jt-cesium-vue :timeline="true" @loaded="loaded" />
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@ import {
 import store from '@/store'
 import overlay from '../components/jt-overlay/index.vue'
 
-import jtVueCesium from '../components/jt-cesium-vue/cesium-vue/index.vue'
+import jtCesiumVue from '../components/jt-cesium-vue/cesium-vue/index.vue'
 import locationbar from '../components/jt-cesium-vue/locationbar/index.vue'
 import toolBar from '../components/jt-cesium-vue/toolbar/index.vue'
 import setting from '../components/jt-cesium-vue/setting/index.vue'
@@ -77,7 +77,7 @@ import { LocationBarGetterTypes } from '@/store/modules/jt-cesium-vue/modules/lo
 export default defineComponent({
   name: 'Home',
   components: {
-    jtVueCesium,
+    jtCesiumVue,
     toolBar,
     overlay,
     setting,

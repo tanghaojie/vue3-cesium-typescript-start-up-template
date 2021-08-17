@@ -100,10 +100,6 @@ For better performance, `cesium instance` is not reactive! Different as vue data
 ## Next
 
 - [x] Options API -> Composition API
-- [ ] Dark mode
-- [ ] Timeline and time data
-- [ ] More sample data
-- [ ] i18n
 
 ## Screenshots
 
@@ -228,10 +224,6 @@ setup() {
 ## 后续计划
 
 - [x] Options API -> Composition API
-- [ ] Dark mode
-- [ ] Timeline and time data
-- [ ] More sample data
-- [ ] i18n
 
 _注意: 不要使用 1.81.0 - 1.82.1 版本的 cesium, 它包含一个已知的[bug](https://github.com/CesiumGS/cesium/issues/9590)._
 

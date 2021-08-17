@@ -1,10 +1,7 @@
 import { Group } from '../../../Types'
 import * as Cesium from 'cesium'
 import store from '@/store'
-import {
-  highlight3DTileFeature,
-  removeHighlighted3DTileFeature,
-} from '@/libs/cesium/libs/highlight'
+import { highlight3DTileFeature, removeAll } from '@/libs/cesium/libs/highlight'
 import {
   addClassification,
   removeClassification,
@@ -157,7 +154,7 @@ const view: Group = {
           (item && item.clickHandlerResult)
         ) {
           // stop
-          removeHighlighted3DTileFeature()
+          removeAll(viewer)
           if (item && item.clickHandlerResult) {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined

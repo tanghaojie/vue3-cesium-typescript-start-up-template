@@ -119,6 +119,7 @@ const addInvertClassification = function (
   const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
   handler.setInputAction(function (movement) {
     const pickedObject = scene.pick(movement.position)
+
     if (
       pickedObject &&
       Cesium.defined(pickedObject) &&

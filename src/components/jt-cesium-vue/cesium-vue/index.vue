@@ -1,5 +1,5 @@
 <template>
-  <div ref="jtVueCesium" class="jt-vue-cesium w-full h-full m-0 p-0">
+  <div ref="jtCesiumVue" class="w-full h-full m-0 p-0">
     <slot />
   </div>
 </template>
@@ -22,7 +22,7 @@ import 'cesium/Build/Cesium/Widgets/widgets.css'
 import logMousePositionMixin from '@/libs/cesium/mixins/logMousePositionMixin'
 
 export default defineComponent({
-  name: 'jt-vue-cesium',
+  name: 'jt-cesium-vue',
   props: {
     animation: {
       type: Boolean,
@@ -107,7 +107,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const jtVueCesium = shallowRef<HTMLElement | null>(null)
+    const jtCesiumVue = shallowRef<HTMLElement | null>(null)
 
     const initializeCesiumDefault = (): void => {
       const west = 94
@@ -166,7 +166,7 @@ export default defineComponent({
         terrainShadows: props.terrainShadows,
       }
 
-      const el = jtVueCesium.value as HTMLElement
+      const el = jtCesiumVue.value as HTMLElement
       const viewer = new Cesium.Viewer(el, {
         ...DEFAULT_OPT,
         ...options,
@@ -216,7 +216,7 @@ export default defineComponent({
     })
 
     return {
-      jtVueCesium,
+      jtCesiumVue,
       initializeCesiumDefault,
       initializeCesium,
       init,
