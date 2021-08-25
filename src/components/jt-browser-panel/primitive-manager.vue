@@ -70,6 +70,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, inject, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
@@ -245,6 +246,23 @@ export default defineComponent({
       })
     }
 
+    const getPrimitiveIndex = (url: string): number => {
+      syncPrimitives()
+      const { viewer } = cesiumRef || {}
+      if (!viewer) {
+        return -1
+      }
+      const pris = viewer.scene.primitives
+      const len = primitives.length
+      for (let i = 0; i < len; i++) {
+        const model = pris.get(primitives[i].cesiumPrimitiveIndex)
+        if (url === model._url || model.basePath) {
+          return i
+        }
+      }
+      return -1
+    }
+
     const init = (): void => {
       const { viewer } = cesiumRef || {}
       if (!viewer) {
@@ -263,7 +281,7 @@ export default defineComponent({
         show: false,
       })
 
-      // this.add3DTileset({
+      // add3DTileset({
       //   name: '倾斜摄影模型',
       //   url: 'http://117.139.247.104:60001/models/3dtiles/yingxiu/tileset.json',
       //   show: false,
@@ -278,7 +296,7 @@ export default defineComponent({
       add3DTileset({
         name: '成都建筑群',
         url: sampleData['cd-buildings'],
-        show: true,
+        show: false,
         // debugColorizeTiles: true,
         // debugWireframe: true,
         // debugShowBoundingVolume: true,
@@ -297,6 +315,53 @@ export default defineComponent({
         name: '简模002(适配全球地形)',
         url: sampleData.apartment,
       })
+
+      initQuery()
+    }
+
+    const initQuery = (): void => {
+      const route = useRoute()
+      const tile3DUrl = route.query['3dt']
+      add3DTileset({
+        url: tile3DUrl,
+        show: true,
+      })
+
+      const flyToTile3D = route.query['f23dt']
+      if (flyToTile3D && tile3DUrl) {
+        syncPrimitives()
+        const { viewer } = cesiumRef || {}
+        if (!viewer) {
+          return
+        }
+        const pris = viewer.scene.primitives
+        const len = primitives.length
+        for (let i = 0; i < len; i++) {
+          const model = pris.get(primitives[i].cesiumPrimitiveIndex)
+          if (tile3DUrl === model._url || model.basePath) {
+            if (model.readyPromise) {
+              model.readyPromise.then((pri: any) => {
+                const location = calculatePrimitiveCenter(pri)
+                viewer.camera.flyTo({
+                  duration: 1,
+                  destination: Cesium.Cartesian3.fromDegrees(
+                    location.longitude,
+                    location.latitude - 0.001,
+                    location.height + 500
+                  ),
+                  orientation: {
+                    heading: Cesium.Math.toRadians(0),
+                    pitch: Cesium.Math.toRadians(-78),
+                    roll: 0.0,
+                  },
+                })
+              })
+            }
+            return
+          }
+        }
+        return
+      }
     }
 
     onMounted(() => {
@@ -317,6 +382,7 @@ export default defineComponent({
       removePrimitive,
       primitiveNameDoubleClick,
       init,
+      getPrimitiveIndex,
     }
   },
 })

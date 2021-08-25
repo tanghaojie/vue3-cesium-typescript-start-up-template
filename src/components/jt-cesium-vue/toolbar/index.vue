@@ -35,15 +35,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, shallowRef, computed, onMounted } from 'vue'
+import {
+  defineComponent,
+  ref,
+  shallowRef,
+  computed,
+  onMounted,
+  watch,
+} from 'vue'
 import { mapActions } from 'vuex'
-
+import { useRoute } from 'vue-router'
 import Store from '@/store'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 import type { DropdownState } from '@/store/modules/jt-cesium-vue/modules/toolbar/state'
-
+import store from '@/store'
 import tbConfig from './config'
-
+import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import menus from './components/menus.vue'
 import groups from './components/groups.vue'
 
@@ -95,6 +102,15 @@ export default defineComponent({
         `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )
+
+      const route = useRoute()
+      const toolbarHiden = route.query['tbh']
+      if (toolbarHiden) {
+        store.dispatch(
+          `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_TOOLBAR}`,
+          false
+        )
+      }
     })
 
     return {
