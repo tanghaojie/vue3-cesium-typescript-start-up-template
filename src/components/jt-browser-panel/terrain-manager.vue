@@ -119,7 +119,7 @@ export default defineComponent({
         return
       }
       if (terrain.terrainProvider) {
-        viewer.terrainProvider = terrain.terrainProvider
+        ;(viewer.terrainProvider as any) = terrain.terrainProvider
       } else if (terrain.terrainProviderName) {
         const provider: Cesium.TerrainProvider = new (Cesium as any)[
           terrain.terrainProviderName

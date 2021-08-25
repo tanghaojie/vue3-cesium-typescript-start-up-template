@@ -322,45 +322,47 @@ export default defineComponent({
     const initQuery = (): void => {
       const route = useRoute()
       const tile3DUrl = route.query['3dt']
-      add3DTileset({
-        url: tile3DUrl,
-        show: true,
-      })
+      if (tile3DUrl) {
+        add3DTileset({
+          url: tile3DUrl,
+          show: true,
+        })
 
-      const flyToTile3D = route.query['f23dt']
-      if (flyToTile3D && tile3DUrl) {
-        syncPrimitives()
-        const { viewer } = cesiumRef || {}
-        if (!viewer) {
-          return
-        }
-        const pris = viewer.scene.primitives
-        const len = primitives.length
-        for (let i = 0; i < len; i++) {
-          const model = pris.get(primitives[i].cesiumPrimitiveIndex)
-          if (tile3DUrl === model._url || model.basePath) {
-            if (model.readyPromise) {
-              model.readyPromise.then((pri: any) => {
-                const location = calculatePrimitiveCenter(pri)
-                viewer.camera.flyTo({
-                  duration: 1,
-                  destination: Cesium.Cartesian3.fromDegrees(
-                    location.longitude,
-                    location.latitude - 0.001,
-                    location.height + 500
-                  ),
-                  orientation: {
-                    heading: Cesium.Math.toRadians(0),
-                    pitch: Cesium.Math.toRadians(-78),
-                    roll: 0.0,
-                  },
-                })
-              })
-            }
+        const flyToTile3D = route.query['f23dt']
+        if (flyToTile3D && tile3DUrl) {
+          syncPrimitives()
+          const { viewer } = cesiumRef || {}
+          if (!viewer) {
             return
           }
+          const pris = viewer.scene.primitives
+          const len = primitives.length
+          for (let i = 0; i < len; i++) {
+            const model = pris.get(primitives[i].cesiumPrimitiveIndex)
+            if (tile3DUrl === model._url || model.basePath) {
+              if (model.readyPromise) {
+                model.readyPromise.then((pri: any) => {
+                  const location = calculatePrimitiveCenter(pri)
+                  viewer.camera.flyTo({
+                    duration: 1,
+                    destination: Cesium.Cartesian3.fromDegrees(
+                      location.longitude,
+                      location.latitude - 0.001,
+                      location.height + 500
+                    ),
+                    orientation: {
+                      heading: Cesium.Math.toRadians(0),
+                      pitch: Cesium.Math.toRadians(-78),
+                      roll: 0.0,
+                    },
+                  })
+                })
+              }
+              return
+            }
+          }
+          return
         }
-        return
       }
     }
 
@@ -382,6 +384,7 @@ export default defineComponent({
       removePrimitive,
       primitiveNameDoubleClick,
       init,
+      initQuery,
       getPrimitiveIndex,
     }
   },
