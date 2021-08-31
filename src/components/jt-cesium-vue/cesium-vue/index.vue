@@ -193,11 +193,7 @@ export default defineComponent({
 
     const init = (): Cesium.Viewer => {
       initializeCesiumDefault()
-
       const viewer = initializeCesium('cesiumContainer')
-      // viewer.extend(logMousePositionMixin, { withHeight: true })
-      // viewer.extend(Cesium.viewerCesiumInspectorMixin)
-
       return viewer
     }
 

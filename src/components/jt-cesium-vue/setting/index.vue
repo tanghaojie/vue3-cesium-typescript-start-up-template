@@ -3,7 +3,7 @@
     v-model="settingShow"
     :resizable="false"
     :w="260"
-    :h="120"
+    :h="180"
     :y="60"
     :initialPosition="'tm'"
     class="pointer-events-auto"
@@ -21,13 +21,17 @@
         >
           {{ inspector.name }}
         </el-checkbox>
+
+        <el-checkbox v-model="showCoordinateWhenClick">
+          点击输出鼠标经纬度
+        </el-checkbox>
       </div>
     </div>
   </jtDraggableResizable>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, reactive, inject } from 'vue'
+import { defineComponent, computed, reactive, ref, inject, watch } from 'vue'
 import * as Cesium from 'cesium'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElCheckbox } from 'element-plus'
@@ -35,6 +39,9 @@ import store from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
+import logMousePositionMixin, {
+  additionPropertyName,
+} from '@/libs/cesium/mixins/logMousePositionMixin'
 
 export default defineComponent({
   name: '',
@@ -54,6 +61,8 @@ export default defineComponent({
         show: false,
       },
     ])
+
+    const showCoordinateWhenClick = ref(false)
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
@@ -114,12 +123,30 @@ export default defineComponent({
       }
     }
 
+    watch(showCoordinateWhenClick, (newVal) => {
+      const viewer = cesiumRef?.viewer
+      if (!viewer) {
+        return
+      }
+      if (newVal) {
+        const options = {
+          withHeight: true,
+        }
+        viewer.extend(logMousePositionMixin, options)
+      } else {
+        const mixin = (viewer as any)[additionPropertyName]
+        mixin && mixin.handler && mixin.handler.destroy()
+        ;(viewer as any)[additionPropertyName] = undefined
+      }
+    })
+
     return {
       inspectors,
       settingShow,
       toolbarShow,
       browserPanelShow,
       inspectorCheckChange,
+      showCoordinateWhenClick,
     }
   },
 })

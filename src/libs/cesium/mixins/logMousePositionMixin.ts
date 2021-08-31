@@ -2,13 +2,17 @@ import define from 'cesium/Source/Core/defined'
 import DeveloperError from 'cesium/Source/Core/DeveloperError'
 import * as Cesium from 'cesium'
 
+type Options = {
+  withHeight: boolean
+}
+
 function logMousePositionMixin(
   viewer: Cesium.Viewer,
-  options = {
+  options: Options = {
     withHeight: false,
   }
 ): void {
-  if (!define(viewer)) {
+  if (!viewer || !define(viewer)) {
     throw new DeveloperError('viewer is required.')
   }
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
@@ -32,6 +36,11 @@ function logMousePositionMixin(
     const height = cartographic.height
     console.log(longitude, latitude, height)
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+  ;(viewer as any)[additionPropertyName] = {
+    handler: handler,
+  }
 }
 
+const additionPropertyName = 'jtLogMousePositionMixin'
+export { additionPropertyName }
 export default logMousePositionMixin
