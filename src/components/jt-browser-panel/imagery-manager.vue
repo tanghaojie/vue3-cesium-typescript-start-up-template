@@ -182,6 +182,7 @@ export default defineComponent({
   },
   setup() {
     const imageries: Imagery[] = reactive([])
+
     const imagerySources: (ImagerySource | ImagerySource[])[] = shallowReactive(
       [
         [
@@ -440,7 +441,9 @@ export default defineComponent({
         },
       ]
     )
+
     const addImageryDialogVisible = ref(false)
+
     const imageryLayerOperate = reactive({
       dialogVisible: false,
       props: {
@@ -549,8 +552,14 @@ export default defineComponent({
       }
       const ils = viewer.imageryLayers
       ils.removeAll()
-      addImagery((imagerySources[0] as ImagerySource[])[0])
-      addImagery((imagerySources[0] as ImagerySource[])[1])
+      const tiandituSatellite = addImagery(
+        (imagerySources[0] as ImagerySource[])[0]
+      )
+
+      const tiandituLabel = addImagery(
+        (imagerySources[0] as ImagerySource[])[1]
+      )
+
       syncImageries()
     }
 

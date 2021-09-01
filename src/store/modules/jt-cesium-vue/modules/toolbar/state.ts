@@ -3,6 +3,7 @@ import type { Tool3DTileState } from './modules/tool3DTile'
 import type { OtherState } from './modules/other'
 import type { DrawState } from './modules/draw'
 import type { MeasureState } from './modules/measure'
+import type { ImageryState } from './modules/imagery'
 
 export type ToolbarStateAndModule = {
   visible: boolean
@@ -15,6 +16,7 @@ export type ToolbarStateAndModule = {
   other: OtherState
   draw: DrawState
   measure: MeasureState
+  imagery: ImageryState
 }
 
 export type State = {

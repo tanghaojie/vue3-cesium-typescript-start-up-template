@@ -5,6 +5,7 @@ import {
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 import { OtherActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/other/action-types'
+import { OtherMutationTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/other/mutation-types'
 
 const view: Group = {
   name: '其他',
@@ -26,8 +27,10 @@ const view: Group = {
       onMounted: (options: OnMountedOption | undefined): void => {
         const viewer = options?.viewer
         if (viewer) {
-          store.state.jtCesiumVue.toolbar.other.depthTestAgainstTerrain =
+          store.commit(
+            `jtCesiumVue/toolbar/other/${OtherMutationTypes.SET_DEPTH_TEST_AGAINST_TERRAIN}`,
             viewer.scene.globe.depthTestAgainstTerrain
+          )
         }
       },
     },

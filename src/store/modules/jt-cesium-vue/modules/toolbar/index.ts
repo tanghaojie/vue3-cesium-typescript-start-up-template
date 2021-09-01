@@ -6,6 +6,7 @@ import { store as tool3DTile } from './modules/tool3DTile'
 import { store as other } from './modules/other'
 import { store as draw } from './modules/draw'
 import { store as measure } from './modules/measure'
+import { store as imagery } from './modules/imagery'
 
 import { state } from './state'
 import type { ToolbarStateAndModule, State } from './state'
@@ -29,5 +30,6 @@ export const store: Module<ToolbarState, RootState> = {
     other,
     draw,
     measure,
+    imagery,
   },
 }
