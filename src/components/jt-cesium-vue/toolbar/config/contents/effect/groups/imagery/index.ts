@@ -37,10 +37,10 @@ const view: Group = {
               position: switchToPosition,
             }
             const tFirst: Cesium.ImageryLayer = ils.get(layerLen - 1)
-            const tSecond: Cesium.ImageryLayer = ils.get(layerLen - 2)
+            // const tSecond: Cesium.ImageryLayer = ils.get(layerLen - 2)
 
             tFirst.splitDirection = Cesium.ImagerySplitDirection.RIGHT
-            tSecond.splitDirection = Cesium.ImagerySplitDirection.LEFT
+            // tSecond.splitDirection = Cesium.ImagerySplitDirection.LEFT
           } else {
             // cancel split
             switchToPosition = 0

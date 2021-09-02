@@ -439,6 +439,34 @@ export default defineComponent({
             }
           },
         },
+        [
+          {
+            iconImageUrl: 'tile_coordinates.jpg',
+            name: 'WGS84切片网',
+            providerName: 'TileCoordinatesImageryProvider',
+          },
+          {
+            iconImageUrl: 'tile_coordinates.jpg',
+            name: 'Web Mercator切片网',
+            options: {
+              tilingScheme: new Cesium.WebMercatorTilingScheme(),
+            },
+            providerName: 'TileCoordinatesImageryProvider',
+          },
+          {
+            iconImageUrl: 'tile.jpg',
+            name: 'Web Mercator网',
+            options: {
+              tilingScheme: new Cesium.WebMercatorTilingScheme(),
+            },
+            providerName: 'GridImageryProvider',
+          },
+          {
+            iconImageUrl: 'tile.jpg',
+            name: 'WGS84网',
+            providerName: 'GridImageryProvider',
+          },
+        ],
       ]
     )
 
@@ -501,7 +529,7 @@ export default defineComponent({
         return undefined
       }
       const provider = new (Cesium as any)[item.providerName]({
-        ...item.options,
+        ...(item.options || {}),
       })
       provider.readyPromise.then((success: boolean): void => {
         item.afterReady && item.afterReady(viewer, success)
