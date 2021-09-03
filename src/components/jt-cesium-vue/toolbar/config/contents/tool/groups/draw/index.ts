@@ -18,16 +18,11 @@ const view: Group = {
         if (
           !option ||
           !option.viewer ||
+          !option.viewer.jt ||
           store.state.jtCesiumVue.toolbar.draw.drawPointActive
         ) {
           return
         }
-
-        const { viewer } = option
-        if (!viewer.jtDraw) {
-          viewer.jtDraw = new Draw(viewer)
-        }
-        const { jtDraw } = viewer
         const cb: DrawUserCallBackOption = {
           started: () => {
             store.dispatch(
@@ -42,7 +37,7 @@ const view: Group = {
             )
           },
         }
-        jtDraw.drawPoint(cb)
+        option.viewer.jt.draw.drawPoint(cb)
       },
       active: (): boolean => {
         return store.state.jtCesiumVue.toolbar.draw.drawPointActive
@@ -55,16 +50,11 @@ const view: Group = {
         if (
           !option ||
           !option.viewer ||
+          !option.viewer.jt ||
           store.state.jtCesiumVue.toolbar.draw.drawPolylineActive
         ) {
           return
         }
-
-        const { viewer } = option
-        if (!viewer.jtDraw) {
-          viewer.jtDraw = new Draw(viewer)
-        }
-        const { jtDraw } = viewer
         const cb: DrawUserCallBackOption = {
           started: () => {
             store.dispatch(
@@ -79,7 +69,7 @@ const view: Group = {
             )
           },
         }
-        jtDraw.drawPolyline(cb)
+        option.viewer.jt.draw.drawPolyline(cb)
       },
       active: (): boolean => {
         return store.state.jtCesiumVue.toolbar.draw.drawPolylineActive
@@ -92,16 +82,11 @@ const view: Group = {
         if (
           !option ||
           !option.viewer ||
+          !option.viewer.jt ||
           store.state.jtCesiumVue.toolbar.draw.drawPolygonActive
         ) {
           return
         }
-
-        const { viewer } = option
-        if (!viewer.jtDraw) {
-          viewer.jtDraw = new Draw(viewer)
-        }
-        const { jtDraw } = viewer
         const cb: DrawUserCallBackOption = {
           started: () => {
             store.dispatch(
@@ -116,7 +101,7 @@ const view: Group = {
             )
           },
         }
-        jtDraw.drawPolygon(cb)
+        option.viewer.jt.draw.drawPolygon(cb)
       },
       active: (): boolean => {
         return store.state.jtCesiumVue.toolbar.draw.drawPolygonActive
@@ -126,15 +111,10 @@ const view: Group = {
       name: '移除',
       icon: 'delete',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
-        if (!option || !option.viewer) {
+        if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
-        const { viewer } = option
-        if (!viewer.jtDraw) {
-          viewer.jtDraw = new Draw(viewer)
-        }
-        const { jtDraw } = viewer
-        jtDraw.removeAllDrawed()
+        option.viewer.jt.draw.removeAllDrawed()
       },
     },
   ],

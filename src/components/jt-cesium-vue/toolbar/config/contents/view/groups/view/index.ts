@@ -1,5 +1,4 @@
 import { Group, ClickHandlerOption } from '../../../Types'
-import FlyTo from '@/libs/cesium/libs/fly-to/FlyTo'
 
 const view: Group = {
   name: '视角',
@@ -12,10 +11,7 @@ const view: Group = {
         if (!viewer) {
           return
         }
-        if (!viewer.jtFlyTo) {
-          viewer.jtFlyTo = new FlyTo(viewer)
-        }
-        viewer.jtFlyTo.flyToEarth()
+        viewer.jt?.flyTo.flyToEarth()
       },
     },
     {
@@ -26,10 +22,7 @@ const view: Group = {
         if (!viewer) {
           return
         }
-        if (!viewer.jtFlyTo) {
-          viewer.jtFlyTo = new FlyTo(viewer)
-        }
-        viewer.jtFlyTo.flyToChina()
+        viewer.jt?.flyTo.flyToChina()
       },
     },
   ],

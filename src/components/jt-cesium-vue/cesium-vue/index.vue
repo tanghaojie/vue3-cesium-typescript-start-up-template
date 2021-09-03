@@ -19,7 +19,7 @@ import {
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
-import logMousePositionMixin from '@/libs/cesium/mixins/logMousePositionMixin'
+import Jt from '@/libs/cesium/cesium-jt'
 
 export default defineComponent({
   name: 'jt-cesium-vue',
@@ -194,6 +194,7 @@ export default defineComponent({
     const init = (): Cesium.Viewer => {
       initializeCesiumDefault()
       const viewer = initializeCesium('cesiumContainer')
+      viewer.jt = new Jt(viewer)
       return viewer
     }
 
