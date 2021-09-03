@@ -1,17 +1,12 @@
 import { Group } from '../../../Types'
 import store from '@/store'
 import {
-  drawPoint,
-  drawShape,
-  DrawMode,
-  removeDrawed,
-} from '@/libs/cesium/libs/draw'
-import type { DrawPointOption, DrawShapeOption } from '@/libs/cesium/libs/draw'
-import {
   ClickHandlerOption,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 import { DrawActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/draw/action-types'
+import Draw from '@/libs/cesium/libs/draw/Draw'
+import type { DrawUserCallBackOption } from '@/libs/cesium/libs/draw/Draw'
 
 const view: Group = {
   name: '绘制(左键开始，右键结束)',
@@ -20,18 +15,20 @@ const view: Group = {
       name: '画点',
       icon: 'point',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
-        if (!option) {
+        if (
+          !option ||
+          !option.viewer ||
+          store.state.jtCesiumVue.toolbar.draw.drawPointActive
+        ) {
           return
         }
+
         const { viewer } = option
-        if (!viewer) {
-          return
+        if (!viewer.jtDraw) {
+          viewer.jtDraw = new Draw(viewer)
         }
-        if (store.state.jtCesiumVue.toolbar.draw.drawPointActive) {
-          return
-        }
-        drawPoint({
-          viewer,
+        const { jtDraw } = viewer
+        const cb: DrawUserCallBackOption = {
           started: () => {
             store.dispatch(
               `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POINT_ACTIVE}`,
@@ -44,7 +41,8 @@ const view: Group = {
               false
             )
           },
-        })
+        }
+        jtDraw.drawPoint(cb)
       },
       active: (): boolean => {
         return store.state.jtCesiumVue.toolbar.draw.drawPointActive
@@ -54,19 +52,20 @@ const view: Group = {
       name: '画线',
       icon: 'line',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
-        if (!option) {
+        if (
+          !option ||
+          !option.viewer ||
+          store.state.jtCesiumVue.toolbar.draw.drawPolylineActive
+        ) {
           return
         }
+
         const { viewer } = option
-        if (!viewer) {
-          return
+        if (!viewer.jtDraw) {
+          viewer.jtDraw = new Draw(viewer)
         }
-        if (store.state.jtCesiumVue.toolbar.draw.drawPolylineActive) {
-          return
-        }
-        drawShape({
-          viewer,
-          drawMode: DrawMode.Polyline,
+        const { jtDraw } = viewer
+        const cb: DrawUserCallBackOption = {
           started: () => {
             store.dispatch(
               `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POLYLINE_ACTIVE}`,
@@ -79,7 +78,8 @@ const view: Group = {
               false
             )
           },
-        })
+        }
+        jtDraw.drawPolyline(cb)
       },
       active: (): boolean => {
         return store.state.jtCesiumVue.toolbar.draw.drawPolylineActive
@@ -89,19 +89,20 @@ const view: Group = {
       name: '画面',
       icon: 'polygon',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
-        if (!option) {
+        if (
+          !option ||
+          !option.viewer ||
+          store.state.jtCesiumVue.toolbar.draw.drawPolygonActive
+        ) {
           return
         }
+
         const { viewer } = option
-        if (!viewer) {
-          return
+        if (!viewer.jtDraw) {
+          viewer.jtDraw = new Draw(viewer)
         }
-        if (store.state.jtCesiumVue.toolbar.draw.drawPolygonActive) {
-          return
-        }
-        drawShape({
-          viewer,
-          drawMode: DrawMode.Polygon,
+        const { jtDraw } = viewer
+        const cb: DrawUserCallBackOption = {
           started: () => {
             store.dispatch(
               `jtCesiumVue/toolbar/draw/${DrawActionTypes.SET_DRAW_POLYGON_ACTIVE}`,
@@ -114,7 +115,8 @@ const view: Group = {
               false
             )
           },
-        })
+        }
+        jtDraw.drawPolygon(cb)
       },
       active: (): boolean => {
         return store.state.jtCesiumVue.toolbar.draw.drawPolygonActive
@@ -124,14 +126,15 @@ const view: Group = {
       name: '移除',
       icon: 'delete',
       clickHandler: (option: ClickHandlerOption | undefined): void => {
-        if (!option) {
+        if (!option || !option.viewer) {
           return
         }
         const { viewer } = option
-        if (!viewer) {
-          return
+        if (!viewer.jtDraw) {
+          viewer.jtDraw = new Draw(viewer)
         }
-        removeDrawed(viewer)
+        const { jtDraw } = viewer
+        jtDraw.removeAllDrawed()
       },
     },
   ],
