@@ -71,7 +71,6 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import store from '@/store'
 import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import * as Cesium from 'cesium'
-import { setPercentageChange } from '@/libs/cesium/libs/percentage-change'
 
 export default defineComponent({
   name: '',
@@ -153,7 +152,7 @@ export default defineComponent({
       if (!viewer) {
         return
       }
-      setPercentageChange(viewer, props.percentageChanged)
+      viewer.jt?.percentageChange.set(props.percentageChanged)
     }
 
     const bindCameraLocation = (): void => {

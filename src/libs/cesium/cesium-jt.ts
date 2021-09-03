@@ -6,6 +6,7 @@ import Highlight from '@/libs/cesium/libs/highlight/Highlight'
 import Light from '@/libs/cesium/libs/light/Light'
 import TerrainSampling from '@/libs/cesium/libs/terrain-sampling/TerrainSampling'
 import Classification from '@/libs/cesium/libs/classification/Classification'
+import PercentageChange from '@/libs/cesium/libs/percentage-change/PercentageChange'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -67,6 +68,14 @@ class Jt {
       this._classification = new Classification(this.viewer)
     }
     return this._classification
+  }
+
+  private _percentageChange?: PercentageChange
+  public get percentageChange(): PercentageChange {
+    if (!this._percentageChange) {
+      this._percentageChange = new PercentageChange(this.viewer)
+    }
+    return this._percentageChange
   }
 }
 

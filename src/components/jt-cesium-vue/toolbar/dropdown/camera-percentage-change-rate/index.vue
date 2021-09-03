@@ -36,17 +36,11 @@ export default defineComponent({
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const afterChange = (val: number) => {
-      const { viewer } = cesiumRef || {}
-      if (viewer) {
-        setPercentageChange(viewer, val)
-      }
+      cesiumRef?.viewer?.jt?.percentageChange.set(val)
     }
 
     onMounted(() => {
-      const { viewer } = cesiumRef || {}
-      if (viewer) {
-        value.value = getPercentageChange(viewer)
-      }
+      value.value = cesiumRef?.viewer?.jt?.percentageChange.get() || 0
     })
 
     return {
