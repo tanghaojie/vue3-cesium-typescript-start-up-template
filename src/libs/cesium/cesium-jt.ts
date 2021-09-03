@@ -4,6 +4,7 @@ import ElevationContour from '@/libs/cesium/libs/elevation-contour/ElevationCont
 import FlyTo from '@/libs/cesium/libs/fly-to/FlyTo'
 import Highlight from '@/libs/cesium/libs/highlight/Highlight'
 import Light from '@/libs/cesium/libs/light/Light'
+import TerrainSampling from '@/libs/cesium/libs/terrain-sampling/TerrainSampling'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -49,6 +50,14 @@ class Jt {
       this._light = new Light(this.viewer)
     }
     return this._light
+  }
+
+  private _terrainSampling?: TerrainSampling
+  public get terrainSampling(): TerrainSampling {
+    if (!this._terrainSampling) {
+      this._terrainSampling = new TerrainSampling(this.viewer)
+    }
+    return this._terrainSampling
   }
 }
 

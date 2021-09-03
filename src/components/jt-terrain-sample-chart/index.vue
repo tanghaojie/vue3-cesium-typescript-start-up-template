@@ -52,7 +52,6 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
-import { removeAll } from '@/libs/cesium/libs/terrain-sampling'
 
 echarts.use([GridComponent, LineChart, CanvasRenderer])
 
@@ -78,7 +77,7 @@ export default defineComponent({
         return terrainSampling.value.show
       },
       set(val: boolean): void {
-        cesiumRef?.viewer && removeAll(cesiumRef?.viewer)
+        cesiumRef?.viewer && cesiumRef?.viewer?.jt?.terrainSampling.removeAll()
         store.dispatch(
           `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_TERRAIN_SAMPLING}`,
           {
@@ -110,7 +109,7 @@ export default defineComponent({
       if (!terrainSampling.value.show) {
         return
       }
-      if (!chart.value) {
+      if (!chart.value || chart.value?.isDisposed()) {
         initChart()
       }
       const datas = terrainSampling.value.datas
