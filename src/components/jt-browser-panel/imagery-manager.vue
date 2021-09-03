@@ -59,77 +59,12 @@
       @change="imageryLayerChange"
     />
 
-    <el-dialog
-      title="添加影像"
+    <imagerySelect
+      :imagerySources="imagerySources"
       v-model="addImageryDialogVisible"
-      width="500px"
-      destroy-on-close
+      @imagerySourceSelected="addImagery"
     >
-      <div>
-        <div
-          v-for="(imagerySource, index) in imagerySources"
-          :key="index"
-          :class="Array.isArray(imagerySource) ? 'px-5' : 'p-2 w-20'"
-        >
-          <div
-            v-if="Array.isArray(imagerySource)"
-            class="flex flex-row flex-wrap justify-around items-center"
-          >
-            <div
-              v-for="(sub, index) in imagerySource"
-              :key="index"
-              class="px-2 py-3 w-20"
-              @dblclick="addImagery(sub)"
-            >
-              <div
-                class="
-                  w-16
-                  h-16
-                  overflow-hidden
-                  rounded-xl
-                  shadow-2xl
-                  border-solid border border-gray-200
-                "
-              >
-                <img
-                  :src="'./static/imgs/' + sub.iconImageUrl"
-                  width="64"
-                  height="64"
-                  class="w-full h-full"
-                />
-              </div>
-              <div
-                class="font-sans text-center align-middle text-black text-sm"
-              >
-                {{ sub.name }}
-              </div>
-            </div>
-          </div>
-          <div v-else @dblclick="addImagery(imagerySource)">
-            <div
-              class="
-                w-16
-                h-16
-                overflow-hidden
-                rounded-xl
-                shadow-2xl
-                border-solid border border-gray-200
-              "
-            >
-              <img
-                :src="'./static/imgs/' + imagerySource.iconImageUrl"
-                width="64"
-                height="64"
-                class="w-full h-full"
-              />
-            </div>
-            <div class="font-sans text-center align-middle text-black text-sm">
-              {{ imagerySource.name }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </el-dialog>
+    </imagerySelect>
   </div>
 </template>
 
@@ -147,12 +82,14 @@ import {
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElIcon, ElCheckbox, ElDialog } from 'element-plus'
 import imageryLayerOperate from './imagery-layer-operate.vue'
+import imagerySelect from './imagery-select.vue'
 import sampleData from '@/resources/sample-data'
 import * as Cesium from 'cesium'
 import uuid from '@/libs/utils/uuid'
 import overlay from '@/components/jt-overlay/index.vue'
 import store from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
+import type { ImagerySource } from './common'
 
 type Imagery = {
   name: string
@@ -162,14 +99,6 @@ type Imagery = {
   cesiumLayerIndex: number
 }
 
-type ImagerySource = {
-  name: string
-  iconImageUrl: string
-  providerName: string
-  afterReady?: (viewer: Cesium.Viewer, success: boolean) => void
-  options?: any
-}
-
 export default defineComponent({
   name: '',
   components: {
@@ -177,6 +106,7 @@ export default defineComponent({
     ElCheckbox,
     ElDialog,
     imageryLayerOperate,
+    imagerySelect,
     overlay,
     jtDraggableResizable,
   },
