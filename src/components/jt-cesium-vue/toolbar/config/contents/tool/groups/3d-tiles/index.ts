@@ -2,14 +2,6 @@ import { Group } from '../../../Types'
 import * as Cesium from 'cesium'
 import store from '@/store'
 import {
-  addClassification,
-  removeClassification,
-  addInvertClassification,
-  removeInvertClassification,
-  add3DTileClassificationPrimitive,
-  remove3DTileClassificationPrimitive,
-} from '@/libs/cesium/libs/classification'
-import {
   ClickHandlerOption,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
@@ -114,8 +106,7 @@ const YIN_TAI_IN_99_CLASSIFICATION_PRIMITIVES = [
 
 const addYinTaiIn99ClassificationPrimitive = function (viewer: Cesium.Viewer) {
   YIN_TAI_IN_99_CLASSIFICATION_PRIMITIVES.forEach((item) => {
-    add3DTileClassificationPrimitive({
-      viewer,
+    viewer.jt?.classification.add3DTileClassificationPrimitive({
       id: item.id,
       geometry: item.polygon,
     })
@@ -126,8 +117,7 @@ const removeYinTaiIn99ClassificationPrimitive = function (
   viewer: Cesium.Viewer
 ) {
   YIN_TAI_IN_99_CLASSIFICATION_PRIMITIVES.forEach((item) => {
-    remove3DTileClassificationPrimitive({
-      viewer,
+    viewer.jt?.classification.remove3DTileClassificationPrimitive({
       id: item.id,
     })
   })
@@ -179,20 +169,17 @@ const view: Group = {
       name: '分类(滑动)',
       icon: 'move',
       clickHandler: (option: ClickHandlerOption | undefined): any => {
-        if (!option) {
+        if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
-        const { viewer, item } = option
-        if (!viewer) {
-          return
-        }
+        const { item } = option
         if (
           store.state.jtCesiumVue.toolbar.tool3DTile
             .hoverClassificationActive ||
           (item && item.clickHandlerResult)
         ) {
           // stop
-          removeClassification()
+          option.viewer.jt.classification.removeClassification()
           if (item && item.clickHandlerResult) {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined
@@ -201,15 +188,15 @@ const view: Group = {
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
             false
           )
-          removeYinTaiIn99ClassificationPrimitive(viewer)
+          removeYinTaiIn99ClassificationPrimitive(option.viewer)
           return
         } else {
           store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
             true
           )
-          addYinTaiIn99ClassificationPrimitive(viewer)
-          viewer.camera.flyTo({
+          addYinTaiIn99ClassificationPrimitive(option.viewer)
+          option.viewer.camera.flyTo({
             destination: Cesium.Cartesian3.fromDegrees(104.06722, 30.582, 400),
             orientation: {
               heading: Cesium.Math.toRadians(0),
@@ -218,7 +205,9 @@ const view: Group = {
             },
             duration: 1,
           })
-          return addClassification({ viewer, color: [255, 0, 0, 128] })
+          return option.viewer.jt.classification.addClassification({
+            color: [255, 0, 0, 128],
+          })
         }
       },
       active: (): boolean => {
@@ -230,20 +219,17 @@ const view: Group = {
       name: '分类(点击)',
       icon: 'select',
       clickHandler: (option: ClickHandlerOption | undefined): any => {
-        if (!option) {
+        if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
-        const { viewer, item } = option
-        if (!viewer) {
-          return
-        }
+        const { item } = option
         if (
           store.state.jtCesiumVue.toolbar.tool3DTile
             .clickClassificationActive ||
           (item && item.clickHandlerResult)
         ) {
           // stop
-          removeInvertClassification({ viewer })
+          option.viewer.jt.classification.removeInvertClassification()
           if (item && item.clickHandlerResult) {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined
@@ -252,7 +238,7 @@ const view: Group = {
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
             false
           )
-          removeYinTaiIn99ClassificationPrimitive(viewer)
+          removeYinTaiIn99ClassificationPrimitive(option.viewer)
           return
         } else {
           // start
@@ -260,8 +246,8 @@ const view: Group = {
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
             true
           )
-          addYinTaiIn99ClassificationPrimitive(viewer)
-          viewer.camera.flyTo({
+          addYinTaiIn99ClassificationPrimitive(option.viewer)
+          option.viewer.camera.flyTo({
             destination: Cesium.Cartesian3.fromDegrees(104.06722, 30.582, 400),
             orientation: {
               heading: Cesium.Math.toRadians(0),
@@ -270,7 +256,7 @@ const view: Group = {
             },
             duration: 1,
           })
-          return addInvertClassification({ viewer })
+          return option.viewer.jt.classification.addInvertClassification()
         }
       },
       active: (): boolean => {

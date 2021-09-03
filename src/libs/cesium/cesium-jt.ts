@@ -5,6 +5,7 @@ import FlyTo from '@/libs/cesium/libs/fly-to/FlyTo'
 import Highlight from '@/libs/cesium/libs/highlight/Highlight'
 import Light from '@/libs/cesium/libs/light/Light'
 import TerrainSampling from '@/libs/cesium/libs/terrain-sampling/TerrainSampling'
+import Classification from '@/libs/cesium/libs/classification/Classification'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -58,6 +59,14 @@ class Jt {
       this._terrainSampling = new TerrainSampling(this.viewer)
     }
     return this._terrainSampling
+  }
+
+  private _classification?: Classification
+  public get classification(): Classification {
+    if (!this._classification) {
+      this._classification = new Classification(this.viewer)
+    }
+    return this._classification
   }
 }
 
