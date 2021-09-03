@@ -28,23 +28,11 @@
       </div>
     </div>
 
-    <el-dialog
+    <terrainSetting
       v-model="terrainSettingDialog.dialogVisible"
-      title="地形设置"
-      destroyOnClose
-      @close="terrainSettingDialog.dialogVisible = false"
-    >
-      <p>地形缩放</p>
-      <el-slider
-        :min="0"
-        :max="10"
-        :step="0.01"
-        v-model="terrainSettingDialog.exaggeration"
-        show-input
-        @change="terrainExaggerationChange"
-      >
-      </el-slider>
-    </el-dialog>
+      :initExaggeration="terrainSettingDialog.exaggeration"
+      @change="terrainExaggerationChange"
+    ></terrainSetting>
   </div>
 </template>
 
@@ -53,12 +41,12 @@ import { defineComponent, reactive, ref, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import sampleData from '@/resources/sample-data'
-
+import terrainSetting from './terrain-setting.vue'
 import { ElSelect, ElOption, ElDialog, ElSlider } from 'element-plus'
 
 export default defineComponent({
   name: '',
-  components: { ElSelect, ElOption, ElDialog, ElSlider },
+  components: { ElSelect, ElOption, ElDialog, ElSlider, terrainSetting },
   setup() {
     const terrains = reactive([
       {

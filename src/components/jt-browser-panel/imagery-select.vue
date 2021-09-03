@@ -96,7 +96,6 @@
 </template>
 
 <script lang="ts">
-const CHANGE_EVENT = 'change'
 const UPDATE_MODEL_EVENT = 'update:modelValue'
 const IMAGERY_SOURCE_SELECTED = 'imagerySourceSelected'
 
@@ -131,10 +130,6 @@ export default defineComponent({
   setup(props, context) {
     const visible = ref(props.modelValue)
 
-    const afterChange = (key: string, val: number): void => {
-      context.emit(CHANGE_EVENT, key, val)
-    }
-
     const imagerySourceDblClick = (imagerySource: ImagerySource): void => {
       context.emit(IMAGERY_SOURCE_SELECTED, imagerySource)
     }
@@ -157,16 +152,11 @@ export default defineComponent({
 
     return {
       visible,
-      afterChange,
       imagerySourceDblClick,
       toolbarHeight,
     }
   },
   emits: {
-    [CHANGE_EVENT](key: string, val: number) {
-      return true
-    },
-
     [UPDATE_MODEL_EVENT](val: boolean) {
       return true
     },
