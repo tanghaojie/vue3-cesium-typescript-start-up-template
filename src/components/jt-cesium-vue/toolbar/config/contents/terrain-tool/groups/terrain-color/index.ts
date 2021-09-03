@@ -1,10 +1,6 @@
 import { Group } from '../../../Types'
-import * as Cesium from 'cesium'
 import store from '@/store'
-import {
-  showElevationContour,
-  removeElevationContour,
-} from '@/libs/cesium/libs/elevation-contour'
+import ElevationContour from '@/libs/cesium/libs/elevation-contour/ElevationContour'
 import { ClickHandlerOption } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 
@@ -18,21 +14,23 @@ const view: Group = {
         componentName: 'elevationContourSetting',
       },
       clickHandler: (option: ClickHandlerOption | undefined): any => {
-        if (!option) {
+        if (!option || !option.viewer) {
           return
         }
         const { viewer, item } = option
-        if (!viewer) {
-          return
+        if (!viewer.jtElevationContour) {
+          viewer.jtElevationContour = new ElevationContour(viewer)
         }
+
+        const { jtElevationContour } = viewer
         if (store.state.jtCesiumVue.toolbar.elevationContourActive) {
-          removeElevationContour({ viewer })
+          jtElevationContour.remove()
           store.dispatch(
             `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_ELEVATION_CONTURE_ACTIVE}`,
             false
           )
         } else {
-          showElevationContour({ viewer })
+          jtElevationContour.show()
           store.dispatch(
             `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_ELEVATION_CONTURE_ACTIVE}`,
             true
