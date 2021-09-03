@@ -21,15 +21,8 @@ import {
   inject,
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
-import { ElSlider, ElRadioGroup, ElRadioButton } from 'element-plus'
-import {
-  getSunLight,
-  getMoonLight,
-  getFlashLight,
-  getMoonDirection,
-  updateFlashLightListener,
-  updateMoonLightListener,
-} from '@/libs/cesium/libs/light'
+import { ElRadioGroup, ElRadioButton } from 'element-plus'
+import Light from '@/libs/cesium/libs/light/Light'
 import * as Cesium from 'cesium'
 import terrainManagerVue from '@/components/jt-browser-panel/terrain-manager.vue'
 import TrustedServers from 'cesium/Source/Core/TrustedServers'
@@ -43,13 +36,13 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
     const { viewer } = cesiumRef || {}
-    if (!viewer) {
+    if (!viewer || !viewer.jt) {
       throw new Error('Viewer not loaded.')
     }
 
-    const sunLight = getSunLight()
-    const flashLight = getFlashLight(viewer.scene)
-    const moonLight = getMoonLight(viewer.clock.currentTime)
+    const sunLight = viewer.jt.light.getSunLight()
+    const flashLight = viewer.jt.light.getFlashLight()
+    const moonLight = viewer.jt.light.getMoonLight(viewer.clock.currentTime)
 
     const lightTypes = reactive([
       {
@@ -69,7 +62,7 @@ export default defineComponent({
           const scene = viewer.scene
           scene.light = moonLight
           scene.globe.dynamicAtmosphereLightingFromSun = false
-          scene.preRender.addEventListener(updateMoonLightListener)
+          scene.preRender.addEventListener(Light.updateMoonLightListener)
         },
       },
       {
@@ -83,7 +76,7 @@ export default defineComponent({
           const scene = viewer.scene
           scene.light = flashLight
           scene.globe.dynamicAtmosphereLighting = false
-          scene.preRender.addEventListener(updateFlashLightListener)
+          scene.preRender.addEventListener(Light.updateFlashLightListener)
         },
       },
     ])
@@ -95,8 +88,8 @@ export default defineComponent({
       }
       const scene = viewer.scene
       scene.light = sunLight
-      scene.preRender.removeEventListener(updateFlashLightListener)
-      scene.preRender.removeEventListener(updateMoonLightListener)
+      scene.preRender.removeEventListener(Light.updateFlashLightListener)
+      scene.preRender.removeEventListener(Light.updateMoonLightListener)
       scene.globe.dynamicAtmosphereLighting = true
       scene.globe.dynamicAtmosphereLightingFromSun = false
     }
