@@ -1,7 +1,6 @@
 import { Group } from '../../../Types'
 import * as Cesium from 'cesium'
 import store from '@/store'
-import { highlight3DTileFeature, removeAll } from '@/libs/cesium/libs/highlight'
 import {
   addClassification,
   removeClassification,
@@ -141,20 +140,17 @@ const view: Group = {
       name: '高亮',
       icon: 'classification',
       clickHandler: (option: ClickHandlerOption | undefined): any => {
-        if (!option) {
+        if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
-        const { viewer, item } = option
-        if (!viewer) {
-          return
-        }
+        const { item } = option
         if (
           store.state.jtCesiumVue.toolbar.tool3DTile
             .highlight3DTileFeatureActive ||
           (item && item.clickHandlerResult)
         ) {
           // stop
-          removeAll(viewer)
+          option.viewer.jt.highlight.removeAll()
           if (item && item.clickHandlerResult) {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined
@@ -169,8 +165,7 @@ const view: Group = {
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
             true
           )
-          return highlight3DTileFeature({
-            viewer,
+          return option.viewer.jt.highlight.highlight3DTileFeature({
             color: Cesium.Color.YELLOW.withAlpha(0.5),
           })
         }

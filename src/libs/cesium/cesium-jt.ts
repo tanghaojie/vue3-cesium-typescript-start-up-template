@@ -2,6 +2,7 @@ import * as Cesium from 'cesium'
 import Draw from '@/libs/cesium/libs/draw/Draw'
 import ElevationContour from '@/libs/cesium/libs/elevation-contour/ElevationContour'
 import FlyTo from '@/libs/cesium/libs/fly-to/FlyTo'
+import Highlight from '@/libs/cesium/libs/highlight/Highlight'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -31,6 +32,14 @@ class Jt {
       this._flyTo = new FlyTo(this.viewer)
     }
     return this._flyTo
+  }
+
+  private _highlight?: Highlight
+  public get highlight(): Highlight {
+    if (!this._highlight) {
+      this._highlight = new Highlight(this.viewer)
+    }
+    return this._highlight
   }
 }
 
