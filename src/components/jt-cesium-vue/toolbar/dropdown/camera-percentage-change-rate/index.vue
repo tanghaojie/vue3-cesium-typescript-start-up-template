@@ -20,10 +20,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
-import {
-  getPercentageChange,
-  setPercentageChange,
-} from '@/libs/cesium/libs/percentage-change'
 
 import { ElSlider } from 'element-plus'
 
