@@ -1,5 +1,6 @@
 import * as Cesium from 'cesium'
 import Draw from '@/libs/cesium/libs/draw/Draw'
+import Measure from '@/libs/cesium/libs/measure/Measure'
 import ElevationContour from '@/libs/cesium/libs/elevation-contour/ElevationContour'
 import FlyTo from '@/libs/cesium/libs/fly-to/FlyTo'
 import Highlight from '@/libs/cesium/libs/highlight/Highlight'
@@ -76,6 +77,14 @@ class Jt {
       this._percentageChange = new PercentageChange(this.viewer)
     }
     return this._percentageChange
+  }
+
+  private _measure?: Measure
+  public get measure(): Measure {
+    if (!this._measure) {
+      this._measure = new Measure(this.viewer)
+    }
+    return this._measure
   }
 }
 

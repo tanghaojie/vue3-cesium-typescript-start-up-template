@@ -5,7 +5,6 @@ import {
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 import { DrawActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/draw/action-types'
-import Draw from '@/libs/cesium/libs/draw/Draw'
 import type { DrawUserCallBackOption } from '@/libs/cesium/libs/draw/Draw'
 
 const view: Group = {
