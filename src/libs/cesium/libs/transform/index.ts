@@ -39,7 +39,7 @@ const calculate3DTilesetTransform = function (
   scale: number = 0
 ): void {
   tileset.readyPromise.then((self) => {
-    // console.log('ready', self.root.transform)
+    console.log('ready', self.root.transform)
 
     // original coordinate
     const cartographic = Cesium.Cartographic.fromCartesian(
@@ -64,7 +64,7 @@ const calculate3DTilesetTransform = function (
     self.root.transform = matrix
 
     // you can change root 'tileset.json' file: transform value, to define transform in 3d tile file.
-    // console.log('changed', self.root.transform)
+    console.log('changed', self.root.transform)
   })
 }
 

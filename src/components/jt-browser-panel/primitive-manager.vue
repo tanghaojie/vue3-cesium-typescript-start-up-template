@@ -81,7 +81,7 @@ import {
   PRIMITIVE_MANAGER_FLAG_KEY,
 } from './common'
 import uuid from '@/libs/utils/uuid'
-
+import UrlQuery from '@/utils/url-query'
 import {
   calculate3DTilesetTransform,
   transform,
@@ -113,6 +113,8 @@ export default defineComponent({
     })
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
+
+    const route = useRoute()
 
     const syncPrimitives = (): void => {
       primitives.splice(0, primitives.length)
@@ -172,7 +174,7 @@ export default defineComponent({
       add3DTilesetDialog.url = ''
     }
 
-    const add3DTileset = (option: any): void => {
+    const add3DTileset = (option: any): any => {
       const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
@@ -190,6 +192,8 @@ export default defineComponent({
 
       viewer.scene.primitives.add(c3Dtileset)
       syncPrimitives()
+
+      return c3DtilesetObj
     }
 
     const addGltf = (option: any): void => {
@@ -271,6 +275,39 @@ export default defineComponent({
 
       viewer.scene.primitives.removeAll()
 
+      if (route.query[UrlQuery.DemoMode]) {
+        initDemoMode()
+      } else {
+        initDefaultData()
+      }
+
+      initQuery()
+    }
+
+    const initDemoMode = (): void => {
+      const w = add3DTileset({
+        name: '张家跳蹲桥',
+        url: 'http://117.139.247.104:60090/GisData/models/ZhangJiaTiaoDunQiao/ZhangJiaTiaoDunQiao/tileset.json',
+        show: true,
+      })
+      change3DTilesetHeight(w as Cesium.Cesium3DTileset, -516)
+
+      const d = add3DTileset({
+        name: '永寿桥',
+        url: 'http://117.139.247.104:60090/GisData/models/YongShouQiao/YongShouQiao/tileset.json',
+        show: true,
+      })
+      change3DTilesetHeight(d as Cesium.Cesium3DTileset, -494)
+
+      const q = add3DTileset({
+        name: '高家碉楼',
+        url: 'http://117.139.247.104:60090/GisData/models/GaoJiaDiaoLou/GaoJiaDiaoLou/tileset.json',
+        show: true,
+      })
+      change3DTilesetHeight(q as Cesium.Cesium3DTileset, -540.5)
+    }
+
+    const initDefaultData = (): void => {
       addGltf({
         name: '精模(适配全球地形)',
         url: sampleData.rc,
@@ -280,12 +317,6 @@ export default defineComponent({
         ),
         show: false,
       })
-
-      // add3DTileset({
-      //   name: '倾斜摄影模型',
-      //   url: 'http://117.139.247.104:60001/models/3dtiles/yingxiu/tileset.json',
-      //   show: false,
-      // })
 
       add3DTileset({
         name: 'iPad Pro Lidar(point cloud)',
@@ -315,20 +346,17 @@ export default defineComponent({
         name: '简模002(适配全球地形)',
         url: sampleData.apartment,
       })
-
-      initQuery()
     }
 
     const initQuery = (): void => {
-      const route = useRoute()
-      const tile3DUrl = route.query['3dt']
+      const tile3DUrl = route.query[UrlQuery.Addition3DTile]
       if (tile3DUrl) {
         add3DTileset({
           url: tile3DUrl,
           show: true,
         })
 
-        const flyToTile3D = route.query['f23dt']
+        const flyToTile3D = route.query[UrlQuery.FlyToAddition3DTile]
         if (flyToTile3D && tile3DUrl) {
           syncPrimitives()
           const { viewer } = cesiumRef || {}
@@ -385,6 +413,8 @@ export default defineComponent({
       primitiveNameDoubleClick,
       init,
       initQuery,
+      initDefaultData,
+      initDemoMode,
       getPrimitiveIndex,
     }
   },

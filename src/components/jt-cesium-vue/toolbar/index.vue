@@ -53,6 +53,7 @@ import tbConfig from './config'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import menus from './components/menus.vue'
 import groups from './components/groups.vue'
+import UrlQuery from '@/utils/url-query'
 
 // dropdown components
 import dropdowns from './dropdown'
@@ -104,8 +105,8 @@ export default defineComponent({
       )
 
       const route = useRoute()
-      const toolbarHiden = route.query['tbh']
-      if (toolbarHiden) {
+      const hideToolbar = route.query[UrlQuery.HideToolbar]
+      if (hideToolbar) {
         store.dispatch(
           `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_TOOLBAR}`,
           false

@@ -12,6 +12,7 @@ import { useRoute } from 'vue-router'
 import { ElScrollbar } from 'element-plus'
 import store from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
+import UrlQuery from '@/utils/url-query'
 
 import imageryManager from './imagery-manager.vue'
 import terrainManager from './terrain-manager.vue'
@@ -23,8 +24,8 @@ export default defineComponent({
   setup() {
     onMounted(() => {
       const route = useRoute()
-      const browserPanelHiden = route.query['bph']
-      if (browserPanelHiden) {
+      const hideBrowserPanel = route.query[UrlQuery.HideBrowserPanel]
+      if (hideBrowserPanel) {
         store.dispatch(
           `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_BROWSER_PANEL}`,
           false
