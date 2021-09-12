@@ -305,6 +305,13 @@ export default defineComponent({
         show: true,
       })
       change3DTilesetHeight(q as Cesium.Cesium3DTileset, -540.5)
+
+      const a = add3DTileset({
+        name: '杨世安墓',
+        url: 'http://117.139.247.104:60090/GisData/models/YangShiAnMu/YangShiAnMu/tileset.json',
+        show: true,
+      })
+      change3DTilesetHeight(a as Cesium.Cesium3DTileset, -568)
     }
 
     const initDefaultData = (): void => {
