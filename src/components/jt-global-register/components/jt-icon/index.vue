@@ -9,6 +9,8 @@
 </template>
 
 <script lang="ts">
+import importAll from '@/utils/import/import-all'
+importAll(require.context('./svgs', true, /\.svg$/))
 import { defineComponent } from 'vue'
 
 export default defineComponent({

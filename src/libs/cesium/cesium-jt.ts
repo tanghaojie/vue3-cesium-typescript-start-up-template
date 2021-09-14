@@ -8,6 +8,7 @@ import Light from '@/libs/cesium/libs/light/Light'
 import TerrainSampling from '@/libs/cesium/libs/terrain-sampling/TerrainSampling'
 import Classification from '@/libs/cesium/libs/classification/Classification'
 import PercentageChange from '@/libs/cesium/libs/percentage-change/PercentageChange'
+import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -85,6 +86,14 @@ class Jt {
       this._measure = new Measure(this.viewer)
     }
     return this._measure
+  }
+
+  private _floodAnalysis?: FloodAnalysis
+  public get floodAnalysis(): FloodAnalysis {
+    if (!this._floodAnalysis) {
+      this._floodAnalysis = new FloodAnalysis(this.viewer)
+    }
+    return this._floodAnalysis
   }
 }
 

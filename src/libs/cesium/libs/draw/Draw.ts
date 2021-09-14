@@ -22,13 +22,19 @@ type DrawShapeEntityPropertyOption = {
   width?: number
 }
 
+type DrawShapeEntityNameAddition = {
+  nameAddition?: string
+}
+
 export type DrawPolylineOption = DrawUserCallBackOption &
   ShapeActivePointOption &
-  DrawShapeEntityPropertyOption
+  DrawShapeEntityPropertyOption &
+  DrawShapeEntityNameAddition
 
 export type DrawPolygonOption = DrawUserCallBackOption &
   ShapeActivePointOption &
-  DrawShapeEntityPropertyOption
+  DrawShapeEntityPropertyOption &
+  DrawShapeEntityNameAddition
 
 type DrawShapeOptionBase = {
   drawMode: DrawMode
@@ -38,7 +44,7 @@ type DrawShapeOption = DrawShapeOptionBase &
   DrawPolylineOption &
   DrawPolygonOption
 
-enum DrawMode {
+export enum DrawMode {
   Polyline,
   Polygon,
 }
@@ -175,7 +181,7 @@ class Draw {
 
   private terminateShape(
     drawMode: DrawMode,
-    option: DrawShapeEntityPropertyOption
+    option: DrawShapeEntityPropertyOption & DrawShapeEntityNameAddition
   ): void {
     const {
       viewer,
@@ -190,7 +196,7 @@ class Draw {
       return
     }
 
-    entity.name = drawShapeEntityName(drawMode)
+    entity.name = drawShapeEntityName(drawMode, option.nameAddition)
 
     if (mousePoint) {
       viewer.entities.remove(mousePoint)
@@ -205,12 +211,15 @@ class Draw {
     this.activeShapePoints = []
   }
 
-  private drawShapeEntityName(drawMode: DrawMode): string {
+  protected drawShapeEntityName(
+    drawMode: DrawMode,
+    nameAddition: string | undefined = undefined
+  ): string {
     let entityName: string = Draw.DRAWED_SHAPES_FLAG
     if (drawMode === DrawMode.Polyline) {
-      entityName += Draw.DRAWED_SHAPES_POLYLINE_FLAG
+      entityName += Draw.DRAWED_SHAPES_POLYLINE_FLAG + (nameAddition || '')
     } else {
-      entityName += Draw.DRAWED_SHAPES_POLYGON_FLAG
+      entityName += Draw.DRAWED_SHAPES_POLYGON_FLAG + (nameAddition || '')
     }
     return entityName
   }
@@ -298,11 +307,14 @@ class Draw {
     started && started()
   }
 
-  private removeDrawedShapes(drawMode: DrawMode): void {
+  private removeDrawedShapes(
+    drawMode: DrawMode,
+    nameAddition: string | undefined = undefined
+  ): void {
     const { viewer, drawShapeEntityName } = this
     const entities = viewer.entities.values
     let index = 0
-    const entityName = drawShapeEntityName(drawMode)
+    const entityName = drawShapeEntityName(drawMode, nameAddition)
     while (index < entities.length) {
       const model = entities[index]
       if (model.name === entityName) {
@@ -327,18 +339,22 @@ class Draw {
     })
   }
 
-  public removeDrawedPolyline(): void {
-    this.removeDrawedShapes(DrawMode.Polyline)
+  public removeDrawedPolyline(
+    nameAddition: string | undefined = undefined
+  ): void {
+    this.removeDrawedShapes(DrawMode.Polyline, nameAddition)
   }
 
-  public removeDrawedPolygon(): void {
-    this.removeDrawedShapes(DrawMode.Polygon)
+  public removeDrawedPolygon(
+    nameAddition: string | undefined = undefined
+  ): void {
+    this.removeDrawedShapes(DrawMode.Polygon, nameAddition)
   }
 
-  public removeAllDrawed(): void {
+  public removeAllDrawed(nameAddition: string | undefined = undefined): void {
     this.removeDrawedPoints()
-    this.removeDrawedPolyline()
-    this.removeDrawedPolygon()
+    this.removeDrawedPolyline(nameAddition)
+    this.removeDrawedPolygon(nameAddition)
   }
 }
 

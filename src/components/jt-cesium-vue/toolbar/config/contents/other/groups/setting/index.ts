@@ -1,7 +1,7 @@
 import { Group } from '../../../Types'
 import store from '@/store'
 
-import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
+import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 const view: Group = {
   name: '设置',
@@ -11,8 +11,8 @@ const view: Group = {
       icon: 'setting',
       clickHandler: (): void => {
         store.dispatch(
-          `jtCesiumVue/setting/${SettingActionTypes.SET_SHOW_SETTING}`,
-          true
+          `jtCesiumVue/layout/${LayoutActionTypes.ADD_UNIQUE_NAME_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
+          'jt-setting'
         )
       },
     },

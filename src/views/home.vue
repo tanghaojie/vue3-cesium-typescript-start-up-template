@@ -5,8 +5,11 @@
 
       <div class="relative" :style="jtCesiumVueContainerStyle">
         <overlay v-if="cesiumLoaded">
-          <setting class="z-50" />
           <jtTerrainSampleChart class="z-50" />
+
+          <template v-for="view in overlayDynamicViews" :key="view.uuid">
+            <component :is="view.name" class="z-50"></component>
+          </template>
 
           <jtSideCollapse
             v-show="browserPanelShow"
@@ -33,7 +36,7 @@
               border
               pointer-events-auto
             "
-            @click.stop="settingShow = true"
+            @click.stop="openSetting()"
           >
             <jt-icon name="setting" class="text-3xl text-gray-300" />
           </div>
@@ -64,12 +67,10 @@ import { useRouter, useRoute } from 'vue-router'
 import jtCesiumVue from '../components/jt-cesium-vue/cesium-vue/index.vue'
 import locationbar from '../components/jt-cesium-vue/locationbar/index.vue'
 import toolBar from '../components/jt-cesium-vue/toolbar/index.vue'
-import setting from '../components/jt-cesium-vue/setting/index.vue'
 import jtSideCollapse from '../components/jt-side-collapse/index.vue'
 import jtBrowserPanel from '../components/jt-browser-panel/index.vue'
 import jtTerrainSampleChart from '../components/jt-terrain-sample-chart/index.vue'
 import jtDraggableResizable from '../components/jt-draggable-resizable/index.vue'
-import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 import { LocationBarGetterTypes } from '@/store/modules/jt-cesium-vue/modules/locationbar/getter-types'
@@ -80,7 +81,6 @@ export default defineComponent({
     jtCesiumVue,
     toolBar,
     overlay,
-    setting,
     locationbar,
     jtSideCollapse,
     jtBrowserPanel,
@@ -128,16 +128,10 @@ export default defineComponent({
       }
     })
 
-    const settingShow = computed({
-      get(): boolean {
-        return store.state.jtCesiumVue.setting.showSetting
-      },
-      set(val: boolean): void {
-        store.dispatch(
-          `jtCesiumVue/setting/${SettingActionTypes.SET_SHOW_SETTING}`,
-          val
-        )
-      },
+    const overlayDynamicViews = computed(() => {
+      {
+        return store.state.jtCesiumVue.layout.overlayDynamicViews
+      }
     })
 
     const loaded = (): void => {
@@ -156,6 +150,13 @@ export default defineComponent({
           h
         )
       }
+    }
+
+    const openSetting = () => {
+      store.dispatch(
+        `jtCesiumVue/layout/${LayoutActionTypes.ADD_UNIQUE_NAME_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
+        'jt-setting'
+      )
     }
 
     watch(toolbar, () => {
@@ -185,7 +186,8 @@ export default defineComponent({
       browserPanelShow,
       toolbarShow,
       jtCesiumVueContainerStyle,
-      settingShow,
+      openSetting,
+      overlayDynamicViews,
       toolbar,
       browserPanel,
       calcToolbarHeight,

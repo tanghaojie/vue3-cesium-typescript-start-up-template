@@ -37,7 +37,6 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElCheckbox } from 'element-plus'
 import store from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
-import { SettingActionTypes } from '@/store/modules/jt-cesium-vue/modules/setting/action-types'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import logMousePositionMixin, {
   additionPropertyName,
@@ -66,18 +65,6 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const settingShow = computed({
-      get(): boolean {
-        return store.state.jtCesiumVue.setting.showSetting
-      },
-      set(val: boolean): void {
-        store.dispatch(
-          `jtCesiumVue/setting/${SettingActionTypes.SET_SHOW_SETTING}`,
-          val
-        )
-      },
-    })
-
     const toolbarShow = computed({
       get(): boolean {
         return store.state.jtCesiumVue.layout.showToolbar
@@ -98,6 +85,18 @@ export default defineComponent({
         store.dispatch(
           `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_BROWSER_PANEL}`,
           val
+        )
+      },
+    })
+
+    const settingShow = computed({
+      get(): boolean {
+        return true
+      },
+      set(val: boolean): void {
+        store.dispatch(
+          `jtCesiumVue/layout/${LayoutActionTypes.REMOVE_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
+          'jt-setting'
         )
       },
     })
@@ -142,8 +141,8 @@ export default defineComponent({
 
     return {
       inspectors,
-      settingShow,
       toolbarShow,
+      settingShow,
       browserPanelShow,
       inspectorCheckChange,
       showCoordinateWhenClick,
