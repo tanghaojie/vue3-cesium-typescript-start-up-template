@@ -9,19 +9,32 @@ export type DrawFloodAnalysisUserCallBackOption = {
 export type FloodAnimateOption = {
   totalMilliseconds?: number
   totalFrame?: number
+  currentHeightChange?: (val: number) => void
 }
 
 class FloodAnalysis extends Draw {
   private static FLOOD_ANALYSIS_DRAWED_POLYGON_NAME_ADDITION =
     '_FOR_FLOOD_ANALYSIS'
 
+  public static FLOOD_ANALYSIS_MAX_HEIGHT_LIMIT = 10000
+  public static FLOOD_ANALYSIS_MIN_HEIGHT_LIMIT = 0
+
   private _minHeight = 0
   private _maxHeight = 9999
+
+  private intervalId = -1
 
   get minHeight(): number {
     return this._minHeight
   }
   set minHeight(val: number) {
+    if (val < FloodAnalysis.FLOOD_ANALYSIS_MIN_HEIGHT_LIMIT) {
+      val = FloodAnalysis.FLOOD_ANALYSIS_MIN_HEIGHT_LIMIT
+    }
+    if (val > this.maxHeight) {
+      val = this.maxHeight - 0.01
+    }
+
     this._minHeight = val
   }
 
@@ -29,6 +42,12 @@ class FloodAnalysis extends Draw {
     return this._maxHeight
   }
   set maxHeight(val: number) {
+    if (val > FloodAnalysis.FLOOD_ANALYSIS_MAX_HEIGHT_LIMIT) {
+      val = FloodAnalysis.FLOOD_ANALYSIS_MAX_HEIGHT_LIMIT
+    }
+    if (val < this.minHeight) {
+      val = this.minHeight + 0.01
+    }
     this._maxHeight = val
   }
 
@@ -37,20 +56,26 @@ class FloodAnalysis extends Draw {
   }
 
   public drawFloodArea(option?: DrawFloodAnalysisUserCallBackOption): void {
+    this.stopFloodAnimate()
     this.viewer.scene.globe.depthTestAgainstTerrain = true
-    this.removeDrawedPolygon(
-      FloodAnalysis.FLOOD_ANALYSIS_DRAWED_POLYGON_NAME_ADDITION
-    )
+    this.removeDrawedFloodArea()
     const self = this
     this.drawPolygon({
       nameAddition: FloodAnalysis.FLOOD_ANALYSIS_DRAWED_POLYGON_NAME_ADDITION,
       color: Cesium.Color.YELLOW,
       material: Cesium.Color.fromCssColorString('#6191daa1'),
       stoped: () => {
-        self.calcFloodAreaMinMaxHeightPoint()
         option && option.stoped && option.stoped()
       },
+      beforeStop: (ps) => self.calcFloodAreaMinMaxHeight(ps),
     })
+  }
+
+  public removeDrawedFloodArea(): void {
+    this.stopFloodAnimate()
+    this.removeDrawedPolygon(
+      FloodAnalysis.FLOOD_ANALYSIS_DRAWED_POLYGON_NAME_ADDITION
+    )
   }
 
   private currentFloodArea(): Cesium.Entity | undefined {
@@ -72,33 +97,31 @@ class FloodAnalysis extends Draw {
     return undefined
   }
 
-  private calcFloodAreaMinMaxHeightPoint(): void {
-    const entity = this.currentFloodArea()
-    if (!entity) {
+  public calcFloodAreaMinMaxHeight(points: Cesium.Cartesian3[]): void {
+    if (!points) {
       return
-    }
-    const points = entity.polygon?.hierarchy?.getValue(
-      this.viewer.clock.currentTime
-    )
-    if (!points || !points.positions) {
-      return
-    }
-    const viewer = this.viewer
-    const ellipsoid = this.viewer.scene.globe.ellipsoid
-    const calcHeight = (cartesian3: Cesium.Cartesian3) => {
-      return (
-        viewer.scene.globe.getHeight(
-          ellipsoid.cartesianToCartographic(cartesian3)
-        ) || 0
-      )
     }
 
-    const ps = points.positions as Cesium.Cartesian3[]
-    let minH = calcHeight(ps[0])
+    // calculate from ellipsoid
+    // const ellipsoid = this.viewer.scene.globe.ellipsoid
+    // const calcHeight = (cartesian3: Cesium.Cartesian3) => {
+    //   return (
+    //     viewer.scene.globe.getHeight(
+    //       ellipsoid.cartesianToCartographic(cartesian3)
+    //     ) || 0
+    //   )
+    // }
+
+    // calculate from pick position
+    const calcHeight = (cartesian3: Cesium.Cartesian3) => {
+      return Cesium.Cartographic.fromCartesian(cartesian3).height
+    }
+
+    let minH = calcHeight(points[0])
     let maxH = minH
-    const len = ps.length
+    const len = points.length
     for (let i = 1; i < len; i++) {
-      const h = calcHeight(ps[i])
+      const h = calcHeight(points[i])
       if (h > maxH) {
         maxH = h
       }
@@ -110,36 +133,61 @@ class FloodAnalysis extends Draw {
     this.maxHeight = maxH
   }
 
+  public setCurrentHeight(val: number, isConstant: boolean = true): void {
+    const floodArea = this.currentFloodArea()
+    if (!floodArea || !floodArea.polygon) {
+      return
+    }
+    this.stopFloodAnimate()
+    floodArea.polygon.extrudedHeight = new Cesium.CallbackProperty(() => {
+      return val
+    }, isConstant)
+  }
+
   public startFloodAnimate(option?: FloodAnimateOption): void {
     const floodArea = this.currentFloodArea()
     if (!floodArea) {
       return
     }
-    const { totalMilliseconds = 3000, totalFrame = 60 } = option || {}
+    const { currentHeightChange } = option || {}
+    let { totalMilliseconds = 3000, totalFrame = 60 } = option || {}
+    if (totalMilliseconds < 300) {
+      totalMilliseconds = 300
+    }
+    if (totalMilliseconds / totalFrame < 10) {
+      totalFrame = totalMilliseconds / 10
+    }
+
     const { maxHeight, minHeight } = this
 
-    const timespan = totalMilliseconds / totalFrame // 单次时间间隔
-    const heightDiff = maxHeight - minHeight // 高度差值
-    const heightGrow = heightDiff / totalFrame // 高度增幅
+    const timespan = totalMilliseconds / totalFrame // timespan per frame
+    const heightDiff = maxHeight - minHeight
+    const heightGrow = heightDiff / totalFrame
 
     let index = 0
     const self = this
-    const id = setInterval(() => {
+    this.intervalId = setInterval(() => {
       if (!floodArea || !floodArea.polygon) {
         return
       }
+      const currentHeight = minHeight + heightGrow * index
       floodArea.polygon.extrudedHeight = new Cesium.CallbackProperty(() => {
-        return minHeight + heightGrow * index
+        return currentHeight
       }, false)
+      currentHeightChange && currentHeightChange(currentHeight)
       index++
 
-      const nowH = floodArea.polygon.extrudedHeight.getValue(
-        self.viewer.clock.currentTime
-      )
-      if (nowH > maxHeight) {
-        clearInterval(id)
+      // const nowH = floodArea.polygon.extrudedHeight.getValue(
+      //   self.viewer.clock.currentTime
+      // )
+      if (currentHeight > maxHeight) {
+        self.stopFloodAnimate()
       }
     }, timespan)
+  }
+
+  public stopFloodAnimate(): void {
+    clearInterval(this.intervalId)
   }
 }
 

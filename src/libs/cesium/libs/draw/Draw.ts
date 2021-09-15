@@ -2,6 +2,7 @@ import * as Cesium from 'cesium'
 
 export type DrawUserCallBackOption = {
   started?: () => void
+  beforeStop?: (pickedPositions: Cesium.Cartesian3[]) => void
   stoped?: () => void
 }
 
@@ -58,6 +59,7 @@ class Draw {
   protected viewer: Cesium.Viewer
 
   private activeShapePoints: Cesium.Cartesian3[] = []
+  private drawShapePickedPositions: Cesium.Cartesian3[] = []
   private activeShape: Cesium.Entity | undefined
   private mousePoint: Cesium.Entity | undefined
 
@@ -181,16 +183,22 @@ class Draw {
 
   private terminateShape(
     drawMode: DrawMode,
-    option: DrawShapeEntityPropertyOption & DrawShapeEntityNameAddition
+    option: DrawShapeEntityPropertyOption &
+      DrawShapeEntityNameAddition &
+      DrawUserCallBackOption
   ): void {
     const {
       viewer,
       activeShapePoints,
+      drawShapePickedPositions,
       mousePoint,
       activeShape,
       drawShapeEntityName,
     } = this
     activeShapePoints.pop()
+
+    option && option.beforeStop && option.beforeStop(drawShapePickedPositions)
+
     const entity = this.buildShape(drawMode, activeShapePoints, option)
     if (!entity) {
       return
@@ -209,6 +217,7 @@ class Draw {
     this.mousePoint = undefined
     this.activeShape = undefined
     this.activeShapePoints = []
+    this.drawShapePickedPositions = []
   }
 
   protected drawShapeEntityName(
@@ -250,6 +259,7 @@ class Draw {
       if (!position || !Cesium.defined(position)) {
         return
       }
+
       if (self.activeShapePoints.length === 0) {
         self.mousePoint = self.createShapeActivePoint(position, option)
         self.activeShapePoints.push(position)
@@ -265,6 +275,7 @@ class Draw {
         )
       }
       self.activeShapePoints.push(position)
+      self.drawShapePickedPositions.push(Cesium.clone(position))
       // createShapeActivePoint(position, option)
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
 
