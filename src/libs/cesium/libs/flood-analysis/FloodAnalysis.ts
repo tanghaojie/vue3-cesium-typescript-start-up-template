@@ -97,7 +97,7 @@ class FloodAnalysis extends Draw {
     return undefined
   }
 
-  public calcFloodAreaMinMaxHeight(points: Cesium.Cartesian3[]): void {
+  private calcFloodAreaMinMaxHeight(points: Cesium.Cartesian3[]): void {
     if (!points) {
       return
     }
@@ -145,6 +145,7 @@ class FloodAnalysis extends Draw {
   }
 
   public startFloodAnimate(option?: FloodAnimateOption): void {
+    this.stopFloodAnimate()
     const floodArea = this.currentFloodArea()
     if (!floodArea) {
       return

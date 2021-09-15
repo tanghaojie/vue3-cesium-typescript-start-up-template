@@ -52,6 +52,7 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
+import debounce from '@/libs/utils/debounce'
 
 echarts.use([GridComponent, LineChart, CanvasRenderer])
 
@@ -62,7 +63,6 @@ export default defineComponent({
   setup() {
     const sampleChart = shallowRef<HTMLElement | null>(null)
     const chart = shallowRef<echarts.ECharts | undefined>(undefined)
-    const timer = ref<number | null>(null)
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
     const initChart = (): void => {
@@ -92,17 +92,12 @@ export default defineComponent({
       return store.state.jtCesiumVue.toolbar.terrainSampling
     })
 
-    const debounce = (fn: any, delay: number) => {
-      if (timer.value !== null) {
-        clearTimeout(timer.value)
-      }
-      timer.value = window.setTimeout(fn, delay)
-    }
+    const chartResize = debounce(() => {
+      chart.value?.resize()
+    }, 200)
 
     const terrainSampleChartResizing = () => {
-      debounce(() => {
-        chart.value?.resize()
-      }, 200)
+      chartResize()
     }
 
     const buildChart = () => {
@@ -199,7 +194,6 @@ export default defineComponent({
     return {
       sampleChart,
       chart,
-      timer,
       buildChart,
       terrainSampling,
       initChart,
