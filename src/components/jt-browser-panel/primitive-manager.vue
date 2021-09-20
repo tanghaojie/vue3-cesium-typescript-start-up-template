@@ -294,14 +294,14 @@ export default defineComponent({
 
       const d = add3DTileset({
         name: '永寿桥',
-        url: 'http://117.139.247.104:60090/GisData/models/YongShouQiao/YongShouQiao/tileset.json',
+        url: 'http://117.139.247.104:60090/GisData/models/yongshouqiao_3dtiles/tileset.json',
         show: true,
       })
       change3DTilesetHeight(d as Cesium.Cesium3DTileset, -494)
 
       const q = add3DTileset({
         name: '高家碉楼',
-        url: 'http://117.139.247.104:60090/GisData/models/GaoJiaDiaoLou/GaoJiaDiaoLou/tileset.json',
+        url: 'http://117.139.247.104:60090/GisData/models/gaojiadiaolou_3dtiles/tileset.json',
         show: true,
       })
       change3DTilesetHeight(q as Cesium.Cesium3DTileset, -540.5)

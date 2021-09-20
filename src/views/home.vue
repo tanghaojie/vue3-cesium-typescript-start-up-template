@@ -44,7 +44,7 @@
           <locationbar v-if="cesiumLoaded && locationBarShow" />
         </overlay>
 
-        <jt-cesium-vue @loaded="loaded" />
+        <jt-cesium-vue @loaded="loaded" :depthTestAgainstTerrain="true" />
       </div>
     </div>
   </div>
