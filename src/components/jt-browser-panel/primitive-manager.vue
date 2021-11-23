@@ -286,32 +286,39 @@ export default defineComponent({
 
     const initDemoMode = (): void => {
       const w = add3DTileset({
-        name: '张家跳蹲桥',
-        url: 'http://117.139.247.104:60090/GisData/models/ZhangJiaTiaoDunQiao/ZhangJiaTiaoDunQiao/tileset.json',
+        name: '白水寺',
+        url: 'http://117.139.247.104:60090/GisData/models/wenwu/BaiShuiSi_3dt/tileset.json',
         show: true,
       })
-      change3DTilesetHeight(w as Cesium.Cesium3DTileset, -516)
+      change3DTilesetHeight(w as Cesium.Cesium3DTileset, -422)
 
-      const d = add3DTileset({
-        name: '永寿桥',
-        url: 'http://117.139.247.104:60090/GisData/models/yongshouqiao_3dtiles/tileset.json',
+      const e = add3DTileset({
+        name: '永利桥',
+        url: 'http://117.139.247.104:60090/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
         show: true,
       })
-      change3DTilesetHeight(d as Cesium.Cesium3DTileset, -494)
+      change3DTilesetHeight(e as Cesium.Cesium3DTileset, -487)
 
       const q = add3DTileset({
-        name: '高家碉楼',
-        url: 'http://117.139.247.104:60090/GisData/models/gaojiadiaolou_3dtiles/tileset.json',
+        name: '刘氏宗祠',
+        url: 'http://117.139.247.104:60090/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
         show: true,
       })
-      change3DTilesetHeight(q as Cesium.Cesium3DTileset, -540.5)
+      change3DTilesetHeight(q as Cesium.Cesium3DTileset, -426)
 
       const a = add3DTileset({
-        name: '杨世安墓',
-        url: 'http://117.139.247.104:60090/GisData/models/YangShiAnMu/YangShiAnMu/tileset.json',
+        name: '五凤关圣宫',
+        url: 'http://117.139.247.104:60090/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
         show: true,
       })
-      change3DTilesetHeight(a as Cesium.Cesium3DTileset, -568)
+      change3DTilesetHeight(a as Cesium.Cesium3DTileset, -325)
+
+      const r = add3DTileset({
+        name: '清音溪摩崖造像',
+        url: 'http://117.139.247.104:60090/GisData/models/wenwu/QingYinXiMoYaZaoXiang_3dt/tileset.json',
+        show: true,
+      })
+      change3DTilesetHeight(r as Cesium.Cesium3DTileset, -557)
     }
 
     const initDefaultData = (): void => {
