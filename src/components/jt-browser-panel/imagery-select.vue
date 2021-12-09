@@ -112,7 +112,10 @@ import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
 import store from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
-import type { ImagerySource } from './common'
+import ImageryManager, {
+  ImagerySource,
+  Imagery,
+} from '@/libs/cesium/libs/imagery-manager/ImageryManager'
 
 export default defineComponent({
   name: '',

@@ -9,6 +9,8 @@ import type { SplitType } from '@/store/modules/jt-cesium-vue/modules/toolbar/mo
 import { ImageryActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/action-types'
 import { ImageryMutationTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/mutation-types'
 
+import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
+
 const view: Group = {
   name: '影像',
   items: [
@@ -76,6 +78,18 @@ const view: Group = {
             split
           )
         }
+      },
+    },
+
+    {
+      name: '偏移纠正',
+      icon: 'overlap',
+
+      clickHandler: (): void => {
+        store.dispatch(
+          `jtCesiumVue/layout/${LayoutActionTypes.ADD_UNIQUE_NAME_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
+          'jt-imagery-layer-correct-offset'
+        )
       },
     },
   ],

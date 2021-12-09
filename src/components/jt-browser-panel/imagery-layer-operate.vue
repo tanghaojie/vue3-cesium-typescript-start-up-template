@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-const CHANGE_EVENT = 'change'
+const PROPERTY_CHANGE_EVENT = 'propertyChange'
 const UPDATE_MODEL_EVENT = 'update:modelValue'
 
 import {
@@ -78,6 +78,7 @@ import {
   computed,
   watch,
   watchEffect,
+  PropType,
 } from 'vue'
 import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
@@ -93,7 +94,7 @@ export default defineComponent({
     c: Number,
     h: Number,
     s: Number,
-    cb: Function,
+    // cb: Function, // not use
     imageryLayerName: {
       type: String,
       default: '',
@@ -112,7 +113,7 @@ export default defineComponent({
     const visible = ref(props.modelValue)
 
     const afterChange = (key: string, val: number): void => {
-      context.emit(CHANGE_EVENT, key, val)
+      context.emit(PROPERTY_CHANGE_EVENT, key, val)
     }
 
     const toolbarHeight = computed((): string => {
@@ -159,7 +160,7 @@ export default defineComponent({
     }
   },
   emits: {
-    [CHANGE_EVENT](key: string, val: number) {
+    [PROPERTY_CHANGE_EVENT](key: string, val: number) {
       return true
     },
 

@@ -7,7 +7,7 @@
           <div class="plus cursor-pointer" @click="showAdd3DTilesetDialog">
             <i class="el-icon-circle-plus-outline"></i>
           </div>
-          <div class="cursor-pointer ml-3" @click="syncPrimitives">
+          <div class="cursor-pointer ml-3" @click="syncUIList">
             <i class="el-icon-refresh"></i>
           </div>
         </div>
@@ -87,13 +87,7 @@ import {
   transform,
   change3DTilesetHeight,
 } from '@/libs/cesium/libs/transform'
-
-type Primitive = {
-  name: string
-  uuid: string
-  show: boolean
-  cesiumPrimitiveIndex: number
-}
+import { Primitive } from '@/libs/cesium/libs/primitive-manager/PrimitiveManager'
 
 export default defineComponent({
   name: '',
@@ -116,30 +110,14 @@ export default defineComponent({
 
     const route = useRoute()
 
-    const syncPrimitives = (): void => {
+    const syncUIList = (): void => {
       primitives.splice(0, primitives.length)
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
-      const pris = viewer.scene.primitives
-      const len = pris.length
-      for (let i = len - 1; i >= 0; --i) {
-        const model = pris.get(i)
-        const flag = model[PRIMITIVE_MANAGER_FLAG_KEY]
-        if (
-          props.inManagedPrimitiveOnly &&
-          flag !== PRIMITIVE_MANAGER_FLAG_VALUE
-        ) {
-          continue
-        }
-        primitives.push({
-          name: model.name || '<NoneName>',
-          uuid: model.uuid || '<NoneUuid>',
-          show: model.show,
-          cesiumPrimitiveIndex: i,
-        })
-      }
+      const pris = (
+        cesiumRef || {}
+      ).viewer?.jt?.primitiveManager.syncPrimitives(
+        props.inManagedPrimitiveOnly
+      )
+      pris && primitives.push(...pris)
     }
 
     const changePrimitiveVisible = (index: number, show: boolean): void => {
@@ -175,67 +153,33 @@ export default defineComponent({
     }
 
     const add3DTileset = (option: any): any => {
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
+      const c3DtilesetObj = (
+        cesiumRef || {}
+      ).viewer?.jt?.primitiveManager.add3DTileset(option)
 
-      const c3Dtileset = new Cesium.Cesium3DTileset({
-        ...option,
-      })
-
-      const c3DtilesetObj = c3Dtileset as any
-      c3DtilesetObj[PRIMITIVE_MANAGER_FLAG_KEY] = PRIMITIVE_MANAGER_FLAG_VALUE
-      c3DtilesetObj.name = option.name
-      c3DtilesetObj.uuid = uuid()
-      c3Dtileset.show = option.show
-
-      viewer.scene.primitives.add(c3Dtileset)
-      syncPrimitives()
-
+      syncUIList()
       return c3DtilesetObj
     }
 
     const addGltf = (option: any): void => {
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
-
-      const gltf = Cesium.Model.fromGltf({
-        ...option,
-      })
-      const gltfObj = gltf as any
-      gltfObj[PRIMITIVE_MANAGER_FLAG_KEY] = PRIMITIVE_MANAGER_FLAG_VALUE
-      gltfObj.name = option.name
-      gltfObj.uuid = uuid()
-      gltf.show = option.show
-      viewer.scene.primitives.add(gltf)
-      syncPrimitives()
+      const gltfObj = (cesiumRef || {}).viewer?.jt?.primitiveManager.addGltf(
+        option
+      )
+      syncUIList()
     }
 
     const removePrimitive = (index: number): void => {
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
-
-      const ps = viewer.scene.primitives
-      const pri = ps.get(primitives[index].cesiumPrimitiveIndex)
-      ps.remove(pri)
-      syncPrimitives()
+      ;(cesiumRef || {}).viewer?.jt?.primitiveManager.removePrimitive(index)
+      syncUIList()
     }
 
     const primitiveNameDoubleClick = (index: number): void => {
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
-      const ps = viewer.scene.primitives
-      const pri = ps.get(primitives[index].cesiumPrimitiveIndex)
+      const pri = (cesiumRef || {}).viewer?.jt?.primitiveManager.getPrimitive(
+        index
+      )
       const location = calculatePrimitiveCenter(pri)
 
-      viewer.camera.flyTo({
+      ;(cesiumRef || {}).viewer?.camera.flyTo({
         duration: 1,
         destination: Cesium.Cartesian3.fromDegrees(
           location.longitude,
@@ -250,30 +194,25 @@ export default defineComponent({
       })
     }
 
-    const getPrimitiveIndex = (url: string): number => {
-      syncPrimitives()
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return -1
-      }
-      const pris = viewer.scene.primitives
-      const len = primitives.length
-      for (let i = 0; i < len; i++) {
-        const model = pris.get(primitives[i].cesiumPrimitiveIndex)
-        if (url === model._url || model.basePath) {
-          return i
-        }
-      }
-      return -1
-    }
+    // const getPrimitiveIndex = (url: string): number => {
+    //   syncUIList()
+    //   const { viewer } = cesiumRef || {}
+    //   if (!viewer) {
+    //     return -1
+    //   }
+    //   const pris = viewer.scene.primitives
+    //   const len = primitives.length
+    //   for (let i = 0; i < len; i++) {
+    //     const model = pris.get(primitives[i].cesiumPrimitiveIndex)
+    //     if (url === model._url || model.basePath) {
+    //       return i
+    //     }
+    //   }
+    //   return -1
+    // }
 
     const init = (): void => {
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
-
-      viewer.scene.primitives.removeAll()
+      ;(cesiumRef || {}).viewer?.jt?.primitiveManager.removeAll()
 
       if (route.query[UrlQuery.DemoMode]) {
         initDemoMode()
@@ -285,60 +224,70 @@ export default defineComponent({
     }
 
     const initDemoMode = (): void => {
-      const w = add3DTileset({
+      const pm = (cesiumRef || {}).viewer?.jt?.primitiveManager
+      if (!pm) {
+        return
+      }
+      const w = pm.add3DTileset({
         name: '白水寺',
         url: 'http://117.139.247.104:60090/GisData/models/wenwu/BaiShuiSi_3dt/tileset.json',
         show: true,
       })
       change3DTilesetHeight(w as Cesium.Cesium3DTileset, -422)
 
-      const e = add3DTileset({
-        name: '永利桥',
-        url: 'http://117.139.247.104:60090/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
-        show: true,
-      })
-      change3DTilesetHeight(e as Cesium.Cesium3DTileset, -487)
+      // const e = pm.add3DTileset({
+      //   name: '永利桥',
+      //   url: 'http://117.139.247.104:60090/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
+      //   show: true,
+      // })
+      // change3DTilesetHeight(e as Cesium.Cesium3DTileset, -487)
 
-      const q = add3DTileset({
-        name: '刘氏宗祠',
-        url: 'http://117.139.247.104:60090/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
-        show: true,
-      })
-      change3DTilesetHeight(q as Cesium.Cesium3DTileset, -426)
+      // const q = pm.add3DTileset({
+      //   name: '刘氏宗祠',
+      //   url: 'http://117.139.247.104:60090/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
+      //   show: true,
+      // })
+      // change3DTilesetHeight(q as Cesium.Cesium3DTileset, -426)
 
-      const a = add3DTileset({
-        name: '五凤关圣宫',
-        url: 'http://117.139.247.104:60090/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
-        show: true,
-      })
-      change3DTilesetHeight(a as Cesium.Cesium3DTileset, -325)
+      // const a = pm.add3DTileset({
+      //   name: '五凤关圣宫',
+      //   url: 'http://117.139.247.104:60090/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
+      //   show: true,
+      // })
+      // change3DTilesetHeight(a as Cesium.Cesium3DTileset, -325)
 
-      const r = add3DTileset({
+      const r = pm.add3DTileset({
         name: '清音溪摩崖造像',
         url: 'http://117.139.247.104:60090/GisData/models/wenwu/QingYinXiMoYaZaoXiang_3dt/tileset.json',
         show: true,
       })
       change3DTilesetHeight(r as Cesium.Cesium3DTileset, -557)
+
+      syncUIList()
     }
 
     const initDefaultData = (): void => {
-      addGltf({
-        name: '精模(适配全球地形)',
+      const pm = (cesiumRef || {}).viewer?.jt?.primitiveManager
+      if (!pm) {
+        return
+      }
+      pm.addGltf({
+        name: '精模',
         url: sampleData.rc,
         modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
-          Cesium.Cartesian3.fromDegrees(103.6144, 30.95525207451468, 665.0),
+          Cesium.Cartesian3.fromDegrees(103.6144, 30.95525207451468, 0.0),
           new Cesium.HeadingPitchRoll(Cesium.Math.PI_OVER_TWO, 0, 0)
         ),
         show: false,
       })
 
-      add3DTileset({
+      pm.add3DTileset({
         name: 'iPad Pro Lidar(point cloud)',
         url: sampleData['my-home'],
         show: false,
       })
 
-      add3DTileset({
+      pm.add3DTileset({
         name: '成都建筑群',
         url: sampleData['cd-buildings'],
         show: false,
@@ -351,15 +300,19 @@ export default defineComponent({
         // debugShowMemoryUsage: true,
       })
 
-      add3DTileset({
-        name: '简模001(适配全球地形)',
+      const w = pm.add3DTileset({
+        name: '简模001',
         url: sampleData['shp-factory'],
       })
+      change3DTilesetHeight(w as Cesium.Cesium3DTileset, -673)
 
-      add3DTileset({
-        name: '简模002(适配全球地形)',
+      const e = pm.add3DTileset({
+        name: '简模002',
         url: sampleData.apartment,
       })
+      change3DTilesetHeight(e as Cesium.Cesium3DTileset, -670)
+
+      syncUIList()
     }
 
     const initQuery = (): void => {
@@ -372,7 +325,7 @@ export default defineComponent({
 
         const flyToTile3D = route.query[UrlQuery.FlyToAddition3DTile]
         if (flyToTile3D && tile3DUrl) {
-          syncPrimitives()
+          syncUIList()
           const { viewer } = cesiumRef || {}
           if (!viewer) {
             return
@@ -416,7 +369,7 @@ export default defineComponent({
       primitives,
       add3DTilesetDialog,
 
-      syncPrimitives,
+      syncUIList,
       changePrimitiveVisible,
       showAdd3DTilesetDialog,
       add3DTilsetConfirm,
@@ -429,7 +382,7 @@ export default defineComponent({
       initQuery,
       initDefaultData,
       initDemoMode,
-      getPrimitiveIndex,
+      // getPrimitiveIndex,
     }
   },
 })

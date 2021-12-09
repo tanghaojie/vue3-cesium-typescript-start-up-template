@@ -9,6 +9,8 @@ import TerrainSampling from '@/libs/cesium/libs/terrain-sampling/TerrainSampling
 import Classification from '@/libs/cesium/libs/classification/Classification'
 import PercentageChange from '@/libs/cesium/libs/percentage-change/PercentageChange'
 import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
+import ImageryManager from '@/libs/cesium/libs/imagery-manager/ImageryManager'
+import PrimitiveManager from '@/libs/cesium/libs/primitive-manager/PrimitiveManager'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -94,6 +96,22 @@ class Jt {
       this._floodAnalysis = new FloodAnalysis(this.viewer)
     }
     return this._floodAnalysis
+  }
+
+  private _imageryManager?: ImageryManager
+  public get imageryManager(): ImageryManager {
+    if (!this._imageryManager) {
+      this._imageryManager = new ImageryManager(this.viewer)
+    }
+    return this._imageryManager
+  }
+
+  private _primitiveManager?: PrimitiveManager
+  public get primitiveManager(): PrimitiveManager {
+    if (!this._primitiveManager) {
+      this._primitiveManager = new PrimitiveManager(this.viewer)
+    }
+    return this._primitiveManager
   }
 }
 
