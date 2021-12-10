@@ -91,7 +91,8 @@ export default defineComponent({
     },
     cesiumToken: {
       type: String,
-      default: '',
+      default:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxMjZjNGMyYy02ZmJlLTQ1ZGYtOWE2NC0yYTdjYmZhODUxYTgiLCJpZCI6NDMyMjgsImlhdCI6MTYxNzMzNDA5OX0.ox0okdwvueefvj7I4KVd9KNqVOEsMStSTmn8sDhoim4',
     },
     depthTestAgainstTerrain: {
       type: Boolean,

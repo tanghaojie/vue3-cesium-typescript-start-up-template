@@ -29,5 +29,6 @@ module.exports = {
       },
     ],
     'vue/no-unused-components': 'off',
+    'prettier/prettier': 'off',
   },
 }
