@@ -230,35 +230,35 @@ export default defineComponent({
       }
       const w = pm.add3DTileset({
         name: '白水寺',
-        url: 'http://117.139.247.104:60090/GisData/models/wenwu/BaiShuiSi_3dt/tileset.json',
+        url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/BaiShuiSi_3dt/tileset.json',
         show: true,
       })
       change3DTilesetHeight(w as Cesium.Cesium3DTileset, -422)
 
       // const e = pm.add3DTileset({
       //   name: '永利桥',
-      //   url: 'http://117.139.247.104:60090/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
+      //   url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
       //   show: true,
       // })
       // change3DTilesetHeight(e as Cesium.Cesium3DTileset, -487)
 
       // const q = pm.add3DTileset({
       //   name: '刘氏宗祠',
-      //   url: 'http://117.139.247.104:60090/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
+      //   url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
       //   show: true,
       // })
       // change3DTilesetHeight(q as Cesium.Cesium3DTileset, -426)
 
       // const a = pm.add3DTileset({
       //   name: '五凤关圣宫',
-      //   url: 'http://117.139.247.104:60090/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
+      //   url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
       //   show: true,
       // })
       // change3DTilesetHeight(a as Cesium.Cesium3DTileset, -325)
 
       const r = pm.add3DTileset({
         name: '清音溪摩崖造像',
-        url: 'http://117.139.247.104:60090/GisData/models/wenwu/QingYinXiMoYaZaoXiang_3dt/tileset.json',
+        url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/QingYinXiMoYaZaoXiang_3dt/tileset.json',
         show: true,
       })
       change3DTilesetHeight(r as Cesium.Cesium3DTileset, -557)

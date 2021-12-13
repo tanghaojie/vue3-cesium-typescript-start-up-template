@@ -51,6 +51,7 @@ npm run build
 - Sampling
 - Contour
 - Settings
+- Offset correct
 - more is coming ...
 
 ## Guide
@@ -120,7 +121,7 @@ _Note: do not use cesium versions from 1.81.0 to 1.82.1, it exists a [bug](https
 
 _可能需要跨过[墙]才能访问_
 
-国内访问不了可以试试[这里](http://117.139.247.104:60080/vue3-cesium-typescript-start-up-template/)
+国内访问不了可以试试[这里](http://tanghaojie.dynv6.net:60080/vue3-cesium-typescript-start-up-template/)
 
 ## 用法说明
 
@@ -166,6 +167,8 @@ npm run build
 - 地形采样
 - 等高线
 - 设置
+- 分屏
+- 偏移纠正
 - 持续加入中...
 
 ## 指南
