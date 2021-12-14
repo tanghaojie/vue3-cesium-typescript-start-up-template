@@ -16,14 +16,7 @@
         <div
           v-for="(primitive, index) in primitives"
           :key="index"
-          class="
-            flex flex-row
-            justify-center
-            items-center
-            text-white
-            py-2
-            select-none
-          "
+          class="flex flex-row justify-center items-center text-white py-2 select-none"
         >
           <el-checkbox
             size="medium"
@@ -90,7 +83,7 @@ import {
 import { Primitive } from '@/libs/cesium/libs/primitive-manager/PrimitiveManager'
 
 export default defineComponent({
-  name: '',
+  name: 'PrimitiveManager',
   components: { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton },
   props: {
     inManagedPrimitiveOnly: {
@@ -230,35 +223,35 @@ export default defineComponent({
       }
       const w = pm.add3DTileset({
         name: '白水寺',
-        url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/BaiShuiSi_3dt/tileset.json',
+        url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/BaiShuiSi_3dt/tileset.json',
         show: true,
       })
       change3DTilesetHeight(w as Cesium.Cesium3DTileset, -422)
 
       // const e = pm.add3DTileset({
       //   name: '永利桥',
-      //   url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
+      //   url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
       //   show: true,
       // })
       // change3DTilesetHeight(e as Cesium.Cesium3DTileset, -487)
 
       // const q = pm.add3DTileset({
       //   name: '刘氏宗祠',
-      //   url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
+      //   url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
       //   show: true,
       // })
       // change3DTilesetHeight(q as Cesium.Cesium3DTileset, -426)
 
       // const a = pm.add3DTileset({
       //   name: '五凤关圣宫',
-      //   url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
+      //   url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
       //   show: true,
       // })
       // change3DTilesetHeight(a as Cesium.Cesium3DTileset, -325)
 
       const r = pm.add3DTileset({
         name: '清音溪摩崖造像',
-        url: 'http://tanghaojie.dynv6.net:60090/GisData/models/wenwu/QingYinXiMoYaZaoXiang_3dt/tileset.json',
+        url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/QingYinXiMoYaZaoXiang_3dt/tileset.json',
         show: true,
       })
       change3DTilesetHeight(r as Cesium.Cesium3DTileset, -557)
@@ -271,6 +264,13 @@ export default defineComponent({
       if (!pm) {
         return
       }
+      // const clippingPlanes = new Cesium.ClippingPlaneCollection({
+      //   planes: [
+      //     new Cesium.ClippingPlane(new Cesium.Cartesian3(1.0, 0.0, 0.0), 10.0),
+      //   ],
+      //   edgeWidth: 10.0,
+      //   edgeColor: Cesium.Color.RED,
+      // })
       pm.addGltf({
         name: '精模',
         url: sampleData.rc,
@@ -279,6 +279,7 @@ export default defineComponent({
           new Cesium.HeadingPitchRoll(Cesium.Math.PI_OVER_TWO, 0, 0)
         ),
         show: false,
+        // clippingPlanes: clippingPlanes,
       })
 
       pm.add3DTileset({

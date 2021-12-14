@@ -17,6 +17,11 @@ const view: Group = {
         window.open('https://sandcastle.cesium.com/')
       },
     },
+    {
+      name: 'test',
+      icon: 'demo',
+      clickHandler: (): void => {},
+    },
   ],
 }
 
