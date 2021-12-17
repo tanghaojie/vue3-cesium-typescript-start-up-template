@@ -118,7 +118,7 @@ import ImageryManager, {
 } from '@/libs/cesium/libs/imagery-manager/ImageryManager'
 
 export default defineComponent({
-  name: '',
+  name: 'ImagerySelect',
   components: { ElSlider, overlay, jtDraggableResizable },
   props: {
     imagerySources: {

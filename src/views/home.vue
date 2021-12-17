@@ -22,20 +22,7 @@
 
           <div
             v-if="!toolbarShow"
-            class="
-              absolute
-              top-8
-              right-8
-              bg-gray-700
-              w-10
-              h-10
-              rounded-lg
-              flex
-              justify-center
-              items-center
-              border
-              pointer-events-auto
-            "
+            class="absolute top-8 right-8 bg-gray-700 w-10 h-10 rounded-lg flex justify-center items-center border pointer-events-auto"
             @click.stop="openSetting()"
           >
             <jt-icon name="setting" class="text-3xl text-gray-300" />

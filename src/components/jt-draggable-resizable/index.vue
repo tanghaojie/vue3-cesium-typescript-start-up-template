@@ -52,7 +52,7 @@ import vue3DraggableResizable from './vue3-draggable-resizable.vue'
 
 export default defineComponent({
   inheritAttrs: true,
-  name: '',
+  name: 'JtDraggableResizable',
   props: {
     modelValue: {
       type: Boolean,

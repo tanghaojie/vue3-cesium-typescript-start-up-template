@@ -14,12 +14,12 @@ import store from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import UrlQuery from '@/utils/url-query'
 
-import imageryManager from './imagery-manager.vue'
-import terrainManager from './terrain-manager.vue'
-import primitiveManager from './primitive-manager.vue'
+import imageryManager from './imagery/imagery-manager.vue'
+import terrainManager from './terrain/terrain-manager.vue'
+import primitiveManager from './pritive/primitive-manager.vue'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-browser-panel',
   components: { ElScrollbar, imageryManager, terrainManager, primitiveManager },
   setup() {
     onMounted(() => {

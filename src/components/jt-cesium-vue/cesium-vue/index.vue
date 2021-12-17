@@ -84,7 +84,12 @@ export default defineComponent({
       type: Number,
       default: Cesium.SceneMode.SCENE3D,
     },
-    globalViewerMountOnWindow: {
+    viewerMountOnWindow: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
+    cesiumMountOnWindow: {
       type: Boolean,
       default: true,
       required: false,
@@ -187,8 +192,9 @@ export default defineComponent({
       // eslint-disable-next-line
       cesiumRef.viewerContainer = (viewer as any)._element
 
-      const { globalViewerMountOnWindow } = props
-      globalViewerMountOnWindow && (window.viewer = viewer)
+      const { viewerMountOnWindow, cesiumMountOnWindow } = props
+      viewerMountOnWindow && (window.viewer = viewer)
+      cesiumMountOnWindow && (window.Cesium = Cesium)
       return viewer
     }
 
@@ -209,8 +215,9 @@ export default defineComponent({
       if (cesiumRef) {
         cesiumRef.viewer = undefined
       }
-      const { globalViewerMountOnWindow } = props
-      globalViewerMountOnWindow && (window.viewer = undefined)
+      const { viewerMountOnWindow, cesiumMountOnWindow } = props
+      viewerMountOnWindow && (window.viewer = undefined)
+      cesiumMountOnWindow && (window.Cesium = undefined)
     })
 
     return {

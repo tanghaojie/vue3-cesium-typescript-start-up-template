@@ -41,7 +41,7 @@ import { defineComponent, reactive, ref, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import sampleData from '@/resources/sample-data'
-import terrainSetting from './terrain-setting.vue'
+import terrainSetting from '../terrain/terrain-setting.vue'
 import { ElSelect, ElOption, ElDialog, ElSlider } from 'element-plus'
 
 export default defineComponent({

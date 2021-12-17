@@ -17,14 +17,7 @@
         <div
           v-for="(imagery, index) in imageries"
           :key="index"
-          class="
-            flex flex-row
-            justify-center
-            items-center
-            text-white
-            py-2
-            select-none
-          "
+          class="flex flex-row justify-center items-center text-white py-2 select-none"
         >
           <el-checkbox
             size="medium"
@@ -94,7 +87,7 @@ import {
 import imagerySourcesList from '@/libs/cesium/libs/imagery-manager/imagery-sources'
 
 export default defineComponent({
-  name: '',
+  name: 'ImageryManager',
   components: {
     ElIcon,
     ElCheckbox,

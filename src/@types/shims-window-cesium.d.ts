@@ -5,5 +5,6 @@ declare namespace globalThis {
 
   interface Window {
     viewer?: Cesium.Viewer
+    Cesium?: Cesium
   }
 }

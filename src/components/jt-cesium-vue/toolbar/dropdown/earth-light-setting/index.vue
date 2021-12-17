@@ -23,9 +23,6 @@ import {
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElRadioGroup, ElRadioButton } from 'element-plus'
 import Light from '@/libs/cesium/libs/light/Light'
-import * as Cesium from 'cesium'
-import terrainManagerVue from '@/components/jt-browser-panel/terrain-manager.vue'
-import TrustedServers from 'cesium/Source/Core/TrustedServers'
 
 export default defineComponent({
   name: 'earth-light-setting',

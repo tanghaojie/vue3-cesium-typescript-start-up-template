@@ -1,36 +1,30 @@
 <template>
-  <jtDraggableResizable
-    v-model="imageryCorrectOffsetShow"
+  <jt-main-area-dialog
+    v-model="visible"
     :resizable="false"
     :w="280"
     :h="'auto'"
     :initialPosition="'tr'"
-    class="pointer-events-auto"
+    :title="'偏移纠正'"
   >
-    <template v-slot:title>偏移纠正</template>
-    <div class="w-full bg-gray-800 bg-opacity-70">
-      <div class="w-full flex flex-col px-8 rounded-lg" @click.stop>
-        <div class="my-0">
-          <el-checkbox-group
-            v-model="imageryOffset.checked"
-            @change="correctOffsetChange"
-          >
-            <el-checkbox
-              v-for="item in imageryOffset.imageryList"
-              :key="item.index"
-              :label="item"
-              :disabled="item.correctOffset === undefined"
-            >
-              {{
-                item.name +
-                (item.correctOffset === undefined ? '(无须纠正)' : '')
-              }}
-            </el-checkbox>
-          </el-checkbox-group>
-        </div>
-      </div>
+    <div class="my-0">
+      <el-checkbox-group
+        v-model="imageryOffset.checked"
+        @change="correctOffsetChange"
+      >
+        <el-checkbox
+          v-for="item in imageryOffset.imageryList"
+          :key="item.index"
+          :label="item"
+          :disabled="item.correctOffset === undefined"
+        >
+          {{
+            item.name + (item.correctOffset === undefined ? '(无须纠正)' : '')
+          }}
+        </el-checkbox>
+      </el-checkbox-group>
     </div>
-  </jtDraggableResizable>
+  </jt-main-area-dialog>
 </template>
 
 <script lang="ts">
@@ -48,6 +42,10 @@ import { ElCheckbox, ElCheckboxGroup } from 'element-plus'
 import store from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
+import {
+  PROPERTY_CHANGE_EVENT,
+  UPDATE_MODEL_EVENT,
+} from '@/libs/utils/vue-const'
 
 type ImageryOffset = {
   checked: ImageryOffsetItem[]
@@ -61,13 +59,20 @@ type ImageryOffsetItem = {
 }
 
 export default defineComponent({
-  name: 'jt-imagery-layer-correct-offset',
+  name: 'imagery-layer-correct-offset',
   components: { ElCheckbox, ElCheckboxGroup, jtDraggableResizable },
-  setup() {
+  props: {
+    modelValue: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  setup(props, context) {
     const imageryOffset = reactive<ImageryOffset>({
       checked: [],
       imageryList: [],
     })
+    const visible = ref(props.modelValue)
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
@@ -145,7 +150,17 @@ export default defineComponent({
       imageryOffset,
       syncUIList,
       correctOffsetChange,
+      visible,
     }
+  },
+  emits: {
+    [PROPERTY_CHANGE_EVENT](key: string, val: number) {
+      return true
+    },
+
+    [UPDATE_MODEL_EVENT](val: boolean) {
+      return true
+    },
   },
 })
 </script>

@@ -86,7 +86,7 @@ import store from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 
 export default defineComponent({
-  name: '',
+  name: 'ImageryLayerOperate',
   components: { ElSlider, overlay, jtDraggableResizable },
   props: {
     a: Number,
@@ -94,7 +94,6 @@ export default defineComponent({
     c: Number,
     h: Number,
     s: Number,
-    // cb: Function, // not use
     imageryLayerName: {
       type: String,
       default: '',

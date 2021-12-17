@@ -69,10 +69,6 @@ import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
 import sampleData from '@/resources/sample-data'
-import {
-  PRIMITIVE_MANAGER_FLAG_VALUE,
-  PRIMITIVE_MANAGER_FLAG_KEY,
-} from './common'
 import uuid from '@/libs/utils/uuid'
 import UrlQuery from '@/utils/url-query'
 import {
@@ -145,17 +141,17 @@ export default defineComponent({
       add3DTilesetDialog.url = ''
     }
 
-    const add3DTileset = (option: any): any => {
-      const c3DtilesetObj = (
+    const add3DTileset = (option: any): Cesium.Cesium3DTileset | undefined => {
+      const c3Dtileset = (
         cesiumRef || {}
       ).viewer?.jt?.primitiveManager.add3DTileset(option)
 
       syncUIList()
-      return c3DtilesetObj
+      return c3Dtileset
     }
 
     const addGltf = (option: any): void => {
-      const gltfObj = (cesiumRef || {}).viewer?.jt?.primitiveManager.addGltf(
+      const gltf = (cesiumRef || {}).viewer?.jt?.primitiveManager.addGltf(
         option
       )
       syncUIList()
@@ -186,23 +182,6 @@ export default defineComponent({
         },
       })
     }
-
-    // const getPrimitiveIndex = (url: string): number => {
-    //   syncUIList()
-    //   const { viewer } = cesiumRef || {}
-    //   if (!viewer) {
-    //     return -1
-    //   }
-    //   const pris = viewer.scene.primitives
-    //   const len = primitives.length
-    //   for (let i = 0; i < len; i++) {
-    //     const model = pris.get(primitives[i].cesiumPrimitiveIndex)
-    //     if (url === model._url || model.basePath) {
-    //       return i
-    //     }
-    //   }
-    //   return -1
-    // }
 
     const init = (): void => {
       ;(cesiumRef || {}).viewer?.jt?.primitiveManager.removeAll()
@@ -264,13 +243,14 @@ export default defineComponent({
       if (!pm) {
         return
       }
-      // const clippingPlanes = new Cesium.ClippingPlaneCollection({
-      //   planes: [
-      //     new Cesium.ClippingPlane(new Cesium.Cartesian3(1.0, 0.0, 0.0), 10.0),
-      //   ],
-      //   edgeWidth: 10.0,
-      //   edgeColor: Cesium.Color.RED,
-      // })
+      const clippingPlanes = new Cesium.ClippingPlaneCollection({
+        planes: [
+          new Cesium.ClippingPlane(new Cesium.Cartesian3(0.0, 0.0, -1.0), 30.0),
+          // new Cesium.ClippingPlane(new Cesium.Cartesian3(1.0, 0.0, 0.0), 30.0),
+        ],
+        edgeWidth: 10.0,
+        edgeColor: Cesium.Color.RED,
+      })
       pm.addGltf({
         name: '精模',
         url: sampleData.rc,
@@ -383,7 +363,6 @@ export default defineComponent({
       initQuery,
       initDefaultData,
       initDemoMode,
-      // getPrimitiveIndex,
     }
   },
 })

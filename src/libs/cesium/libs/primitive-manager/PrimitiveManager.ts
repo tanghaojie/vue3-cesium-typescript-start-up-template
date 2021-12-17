@@ -13,7 +13,6 @@ class PrimitiveManager {
 
   public primitives: Primitive[] = []
   public static PRIMITIVE_MANAGER_FLAG_VALUE = '__JT_PRI_F'
-  public static PRIMITIVE_MANAGER_FLAG_KEY = '_j_p_m_flag'
 
   constructor(viewer: Cesium.Viewer) {
     this.viewer = viewer
@@ -25,10 +24,17 @@ class PrimitiveManager {
     const len = pris.length
     for (let i = len - 1; i >= 0; --i) {
       const model = pris.get(i)
-      const flag = model[PrimitiveManager.PRIMITIVE_MANAGER_FLAG_KEY]
+      if (
+        !(
+          model instanceof Cesium.Cesium3DTileset ||
+          model instanceof Cesium.Model
+        )
+      ) {
+        continue
+      }
       if (
         inManagedPrimitiveOnly &&
-        flag !== PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
+        model._PriManagFlag !== PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
       ) {
         continue
       }
@@ -42,57 +48,164 @@ class PrimitiveManager {
     return this.primitives
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public add3DTileset(option: any): any {
+  public add3DTileset(option: {
+    name: string
+    // cesium default
+    url: Cesium.Resource | string | Promise<Cesium.Resource> | Promise<string>
+    show?: boolean
+    modelMatrix?: Cesium.Matrix4
+    shadows?: Cesium.ShadowMode
+    maximumScreenSpaceError?: number
+    maximumMemoryUsage?: number
+    cullWithChildrenBounds?: boolean
+    cullRequestsWhileMoving?: boolean
+    cullRequestsWhileMovingMultiplier?: number
+    preloadWhenHidden?: boolean
+    preloadFlightDestinations?: boolean
+    preferLeaves?: boolean
+    dynamicScreenSpaceError?: boolean
+    dynamicScreenSpaceErrorDensity?: number
+    dynamicScreenSpaceErrorFactor?: number
+    dynamicScreenSpaceErrorHeightFalloff?: number
+    progressiveResolutionHeightFraction?: number
+    foveatedScreenSpaceError?: boolean
+    foveatedConeSize?: number
+    foveatedMinimumScreenSpaceErrorRelaxation?: number
+    foveatedInterpolationCallback?: Cesium.Cesium3DTileset.foveatedInterpolationCallback
+    foveatedTimeDelay?: number
+    skipLevelOfDetail?: boolean
+    baseScreenSpaceError?: number
+    skipScreenSpaceErrorFactor?: number
+    skipLevels?: number
+    immediatelyLoadDesiredLevelOfDetail?: boolean
+    loadSiblings?: boolean
+    clippingPlanes?: Cesium.ClippingPlaneCollection
+    classificationType?: Cesium.ClassificationType
+    ellipsoid?: Cesium.Ellipsoid
+    pointCloudShading?: any
+    imageBasedLightingFactor?: Cesium.Cartesian2
+    lightColor?: Cesium.Cartesian3
+    luminanceAtZenith?: number
+    sphericalHarmonicCoefficients?: Cesium.Cartesian3[]
+    specularEnvironmentMaps?: string
+    backFaceCulling?: boolean
+    showOutline?: boolean
+    vectorClassificationOnly?: boolean
+    vectorKeepDecodedPositions?: boolean
+    debugHeatmapTilePropertyName?: string
+    debugFreezeFrame?: boolean
+    debugColorizeTiles?: boolean
+    debugWireframe?: boolean
+    debugShowBoundingVolume?: boolean
+    debugShowContentBoundingVolume?: boolean
+    debugShowViewerRequestVolume?: boolean
+    debugShowGeometricError?: boolean
+    debugShowRenderingStatistics?: boolean
+    debugShowMemoryUsage?: boolean
+    debugShowUrl?: boolean
+  }): Cesium.Cesium3DTileset {
     const c3Dtileset = new Cesium.Cesium3DTileset({
       ...option,
     })
 
-    const c3DtilesetObj = c3Dtileset as any
-    c3DtilesetObj[PrimitiveManager.PRIMITIVE_MANAGER_FLAG_KEY] =
-      PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
-    c3DtilesetObj.name = option.name
-    c3DtilesetObj.uuid = uuid()
-    c3Dtileset.show = option.show
+    c3Dtileset._PriManagFlag = PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
+    c3Dtileset.name = option.name
+    c3Dtileset.uuid = uuid()
+    c3Dtileset.show = option.show || false
 
     this.viewer.scene.primitives.add(c3Dtileset)
 
     this.syncPrimitives()
-    return c3DtilesetObj
+    return c3Dtileset
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public addGltf(option: any): any {
+  public addGltf(option: {
+    name: string
+    // cesium default
+    url: Cesium.Resource | string
+    basePath?: Cesium.Resource | string
+    show?: boolean
+    modelMatrix?: Cesium.Matrix4
+    scale?: number
+    minimumPixelSize?: number
+    maximumScale?: number
+    id?: any
+    allowPicking?: boolean
+    incrementallyLoadTextures?: boolean
+    asynchronous?: boolean
+    clampAnimations?: boolean
+    shadows?: Cesium.ShadowMode
+    debugShowBoundingVolume?: boolean
+    debugWireframe?: boolean
+    heightReference?: Cesium.HeightReference
+    scene?: Cesium.Scene
+    distanceDisplayCondition?: Cesium.DistanceDisplayCondition
+    color?: Cesium.Color
+    colorBlendMode?: Cesium.ColorBlendMode
+    colorBlendAmount?: number
+    silhouetteColor?: Cesium.Color
+    silhouetteSize?: number
+    clippingPlanes?: Cesium.ClippingPlaneCollection
+    dequantizeInShader?: boolean
+    credit?: Cesium.Credit | string
+    backFaceCulling?: boolean
+    showOutline?: boolean
+  }): Cesium.Model {
     const gltf = Cesium.Model.fromGltf({
       ...option,
     })
-    const gltfObj = gltf as any
-    gltfObj[PrimitiveManager.PRIMITIVE_MANAGER_FLAG_KEY] =
-      PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
-    gltfObj.name = option.name
-    gltfObj.uuid = uuid()
-    gltf.show = option.show
+
+    gltf._PriManagFlag = PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
+    gltf.name = option.name
+    gltf.uuid = uuid()
+    gltf.show = option.show || false
     this.viewer.scene.primitives.add(gltf)
 
     this.syncPrimitives()
-    return gltfObj
+    return gltf
   }
 
-  public getPrimitive(index: number): any {
-    this.syncPrimitives()
+  public getPrimitive(
+    index: number,
+    inManagedPrimitiveOnly: boolean = true
+  ): any {
+    this.syncPrimitives(inManagedPrimitiveOnly)
     return this.viewer.scene.primitives.get(
       this.primitives[index].cesiumPrimitiveIndex
     )
   }
 
-  public removePrimitive(index: number): void {
-    this.viewer.scene.primitives.remove(this.getPrimitive(index))
-    this.syncPrimitives()
+  public removePrimitive(
+    index: number,
+    inManagedPrimitiveOnly: boolean = true
+  ): void {
+    this.viewer.scene.primitives.remove(
+      this.getPrimitive(index, inManagedPrimitiveOnly)
+    )
+    this.syncPrimitives(inManagedPrimitiveOnly)
   }
 
-  public removeAll(): void {
-    this.viewer.scene.primitives.removeAll()
-    this.syncPrimitives()
+  public removeAll(inManagedPrimitiveOnly: boolean = true): void {
+    let model = this.viewer.scene.primitives.get(0)
+
+    while (model) {
+      if (
+        model instanceof Cesium.Cesium3DTileset ||
+        model instanceof Cesium.Model
+      ) {
+        if (
+          inManagedPrimitiveOnly &&
+          model._PriManagFlag !== PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE
+        ) {
+          continue
+        }
+        this.viewer.scene.primitives.remove(model)
+      }
+
+      model = this.viewer.scene.primitives.get(0)
+    }
+
+    this.syncPrimitives(inManagedPrimitiveOnly)
   }
 }
 
