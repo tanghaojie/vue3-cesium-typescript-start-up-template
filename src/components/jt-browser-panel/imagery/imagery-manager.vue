@@ -78,7 +78,6 @@ import imageryLayerOperate from './imagery-layer-operate.vue'
 import imagerySelect from './imagery-select.vue'
 import * as Cesium from 'cesium'
 import overlay from '@/components/jt-overlay/index.vue'
-import store from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import {
   ImagerySource,

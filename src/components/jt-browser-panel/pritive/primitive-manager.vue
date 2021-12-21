@@ -64,12 +64,12 @@
 <script lang="ts">
 import { defineComponent, reactive, inject, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from '@/store'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
 import sampleData from '@/resources/sample-data'
-import uuid from '@/libs/utils/uuid'
 import UrlQuery from '@/utils/url-query'
 import {
   calculate3DTilesetTransform,
@@ -88,6 +88,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = useStore()
     const primitives = reactive<Primitive[]>([])
     const add3DTilesetDialog = reactive({
       dialogVisible: false,

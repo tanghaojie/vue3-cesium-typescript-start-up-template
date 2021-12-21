@@ -94,7 +94,7 @@
 import { defineComponent, computed, reactive, ref, inject, watch } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElInputNumber, ElSlider } from 'element-plus'
-import store from '@/store'
+import { useStore } from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
@@ -102,9 +102,10 @@ import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
 const componentName = 'jt-flood-analysis'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-flood-analysis',
   components: { ElInputNumber, ElSlider, jtDraggableResizable },
   setup() {
+    const store = useStore()
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
     const viewShow = computed({
       get(): boolean {

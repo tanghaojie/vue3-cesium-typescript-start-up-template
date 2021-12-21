@@ -1,19 +1,6 @@
 <template>
   <div
-    class="
-      bg-gray-800
-      location-bar
-      px-1
-      py-1
-      flex
-      pointer-events-auto
-      text-white
-      opacity-80
-      absolute
-      right-0
-      bottom-0
-      whitespace-nowrap
-    "
+    class="bg-gray-800 location-bar px-1 py-1 flex pointer-events-auto text-white opacity-80 absolute right-0 bottom-0 whitespace-nowrap"
   >
     <div v-if="cameraLocationVisible" class="type">
       <span>视角:</span>
@@ -68,12 +55,12 @@ import {
   inject,
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import * as Cesium from 'cesium'
 
 export default defineComponent({
-  name: '',
+  name: 'location-bar',
   components: {},
   props: {
     // 范围[0,1]，数字越小越精确，但影响性能
@@ -88,6 +75,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = useStore()
     const cameraLocation = reactive({
       longitude: 0,
       latitude: 0,

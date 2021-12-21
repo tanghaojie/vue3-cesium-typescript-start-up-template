@@ -74,13 +74,14 @@
 import { defineComponent, ref, computed, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElSlider, ElInputNumber, ElColorPicker } from 'element-plus'
-import store from '@/store'
+import { useStore } from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-elevation-contour-setting',
   components: { ElSlider, ElInputNumber, ElColorPicker },
   setup() {
+    const store = useStore()
     const contourDistance = ref(100)
     const contourMinDistance = ref(30)
     const contourMaxDistance = ref(1000)

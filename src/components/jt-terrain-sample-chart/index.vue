@@ -10,16 +10,7 @@
   >
     <template v-slot:title>地形采样</template>
     <div
-      class="
-        w-full
-        h-full
-        flex
-        justify-center
-        items-center
-        px-5
-        py-2
-        bg-gray-800 bg-opacity-70
-      "
+      class="w-full h-full flex justify-center items-center px-5 py-2 bg-gray-800 bg-opacity-70"
     >
       <div class="relative w-full h-full">
         <div
@@ -56,11 +47,12 @@ import debounce from '@/libs/utils/debounce'
 
 echarts.use([GridComponent, LineChart, CanvasRenderer])
 
-import store from '@/store'
+import { useStore } from '@/store'
 
 export default defineComponent({
   components: { ElIcon, jtDraggableResizable },
   setup() {
+    const store = useStore()
     const sampleChart = shallowRef<HTMLElement | null>(null)
     const chart = shallowRef<echarts.ECharts | undefined>(undefined)
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)

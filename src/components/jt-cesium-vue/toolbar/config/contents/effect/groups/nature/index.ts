@@ -1,9 +1,9 @@
-import { Group } from '../../../Types'
-import store from '@/store'
 import {
+  Group,
   ClickHandlerOption,
   OnMountedOption,
-} from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+  ActiveOption,
+} from '../../../Types'
 import { NatureActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/nature/action-types'
 
 const view: Group = {
@@ -13,73 +13,77 @@ const view: Group = {
       name: '太阳',
       icon: 'sun',
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SUN}`,
-          options
+          option
         )
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.nature.showSun,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.nature.showSun,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        store.state.jtCesiumVue.toolbar.nature.showSun =
-          !!options?.viewer?.scene.sun?.show
+      onMounted: (option: OnMountedOption): void => {
+        option.store.state.jtCesiumVue.toolbar.nature.showSun =
+          !!option?.viewer?.scene.sun?.show
       },
     },
     {
       name: '月亮',
       icon: 'moon',
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_MOON}`,
-          options
+          option
         )
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.nature.showMoon,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.nature.showMoon,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        store.state.jtCesiumVue.toolbar.nature.showMoon =
-          !!options?.viewer?.scene.moon?.show
+      onMounted: (option: OnMountedOption): void => {
+        option.store.state.jtCesiumVue.toolbar.nature.showMoon =
+          !!option?.viewer?.scene.moon?.show
       },
     },
     {
       name: '大气层',
       icon: 'atmosphere',
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SKY_ATMOSPHERE}`,
-          options
+          option
         )
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.nature.showSkyAtmosphere,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.nature.showSkyAtmosphere,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        store.state.jtCesiumVue.toolbar.nature.showSkyAtmosphere =
-          !!options?.viewer?.scene.skyAtmosphere?.show
+      onMounted: (option: OnMountedOption): void => {
+        option.store.state.jtCesiumVue.toolbar.nature.showSkyAtmosphere =
+          !!option?.viewer?.scene.skyAtmosphere?.show
       },
     },
     {
       name: '日照',
       icon: 'shadow2',
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_ENABLE_LIGHT}`,
-          options
+          option
         )
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.nature.enableLighting,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.nature.enableLighting,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        if (options) {
-          const { viewer } = options
-          store.state.jtCesiumVue.toolbar.nature.enableLighting =
+      onMounted: (option: OnMountedOption): void => {
+        if (option) {
+          const { viewer } = option
+          option.store.state.jtCesiumVue.toolbar.nature.enableLighting =
             !!viewer?.scene.globe?.enableLighting
         }
       },
@@ -92,18 +96,19 @@ const view: Group = {
       name: '天空盒',
       icon: 'universe',
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SKY_BOX}`,
-          options
+          option
         )
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.nature.showSkyBox,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.nature.showSkyBox,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        store.state.jtCesiumVue.toolbar.nature.showSkyBox =
-          !!options?.viewer?.scene.skyBox?.show
+      onMounted: (option: OnMountedOption): void => {
+        option.store.state.jtCesiumVue.toolbar.nature.showSkyBox =
+          !!option?.viewer?.scene.skyBox?.show
       },
     },
 
@@ -112,18 +117,19 @@ const view: Group = {
       icon: 'shadow3',
       disable: false,
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/toolbar/nature/${NatureActionTypes.SWITCH_SHOW_SHADOW}`,
-          options
+          option
         )
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.nature.showShadow,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.nature.showShadow,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        store.state.jtCesiumVue.toolbar.nature.showShadow =
-          !!options?.viewer?.shadows
+      onMounted: (option: OnMountedOption): void => {
+        option.store.state.jtCesiumVue.toolbar.nature.showShadow =
+          !!option?.viewer?.shadows
       },
     },
   ],

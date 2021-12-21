@@ -22,7 +22,7 @@
 import { defineComponent, ref, computed, watch } from 'vue'
 import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import {
   PROPERTY_CHANGE_EVENT,
@@ -30,7 +30,7 @@ import {
 } from '@/libs/utils/vue-const'
 
 export default defineComponent({
-  name: 'JtMainAreaDialog',
+  name: 'jt-main-area-dialog',
   components: { ElSlider, overlay, jtDraggableResizable },
   props: {
     modelValue: {
@@ -79,6 +79,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const store = useStore()
     const visible = ref(props.modelValue)
     const titleText = ref(props.title)
 

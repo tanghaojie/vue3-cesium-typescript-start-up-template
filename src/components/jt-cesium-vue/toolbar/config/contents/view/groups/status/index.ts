@@ -1,7 +1,5 @@
-import { Group } from '../../../Types'
-import store from '@/store'
+import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
 
-import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import { LocationBarActionTypes } from '@/store/modules/jt-cesium-vue/modules/locationbar/action-types'
 
 const view: Group = {
@@ -10,16 +8,18 @@ const view: Group = {
     {
       name: '视角坐标',
       icon: 'camera2',
-      clickHandler: (): void => {
+      clickHandler: (option: ClickHandlerOption): void => {
         const payload: boolean =
-          !store.state.jtCesiumVue.locationbar.showCameraLocation
-        store.dispatch(
+          !option.store.state.jtCesiumVue.locationbar.showCameraLocation
+        option.store.dispatch(
           `jtCesiumVue/locationbar/${LocationBarActionTypes.SET_SHOW_CAMERA_LOCATION}`,
           payload
         )
       },
-      active: (): boolean => {
-        return store.state.jtCesiumVue.locationbar.showCameraLocation
+      active: (option: ActiveOption): boolean => {
+        return (
+          option.store.state.jtCesiumVue.locationbar.showCameraLocation || false
+        )
       },
       dropdown: {
         componentName: 'camera-percentage-change-rate',
@@ -28,30 +28,31 @@ const view: Group = {
     {
       name: '鼠标坐标',
       icon: 'click',
-      clickHandler: (): void => {
+      clickHandler: (option: ClickHandlerOption): void => {
         const payload: boolean =
-          !store.state.jtCesiumVue.locationbar.showMouseLocation
-        store.dispatch(
+          !option.store.state.jtCesiumVue.locationbar.showMouseLocation
+        option.store?.dispatch(
           `jtCesiumVue/locationbar/${LocationBarActionTypes.SET_SHOW_MOUSE_LOCATION}`,
           payload
         )
       },
-      active: (): boolean => {
-        return store.state.jtCesiumVue.locationbar.showMouseLocation!
+      active: (option: ActiveOption): boolean => {
+        return option.store.state.jtCesiumVue.locationbar.showMouseLocation!
       },
     },
     {
       name: 'FPS',
       icon: 'fps',
-      clickHandler: (): void => {
-        const payload: boolean = !store.state.jtCesiumVue.locationbar.showFPS
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        const payload: boolean =
+          !option.store.state.jtCesiumVue.locationbar.showFPS
+        option.store.dispatch(
           `jtCesiumVue/locationbar/${LocationBarActionTypes.SET_SHOW_FPS}`,
           payload
         )
       },
-      active: (): boolean => {
-        return store.state.jtCesiumVue.locationbar.showFPS!
+      active: (option: ActiveOption): boolean => {
+        return option.store.state.jtCesiumVue.locationbar.showFPS!
       },
     },
   ],

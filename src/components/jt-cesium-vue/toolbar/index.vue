@@ -18,16 +18,7 @@
     <div
       v-if="dropdown.show"
       @click.stop
-      class="
-        dropdown-panel
-        bg-gray-600 bg-opacity-50
-        text-white
-        p-4
-        absolute
-        border-2 border-t-0 border-gray-900
-        rounded-b
-        z-50
-      "
+      class="dropdown-panel bg-gray-600 bg-opacity-50 text-white p-4 absolute border-2 border-t-0 border-gray-900 rounded-b z-50"
     >
       <component :is="dropdown.componentName"></component>
     </div>
@@ -43,12 +34,10 @@ import {
   onMounted,
   watch,
 } from 'vue'
-import { mapActions } from 'vuex'
 import { useRoute } from 'vue-router'
-import Store from '@/store'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 import type { DropdownState } from '@/store/modules/jt-cesium-vue/modules/toolbar/state'
-import store from '@/store'
+import { useStore } from '@/store'
 import tbConfig from './config'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import menus from './components/menus.vue'
@@ -59,13 +48,14 @@ import UrlQuery from '@/utils/url-query'
 import dropdowns from './dropdown'
 
 export default defineComponent({
-  name: '',
+  name: 'tool-bar',
   components: {
     menus,
     groups,
     ...dropdowns,
   },
   setup() {
+    const store = useStore()
     const currentSelectIndex = ref(0)
     const el = shallowRef<HTMLElement | null>(null)
 
@@ -74,7 +64,7 @@ export default defineComponent({
     })
 
     const dropdown = computed(() => {
-      return Store.state.jtCesiumVue.toolbar.dropdown
+      return store.state.jtCesiumVue.toolbar.dropdown
     })
 
     const selectChange = (val: number) => {
@@ -88,7 +78,7 @@ export default defineComponent({
         componentName: '',
         iconEl: undefined,
       }
-      Store.dispatch(
+      store.dispatch(
         `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )
@@ -99,7 +89,7 @@ export default defineComponent({
         ...dropdown.value,
         top: (el.value as HTMLElement).offsetHeight,
       }
-      Store.dispatch(
+      store.dispatch(
         `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )

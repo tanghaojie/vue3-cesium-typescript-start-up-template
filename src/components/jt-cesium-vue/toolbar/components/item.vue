@@ -3,13 +3,7 @@
     <div class="flex justify-center items-center mx-1 px-2">
       <div
         @click="itemClicked"
-        class="
-          flex flex-col
-          justify-center
-          items-center
-          cursor-pointer
-          hover:text-blue-400
-        "
+        class="flex flex-col justify-center items-center cursor-pointer hover:text-blue-400"
         :class="active ? 'text-blue-400' : ''"
       >
         <div ref="icon" class="text-4xl">
@@ -43,22 +37,23 @@ import {
   onMounted,
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
-import { mapActions, useStore } from 'vuex'
+import { mapActions } from 'vuex'
 
-import Store from '@/store'
+import { useStore } from '@/store'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 import type { DropdownState } from '@/store/modules/jt-cesium-vue/modules/toolbar/state'
 import type {
   Item,
   Content,
   Group,
+  ActiveOption,
   ClickHandlerOption,
   OnMounted,
   OnMountedOption,
 } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-item',
   props: {
     item: {
       type: Object as PropType<Item>,
@@ -66,16 +61,20 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = useStore()
     const el = shallowRef<HTMLElement | null>(null)
     const icon = shallowRef<HTMLElement | null>(null)
 
     const active = computed((): boolean => {
       const { item } = props
-      return !!item.active && item.active()
+      const option: ActiveOption = {
+        store,
+      }
+      return !!item.active && item.active(option)
     })
 
     const dropdown = computed(() => {
-      return Store.state.jtCesiumVue.toolbar.dropdown
+      return store.state.jtCesiumVue.toolbar.dropdown
     })
 
     const dropdownActive = computed((): boolean => {
@@ -102,6 +101,7 @@ export default defineComponent({
       const option: ClickHandlerOption = {
         viewer: viewer,
         item: item,
+        store,
       }
       const result = item.clickHandler && item.clickHandler(option)
       item.clickHandlerResult = result
@@ -120,7 +120,7 @@ export default defineComponent({
         componentName: item.dropdown.componentName,
         iconEl: icon.value! as HTMLElement,
       }
-      Store.dispatch(
+      store.dispatch(
         `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )
@@ -132,6 +132,7 @@ export default defineComponent({
       const option: OnMountedOption = {
         viewer: viewer,
         iconEl: icon.value as HTMLElement,
+        store,
       }
       item.onMounted && item.onMounted(option)
     })

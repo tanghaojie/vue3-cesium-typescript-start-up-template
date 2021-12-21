@@ -10,7 +10,7 @@
 import { defineComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElScrollbar } from 'element-plus'
-import store from '@/store'
+import { useStore } from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import UrlQuery from '@/utils/url-query'
 
@@ -24,6 +24,7 @@ export default defineComponent({
   setup() {
     onMounted(() => {
       const route = useRoute()
+      const store = useStore()
       const hideBrowserPanel = route.query[UrlQuery.HideBrowserPanel]
       if (hideBrowserPanel) {
         store.dispatch(

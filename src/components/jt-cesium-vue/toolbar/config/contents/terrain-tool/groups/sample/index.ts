@@ -1,7 +1,4 @@
-import { Group } from '../../../Types'
-import * as Cesium from 'cesium'
-import store from '@/store'
-import { ClickHandlerOption } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import { Group, ClickHandlerOption } from '../../../Types'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 
 const view: Group = {
@@ -10,13 +7,13 @@ const view: Group = {
     {
       name: '地形采样',
       icon: 'terrain',
-      clickHandler: (option: ClickHandlerOption | undefined): void => {
+      clickHandler: (option: ClickHandlerOption): void => {
         if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
 
         option.viewer.jt.terrainSampling.sampling().then((datas) => {
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_TERRAIN_SAMPLING}`,
             {
               show: true,
@@ -29,11 +26,11 @@ const view: Group = {
     {
       name: '移除',
       icon: 'delete',
-      clickHandler: (option: ClickHandlerOption | undefined): void => {
+      clickHandler: (option: ClickHandlerOption): void => {
         if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
-        store.dispatch(
+        option.store.dispatch(
           `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_TERRAIN_SAMPLING}`,
           {
             show: false,

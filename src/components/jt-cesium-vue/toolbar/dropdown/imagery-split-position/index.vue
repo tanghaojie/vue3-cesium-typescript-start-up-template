@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject, computed } from 'vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ImageryActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/action-types'
 import type { SplitType } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/state'
@@ -31,6 +31,7 @@ export default defineComponent({
   name: 'imagery-split-position',
   components: { ElSlider },
   setup() {
+    const store = useStore()
     const value = ref<number>(0)
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)

@@ -47,7 +47,7 @@ import {
   onMounted,
   ComponentPublicInstance,
 } from 'vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import vue3DraggableResizable from './vue3-draggable-resizable.vue'
 
 export default defineComponent({
@@ -61,6 +61,7 @@ export default defineComponent({
   },
   components: { vue3DraggableResizable },
   setup(props, context) {
+    const store = useStore()
     const v3dr = ref<ComponentPublicInstance | null>(null)
 
     const onClose = () => {

@@ -30,14 +30,7 @@
               @dblclick="imagerySourceDblClick(sub)"
             >
               <div
-                class="
-                  w-16
-                  h-16
-                  overflow-hidden
-                  rounded-xl
-                  shadow-2xl
-                  border-solid border border-gray-200
-                "
+                class="w-16 h-16 overflow-hidden rounded-xl shadow-2xl border-solid border border-gray-200"
               >
                 <img
                   :src="'./static/imgs/' + sub.iconImageUrl"
@@ -47,13 +40,7 @@
                 />
               </div>
               <div
-                class="
-                  font-sans
-                  h-14
-                  text-center
-                  align-middle
-                  text-gray-200 text-sm
-                "
+                class="font-sans h-14 text-center align-middle text-gray-200 text-sm"
               >
                 {{ sub.name }}
               </div>
@@ -61,14 +48,7 @@
           </div>
           <div v-else @dblclick="imagerySourceDblClick(imagerySource)">
             <div
-              class="
-                w-16
-                h-16
-                overflow-hidden
-                rounded-xl
-                shadow-2xl
-                border-solid border border-gray-200
-              "
+              class="w-16 h-16 overflow-hidden rounded-xl shadow-2xl border-solid border border-gray-200"
             >
               <img
                 :src="'./static/imgs/' + imagerySource.iconImageUrl"
@@ -78,13 +58,7 @@
               />
             </div>
             <div
-              class="
-                font-sans
-                h-14
-                text-center
-                align-middle
-                text-gray-200 text-sm
-              "
+              class="font-sans h-14 text-center align-middle text-gray-200 text-sm"
             >
               {{ imagerySource.name }}
             </div>
@@ -110,7 +84,7 @@ import {
 } from 'vue'
 import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import ImageryManager, {
   ImagerySource,
@@ -131,6 +105,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const store = useStore()
     const visible = ref(props.modelValue)
 
     const imagerySourceDblClick = (imagerySource: ImagerySource): void => {

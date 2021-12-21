@@ -1,4 +1,6 @@
 import * as Cesium from 'cesium'
+import type { RootState } from '@/store'
+import { Store } from 'vuex'
 
 export type Content = {
   name: string
@@ -29,11 +31,16 @@ export type Item = {
 export type ClickHandlerOption = {
   viewer?: Cesium.Viewer
   item?: Item
+  store: Store<RootState>
 }
 
-export type ClickHandler = (option?: ClickHandlerOption) => void | any
+export type ClickHandler = (option: ClickHandlerOption) => void | any
 
-export type Active = () => boolean
+export type ActiveOption = {
+  store: Store<RootState>
+}
+
+export type Active = (option: ActiveOption) => boolean
 
 export type Dropdown = {
   componentName: string
@@ -42,9 +49,10 @@ export type Dropdown = {
 export type OnMountedOption = {
   viewer?: Cesium.Viewer
   iconEl?: HTMLElement
+  store: Store<RootState>
 }
 
-export type OnMounted = (option?: OnMountedOption) => void
+export type OnMounted = (option: OnMountedOption) => void
 
 const x = {
   name: '视图',

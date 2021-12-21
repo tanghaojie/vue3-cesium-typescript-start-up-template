@@ -48,7 +48,7 @@ import {
   onMounted,
   nextTick,
 } from 'vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import overlay from '../components/jt-overlay/index.vue'
 import { useRouter, useRoute } from 'vue-router'
 import jtCesiumVue from '../components/jt-cesium-vue/cesium-vue/index.vue'
@@ -63,7 +63,7 @@ import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/
 import { LocationBarGetterTypes } from '@/store/modules/jt-cesium-vue/modules/locationbar/getter-types'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'jt-home',
   components: {
     jtCesiumVue,
     toolBar,
@@ -75,6 +75,7 @@ export default defineComponent({
     jtDraggableResizable,
   },
   setup() {
+    const store = useStore()
     const cesiumLoaded = ref<boolean>(false)
     const toolbar = shallowRef<ComponentPublicInstance | null>(null)
     const browserPanel = ref<ComponentPublicInstance | null>(null)

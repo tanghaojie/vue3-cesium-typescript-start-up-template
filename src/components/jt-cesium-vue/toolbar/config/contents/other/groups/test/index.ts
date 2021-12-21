@@ -1,9 +1,4 @@
-import { Group } from '../../../Types'
-import store from '@/store'
-import {
-  ClickHandlerOption,
-  OnMountedOption,
-} from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import { Group, ClickHandlerOption, OnMountedOption } from '../../../Types'
 import * as Cesium from 'cesium'
 
 const highlighted = {
@@ -17,7 +12,7 @@ const view: Group = {
     {
       name: 'test',
       icon: 'setting',
-      clickHandler: (option: ClickHandlerOption | undefined): void => {
+      clickHandler: (option: ClickHandlerOption): void => {
         if (!option) {
           return
         }

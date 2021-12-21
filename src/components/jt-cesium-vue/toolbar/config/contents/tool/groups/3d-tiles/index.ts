@@ -1,10 +1,5 @@
-import { Group } from '../../../Types'
+import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
 import * as Cesium from 'cesium'
-import store from '@/store'
-import {
-  ClickHandlerOption,
-  OnMountedOption,
-} from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 import { Tool3DTileActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/tool3DTile/action-types'
 
 const YIN_TAI_IN_99_ID: string = 'YIN_TAI_IN_99_ID'
@@ -129,13 +124,13 @@ const view: Group = {
     {
       name: '高亮',
       icon: 'classification',
-      clickHandler: (option: ClickHandlerOption | undefined): any => {
+      clickHandler: (option: ClickHandlerOption): any => {
         if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
         const { item } = option
         if (
-          store.state.jtCesiumVue.toolbar.tool3DTile
+          option.store.state.jtCesiumVue.toolbar.tool3DTile
             .highlight3DTileFeatureActive ||
           (item && item.clickHandlerResult)
         ) {
@@ -145,13 +140,13 @@ const view: Group = {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined
           }
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
             false
           )
           return
         } else {
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HIGHLIGHT_3DTILE_FEATURE_ACTIVE}`,
             true
           )
@@ -160,21 +155,21 @@ const view: Group = {
           })
         }
       },
-      active: (): boolean => {
-        return store.state.jtCesiumVue.toolbar.tool3DTile
+      active: (option: ActiveOption): boolean => {
+        return option.store.state.jtCesiumVue.toolbar.tool3DTile
           .highlight3DTileFeatureActive
       },
     },
     {
       name: '分类(滑动)',
       icon: 'move',
-      clickHandler: (option: ClickHandlerOption | undefined): any => {
+      clickHandler: (option: ClickHandlerOption): any => {
         if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
         const { item } = option
         if (
-          store.state.jtCesiumVue.toolbar.tool3DTile
+          option.store.state.jtCesiumVue.toolbar.tool3DTile
             .hoverClassificationActive ||
           (item && item.clickHandlerResult)
         ) {
@@ -184,14 +179,14 @@ const view: Group = {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined
           }
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
             false
           )
           removeYinTaiIn99ClassificationPrimitive(option.viewer)
           return
         } else {
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_HOVER_CLASSIFICATION_ACTIVE}`,
             true
           )
@@ -210,21 +205,21 @@ const view: Group = {
           })
         }
       },
-      active: (): boolean => {
-        return store.state.jtCesiumVue.toolbar.tool3DTile
+      active: (option: ActiveOption): boolean => {
+        return option.store.state.jtCesiumVue.toolbar.tool3DTile
           .hoverClassificationActive
       },
     },
     {
       name: '分类(点击)',
       icon: 'select',
-      clickHandler: (option: ClickHandlerOption | undefined): any => {
+      clickHandler: (option: ClickHandlerOption): any => {
         if (!option || !option.viewer || !option.viewer.jt) {
           return
         }
         const { item } = option
         if (
-          store.state.jtCesiumVue.toolbar.tool3DTile
+          option.store.state.jtCesiumVue.toolbar.tool3DTile
             .clickClassificationActive ||
           (item && item.clickHandlerResult)
         ) {
@@ -234,7 +229,7 @@ const view: Group = {
             item.clickHandlerResult.destroy()
             item.clickHandlerResult = undefined
           }
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
             false
           )
@@ -242,7 +237,7 @@ const view: Group = {
           return
         } else {
           // start
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/tool3DTile/${Tool3DTileActionTypes.SET_CLICK_CLASSIFICATION_ACTIVE}`,
             true
           )
@@ -259,8 +254,8 @@ const view: Group = {
           return option.viewer.jt.classification.addInvertClassification()
         }
       },
-      active: (): boolean => {
-        return store.state.jtCesiumVue.toolbar.tool3DTile
+      active: (option: ActiveOption): boolean => {
+        return option.store.state.jtCesiumVue.toolbar.tool3DTile
           .clickClassificationActive
       },
     },

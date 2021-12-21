@@ -35,7 +35,7 @@ import { defineComponent, computed, reactive, ref, inject, watch } from 'vue'
 import * as Cesium from 'cesium'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElCheckbox } from 'element-plus'
-import store from '@/store'
+import { useStore } from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import logMousePositionMixin, {
@@ -43,9 +43,10 @@ import logMousePositionMixin, {
 } from '@/libs/cesium/mixins/logMousePositionMixin'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-setting',
   components: { ElCheckbox, jtDraggableResizable },
   setup() {
+    const store = useStore()
     const inspectors = reactive([
       {
         name: 'Cesium调试器',

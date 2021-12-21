@@ -45,11 +45,11 @@ import {
 } from 'vue'
 import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
-import store from '@/store'
+import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 
 export default defineComponent({
-  name: '',
+  name: 'terrain-setting',
   components: { ElSlider, overlay, jtDraggableResizable },
   props: {
     modelValue: {
@@ -62,6 +62,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const store = useStore()
     const visible = ref(props.modelValue)
     const exaggeration = ref(props.initExaggeration)
 

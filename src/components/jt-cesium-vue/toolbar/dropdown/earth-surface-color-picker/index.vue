@@ -13,14 +13,15 @@
 import { defineComponent, ref, computed, onMounted, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElColorPicker } from 'element-plus'
-import store from '@/store'
+import { useStore } from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
 import * as Cesium from 'cesium'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-earth-surface-color-picker',
   components: { ElColorPicker },
   setup() {
+    const store = useStore()
     const color = ref<string>('rgba(19, 206, 102, 0.8)')
 
     const colorPicker = ref(null)

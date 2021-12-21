@@ -1,10 +1,10 @@
-import { Group } from '../../../Types'
-import store from '@/store'
-import * as Cesium from 'cesium'
 import {
+  Group,
   ClickHandlerOption,
+  ActiveOption,
   OnMountedOption,
-} from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+} from '../../../Types'
+import * as Cesium from 'cesium'
 import type { SplitType } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/state'
 import { ImageryActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/action-types'
 import { ImageryMutationTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/mutation-types'
@@ -22,8 +22,8 @@ const view: Group = {
         componentName: 'imagery-split-position',
       },
 
-      clickHandler: (options: ClickHandlerOption | undefined): void => {
-        const viewer = options?.viewer
+      clickHandler: (option: ClickHandlerOption): void => {
+        const viewer = option?.viewer
         if (viewer) {
           const ils = viewer.imageryLayers
           const layerLen = ils.length
@@ -56,24 +56,25 @@ const view: Group = {
           }
 
           viewer.scene.imagerySplitPosition = switchToPosition
-          store.dispatch(
+          option.store.dispatch(
             `jtCesiumVue/toolbar/imagery/${ImageryActionTypes.SET_SPLIT}`,
             split
           )
         }
       },
 
-      active: () => store.state.jtCesiumVue.toolbar.imagery.split.enable,
+      active: (option: ActiveOption) =>
+        option.store.state.jtCesiumVue.toolbar.imagery.split.enable,
 
-      onMounted: (options: OnMountedOption | undefined): void => {
-        const viewer = options?.viewer
+      onMounted: (option: OnMountedOption): void => {
+        const viewer = option?.viewer
         if (viewer) {
           const position = viewer.scene.imagerySplitPosition
           const split: SplitType = {
             enable: position > 0,
             position: position,
           }
-          store.commit(
+          option.store.commit(
             `jtCesiumVue/toolbar/imagery/${ImageryMutationTypes.SET_SPLIT}`,
             split
           )
@@ -85,8 +86,8 @@ const view: Group = {
       name: '偏移纠正',
       icon: 'overlap',
 
-      clickHandler: (): void => {
-        store.dispatch(
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
           `jtCesiumVue/layout/${LayoutActionTypes.ADD_UNIQUE_NAME_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
           'jt-imagery-layer-correct-offset'
         )

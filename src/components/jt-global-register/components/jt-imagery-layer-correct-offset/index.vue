@@ -45,7 +45,7 @@ import {
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElCheckbox, ElCheckboxGroup } from 'element-plus'
-import store from '@/store'
+import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
@@ -64,6 +64,7 @@ export default defineComponent({
   name: 'jt-imagery-layer-correct-offset',
   components: { ElCheckbox, ElCheckboxGroup, jtDraggableResizable },
   setup() {
+    const store = useStore()
     const imageryOffset = reactive<ImageryOffset>({
       checked: [],
       imageryList: [],
