@@ -11,6 +11,7 @@ import PercentageChange from '@/libs/cesium/libs/percentage-change/PercentageCha
 import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
 import ImageryManager from '@/libs/cesium/libs/imagery-manager/ImageryManager'
 import PrimitiveManager from '@/libs/cesium/libs/primitive-manager/PrimitiveManager'
+import ClippingPlane from '@/libs/cesium/libs/clipping-plane/ClippingPlane'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -112,6 +113,14 @@ class Jt {
       this._primitiveManager = new PrimitiveManager(this.viewer)
     }
     return this._primitiveManager
+  }
+
+  private _clippingPlane?: ClippingPlane
+  public get clippingPlane(): ClippingPlane {
+    if (!this._clippingPlane) {
+      this._clippingPlane = new ClippingPlane(this.viewer)
+    }
+    return this._clippingPlane
   }
 }
 

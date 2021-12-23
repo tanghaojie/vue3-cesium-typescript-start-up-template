@@ -7,37 +7,88 @@ class ClippingPlane {
     this.viewer = viewer
   }
 
-  public loadModel(url: string): void {
-    const clippingPlanes = new Cesium.ClippingPlaneCollection({
-      planes: [
-        new Cesium.ClippingPlane(new Cesium.Cartesian3(0.0, 0.0, -1.0), 0.0),
-      ],
-      edgeWidth: 1.0,
-    })
+  public createOrUpdateOnly1Plane(
+    primitive: Cesium.Cesium3DTileset | Cesium.Model,
+    x: number,
+    y: number,
+    z: number,
+    distance: number,
+    option: {
+      edgeColor: Cesium.Color
+      edgeWidth: number
+    } = {
+      edgeColor: Cesium.Color.RED,
+      edgeWidth: 10,
+    }
+  ): void {
+    // not has clippingPlanes
+    if (!primitive.clippingPlanes || primitive.clippingPlanes.isDestroyed()) {
+      primitive.clippingPlanes = new Cesium.ClippingPlaneCollection({
+        planes: [
+          new Cesium.ClippingPlane(new Cesium.Cartesian3(x, y, z), distance),
+        ],
+        edgeWidth: option.edgeWidth,
+        edgeColor: option.edgeColor,
+      })
+    } else {
+      const cpLen = primitive.clippingPlanes.length
+      // more than 1 clippingPlanes
+      // remove and renew
+      if (cpLen !== 1) {
+        cpLen > 0 && primitive.clippingPlanes.removeAll()
+        ;(primitive as any).clippingPlanes = undefined
 
-    const position = Cesium.Cartesian3.fromDegrees(
-      -123.0744619,
-      44.0503706,
-      300.0
-    )
-    const heading = Cesium.Math.toRadians(135.0)
-    const pitch = 0.0
-    const roll = 0.0
-    const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
-    const x = Cesium.Transforms.headingPitchRollQuaternion(position, hpr)
-    const entity = this.viewer.entities.add({
-      name: url,
-      position: position,
-      // orientation: x,
-      model: {
-        uri: url,
-        scale: 8,
-        minimumPixelSize: 100.0,
-        clippingPlanes: clippingPlanes,
-      },
-    })
+        primitive.clippingPlanes = new Cesium.ClippingPlaneCollection({
+          planes: [
+            new Cesium.ClippingPlane(new Cesium.Cartesian3(x, y, z), distance),
+          ],
+          edgeWidth: option.edgeWidth,
+          edgeColor: option.edgeColor,
+        })
+      } else {
+        primitive.clippingPlanes.edgeWidth !== option.edgeWidth &&
+          (primitive.clippingPlanes.edgeWidth = option.edgeWidth)
+        primitive.clippingPlanes.edgeColor !== option.edgeColor &&
+          (primitive.clippingPlanes.edgeColor = option.edgeColor)
 
-    this.viewer.trackedEntity = entity
+        const cp = primitive.clippingPlanes.get(0)
+        cp.distance !== distance && (cp.distance = distance)
+        cp.normal.x !== x && (cp.normal.x = x)
+        cp.normal.y !== y && (cp.normal.y = y)
+        cp.normal.z !== z && (cp.normal.z = z)
+      }
+    }
+  }
+
+  public removeAllPrimitiveClippingPlanes(
+    inManagedPrimitiveOnly: boolean = true
+  ): void {
+    const pm = this.viewer.jt?.primitiveManager
+    if (!pm) {
+      return
+    }
+    const jtPris = pm.syncJTPrimitives(inManagedPrimitiveOnly)
+
+    if (!jtPris) {
+      return
+    }
+    const len = jtPris.length
+    for (let i = 0; i < len; i++) {
+      const primitive = pm.getPrimitiveByJTPrimitive(jtPris[i])
+      if (
+        primitive instanceof Cesium.Cesium3DTileset ||
+        primitive instanceof Cesium.Model
+      ) {
+        if (
+          primitive.clippingPlanes &&
+          !primitive.clippingPlanes.isDestroyed()
+        ) {
+          primitive.clippingPlanes.removeAll()
+        }
+
+        ;(primitive as any).clippingPlanes = undefined
+      }
+    }
   }
 }
 

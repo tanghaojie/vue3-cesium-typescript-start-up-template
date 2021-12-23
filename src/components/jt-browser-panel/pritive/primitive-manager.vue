@@ -7,29 +7,29 @@
           <div class="plus cursor-pointer" @click="showAdd3DTilesetDialog">
             <i class="el-icon-circle-plus-outline"></i>
           </div>
-          <div class="cursor-pointer ml-3" @click="syncUIList">
+          <div class="cursor-pointer ml-3" @click="syncJTPrimitive">
             <i class="el-icon-refresh"></i>
           </div>
         </div>
       </div>
       <div>
         <div
-          v-for="(primitive, index) in primitives"
+          v-for="(jPri, index) in jtPrimitives"
           :key="index"
           class="flex flex-row justify-center items-center text-white py-2 select-none"
         >
           <el-checkbox
             size="medium"
-            v-model="primitive.show"
+            v-model="jPri.show"
             @change="(checked, e) => changePrimitiveVisible(index, checked)"
           >
           </el-checkbox>
           <div
             class="mx-3 flex-1 cursor-default"
-            :class="primitive.show ? '' : 'text-gray-400'"
+            :class="jPri.show ? '' : 'text-gray-400'"
             @dblclick="primitiveNameDoubleClick(index)"
           >
-            {{ primitive.name }}
+            {{ jPri.name }}
           </div>
           <div class="cursor-default" @click="removePrimitive(index)">
             <i class="el-icon-close"></i>
@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, inject, onMounted } from 'vue'
+import { defineComponent, reactive, inject, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
@@ -76,7 +76,7 @@ import {
   transform,
   change3DTilesetHeight,
 } from '@/libs/cesium/libs/transform'
-import { Primitive } from '@/libs/cesium/libs/primitive-manager/PrimitiveManager'
+import { JTPrimitiveActionTypes } from '@/store/modules/jt-cesium-vue/modules/cesium-data/modules/jt-primitive/action-types'
 
 export default defineComponent({
   name: 'PrimitiveManager',
@@ -89,7 +89,7 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    const primitives = reactive<Primitive[]>([])
+    const route = useRoute()
     const add3DTilesetDialog = reactive({
       dialogVisible: false,
       name: '',
@@ -98,16 +98,15 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const route = useRoute()
+    const jtPrimitives = computed(() => {
+      return store.state.jtCesiumVue.cesiumData.jtPrimitive.jtPrimitives
+    })
 
-    const syncUIList = (): void => {
-      primitives.splice(0, primitives.length)
-      const pris = (
-        cesiumRef || {}
-      ).viewer?.jt?.primitiveManager.syncPrimitives(
-        props.inManagedPrimitiveOnly
+    const syncJTPrimitive = (): void => {
+      store.dispatch(
+        `jtCesiumVue/cesiumData/jtPrimitive/${JTPrimitiveActionTypes.SYNC_JTPRIMITIVES}`,
+        cesiumRef?.viewer
       )
-      pris && primitives.push(...pris)
     }
 
     const changePrimitiveVisible = (index: number, show: boolean): void => {
@@ -116,8 +115,8 @@ export default defineComponent({
         return
       }
 
-      primitives[index].show = viewer.scene.primitives.get(
-        primitives[index].cesiumPrimitiveIndex
+      jtPrimitives.value[index].show = viewer.scene.primitives.get(
+        jtPrimitives.value[index].cesiumPrimitiveIndex
       ).show = show
     }
 
@@ -147,7 +146,7 @@ export default defineComponent({
         cesiumRef || {}
       ).viewer?.jt?.primitiveManager.add3DTileset(option)
 
-      syncUIList()
+      syncJTPrimitive()
       return c3Dtileset
     }
 
@@ -155,18 +154,18 @@ export default defineComponent({
       const gltf = (cesiumRef || {}).viewer?.jt?.primitiveManager.addGltf(
         option
       )
-      syncUIList()
+      syncJTPrimitive()
     }
 
     const removePrimitive = (index: number): void => {
       ;(cesiumRef || {}).viewer?.jt?.primitiveManager.removePrimitive(index)
-      syncUIList()
+      syncJTPrimitive()
     }
 
     const primitiveNameDoubleClick = (index: number): void => {
-      const pri = (cesiumRef || {}).viewer?.jt?.primitiveManager.getPrimitive(
-        index
-      )
+      const pri = (
+        cesiumRef || {}
+      ).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(index)
       const location = calculatePrimitiveCenter(pri)
 
       ;(cesiumRef || {}).viewer?.camera.flyTo({
@@ -236,7 +235,7 @@ export default defineComponent({
       })
       change3DTilesetHeight(r as Cesium.Cesium3DTileset, -557)
 
-      syncUIList()
+      syncJTPrimitive()
     }
 
     const initDefaultData = (): void => {
@@ -244,14 +243,6 @@ export default defineComponent({
       if (!pm) {
         return
       }
-      const clippingPlanes = new Cesium.ClippingPlaneCollection({
-        planes: [
-          new Cesium.ClippingPlane(new Cesium.Cartesian3(0.0, 0.0, -1.0), 30.0),
-          // new Cesium.ClippingPlane(new Cesium.Cartesian3(1.0, 0.0, 0.0), 30.0),
-        ],
-        edgeWidth: 10.0,
-        edgeColor: Cesium.Color.RED,
-      })
       pm.addGltf({
         name: '精模',
         url: sampleData.rc,
@@ -260,7 +251,6 @@ export default defineComponent({
           new Cesium.HeadingPitchRoll(Cesium.Math.PI_OVER_TWO, 0, 0)
         ),
         show: false,
-        // clippingPlanes: clippingPlanes,
       })
 
       pm.add3DTileset({
@@ -294,7 +284,7 @@ export default defineComponent({
       })
       change3DTilesetHeight(e as Cesium.Cesium3DTileset, -670)
 
-      syncUIList()
+      syncJTPrimitive()
     }
 
     const initQuery = (): void => {
@@ -307,15 +297,15 @@ export default defineComponent({
 
         const flyToTile3D = route.query[UrlQuery.FlyToAddition3DTile]
         if (flyToTile3D && tile3DUrl) {
-          syncUIList()
+          syncJTPrimitive()
           const { viewer } = cesiumRef || {}
           if (!viewer) {
             return
           }
           const pris = viewer.scene.primitives
-          const len = primitives.length
+          const len = jtPrimitives.value.length
           for (let i = 0; i < len; i++) {
-            const model = pris.get(primitives[i].cesiumPrimitiveIndex)
+            const model = pris.get(jtPrimitives.value[i].cesiumPrimitiveIndex)
             if (tile3DUrl === model._url || model.basePath) {
               if (model.readyPromise) {
                 model.readyPromise.then((pri: any) => {
@@ -348,10 +338,9 @@ export default defineComponent({
     })
 
     return {
-      primitives,
+      jtPrimitives,
       add3DTilesetDialog,
-
-      syncUIList,
+      syncJTPrimitive,
       changePrimitiveVisible,
       showAdd3DTilesetDialog,
       add3DTilsetConfirm,

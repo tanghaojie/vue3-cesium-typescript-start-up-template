@@ -1,1 +1,1 @@
-export enum ToolbarGetterTypes {}
+export enum CesiumDataGetterTypes {}

@@ -1,9 +1,9 @@
-import type { PrimitiveState } from './modules/primitive'
+import type { JTPrimitiveState } from './modules/jt-primitive'
 
 export type CesiumDataStateAndModule = {
   notUsed: number
 
-  primitive: PrimitiveState
+  jtPrimitive: JTPrimitiveState
 }
 
 export type State = {

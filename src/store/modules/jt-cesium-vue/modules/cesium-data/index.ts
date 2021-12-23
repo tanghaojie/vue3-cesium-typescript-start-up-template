@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 
-import { store as primitive } from './modules/primitive'
+import { store as jtPrimitive } from './modules/jt-primitive'
 
 import { state } from './state'
 import type { CesiumDataStateAndModule, State } from './state'
@@ -20,6 +20,6 @@ export const store: Module<CesiumDataState, RootState> = {
   mutations,
   actions,
   modules: {
-    primitive,
+    jtPrimitive,
   },
 }

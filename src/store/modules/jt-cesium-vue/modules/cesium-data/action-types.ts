@@ -1,3 +1,3 @@
-export enum ToolbarActionTypes {
+export enum CesiumDataActionTypes {
   RESET_STATE = 'RESET_STATE',
 }

@@ -1,7 +1,7 @@
 import * as Cesium from 'cesium'
 import uuid from '@/libs/utils/uuid'
 
-export type Primitive = {
+export type JTPrimitive = {
   name: string
   uuid: string
   show: boolean
@@ -11,15 +11,17 @@ export type Primitive = {
 class PrimitiveManager {
   private viewer: Cesium.Viewer
 
-  public primitives: Primitive[] = []
+  public jtPrimitives: JTPrimitive[] = []
   public static PRIMITIVE_MANAGER_FLAG_VALUE = '__JT_PRI_F'
 
   constructor(viewer: Cesium.Viewer) {
     this.viewer = viewer
   }
 
-  public syncPrimitives(inManagedPrimitiveOnly: boolean = true): Primitive[] {
-    this.primitives.splice(0, this.primitives.length)
+  public syncJTPrimitives(
+    inManagedPrimitiveOnly: boolean = true
+  ): JTPrimitive[] {
+    this.jtPrimitives.splice(0, this.jtPrimitives.length)
     const pris = this.viewer.scene.primitives
     const len = pris.length
     for (let i = len - 1; i >= 0; --i) {
@@ -38,14 +40,14 @@ class PrimitiveManager {
       ) {
         continue
       }
-      this.primitives.push({
+      this.jtPrimitives.push({
         name: model.name || '<NoneName>',
         uuid: model.uuid || '<NoneUuid>',
         show: model.show,
         cesiumPrimitiveIndex: i,
       })
     }
-    return this.primitives
+    return this.jtPrimitives
   }
 
   public add3DTileset(option: {
@@ -115,7 +117,7 @@ class PrimitiveManager {
 
     this.viewer.scene.primitives.add(c3Dtileset)
 
-    this.syncPrimitives()
+    this.syncJTPrimitives()
     return c3Dtileset
   }
 
@@ -161,18 +163,22 @@ class PrimitiveManager {
     gltf.show = option.show || false
     this.viewer.scene.primitives.add(gltf)
 
-    this.syncPrimitives()
+    this.syncJTPrimitives()
     return gltf
   }
 
-  public getPrimitive(
+  public getPrimitiveByJTPrimitiveIndex(
     index: number,
     inManagedPrimitiveOnly: boolean = true
   ): any {
-    this.syncPrimitives(inManagedPrimitiveOnly)
+    this.syncJTPrimitives(inManagedPrimitiveOnly)
     return this.viewer.scene.primitives.get(
-      this.primitives[index].cesiumPrimitiveIndex
+      this.jtPrimitives[index].cesiumPrimitiveIndex
     )
+  }
+
+  public getPrimitiveByJTPrimitive(jtPrimitive: JTPrimitive): any {
+    return this.viewer.scene.primitives.get(jtPrimitive.cesiumPrimitiveIndex)
   }
 
   public removePrimitive(
@@ -180,9 +186,9 @@ class PrimitiveManager {
     inManagedPrimitiveOnly: boolean = true
   ): void {
     this.viewer.scene.primitives.remove(
-      this.getPrimitive(index, inManagedPrimitiveOnly)
+      this.getPrimitiveByJTPrimitiveIndex(index, inManagedPrimitiveOnly)
     )
-    this.syncPrimitives(inManagedPrimitiveOnly)
+    this.syncJTPrimitives(inManagedPrimitiveOnly)
   }
 
   public removeAll(inManagedPrimitiveOnly: boolean = true): void {
@@ -205,7 +211,7 @@ class PrimitiveManager {
       model = this.viewer.scene.primitives.get(0)
     }
 
-    this.syncPrimitives(inManagedPrimitiveOnly)
+    this.syncJTPrimitives(inManagedPrimitiveOnly)
   }
 }
 
