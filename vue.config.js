@@ -3,6 +3,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { use } = require('echarts')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpack = require('webpack')
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 const debug = process.env.NODE_ENV !== 'production'
 // use CesiumUnminified when debug
@@ -48,6 +51,12 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
       new CopyWebpackPlugin({
         patterns: [
           {

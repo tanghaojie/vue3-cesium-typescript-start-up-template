@@ -5,10 +5,10 @@
         <div class="flex-1">模型管理</div>
         <div class="flex flex-row flex-grow-0 flex-shrink-0">
           <div class="plus cursor-pointer" @click="showAdd3DTilesetDialog">
-            <i class="el-icon-circle-plus-outline"></i>
+            <el-icon><circle-plus /></el-icon>
           </div>
           <div class="cursor-pointer ml-3" @click="syncJTPrimitive">
-            <i class="el-icon-refresh"></i>
+            <el-icon><refresh /></el-icon>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
           class="flex flex-row justify-center items-center text-white py-2 select-none"
         >
           <el-checkbox
-            size="medium"
+            :size="'default'"
             v-model="jPri.show"
             @change="(checked, e) => changePrimitiveVisible(index, checked)"
           >
@@ -32,7 +32,7 @@
             {{ jPri.name }}
           </div>
           <div class="cursor-default" @click="removePrimitive(index)">
-            <i class="el-icon-close"></i>
+            <el-icon><close /></el-icon>
           </div>
         </div>
       </div>
@@ -68,6 +68,7 @@ import { useStore } from '@/store'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton } from 'element-plus'
+import { CirclePlus, Refresh, Close } from '@element-plus/icons-vue'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
 import sampleData from '@/resources/sample-data'
 import UrlQuery from '@/utils/url-query'
@@ -80,7 +81,16 @@ import { JTPrimitiveActionTypes } from '@/store/modules/jt-cesium-vue/modules/ce
 
 export default defineComponent({
   name: 'PrimitiveManager',
-  components: { ElIcon, ElCheckbox, ElDialog, ElInput, ElButton },
+  components: {
+    ElIcon,
+    ElCheckbox,
+    ElDialog,
+    ElInput,
+    ElButton,
+    CirclePlus,
+    Refresh,
+    Close,
+  },
   props: {
     inManagedPrimitiveOnly: {
       type: Boolean,

@@ -5,7 +5,7 @@
         <div class="flex-1">地形管理</div>
         <div class="flex flex-row flex-grow-0 flex-shrink-0">
           <div class="plus cursor-pointer" @click="showTerrainSettingDialog">
-            <i class="el-icon-setting"></i>
+            <el-icon><setting /></el-icon>
           </div>
         </div>
       </div>
@@ -13,7 +13,7 @@
       <div class="py-2">
         <el-select
           v-model="currentTerrainName"
-          size="medium"
+          :size="'default'"
           class="w-full"
           @change="selectChange"
         >
@@ -43,10 +43,18 @@ import * as Cesium from 'cesium'
 import sampleData from '@/resources/sample-data'
 import terrainSetting from '../terrain/terrain-setting.vue'
 import { ElSelect, ElOption, ElDialog, ElSlider } from 'element-plus'
+import { Setting } from '@element-plus/icons-vue'
 
 export default defineComponent({
-  name: '',
-  components: { ElSelect, ElOption, ElDialog, ElSlider, terrainSetting },
+  name: 'terrain-manager',
+  components: {
+    ElSelect,
+    ElOption,
+    ElDialog,
+    ElSlider,
+    Setting,
+    terrainSetting,
+  },
   setup() {
     const terrains = reactive([
       {

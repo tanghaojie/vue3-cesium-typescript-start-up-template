@@ -18,7 +18,7 @@ import { defineComponent, ref, reactive, computed, watch, onMounted } from 'vue'
 import overlay from '@/components/jt-overlay/index.vue'
 
 export default defineComponent({
-  name: '',
+  name: 'test-component',
   components: { overlay },
   props: {},
   setup(props, context) {},

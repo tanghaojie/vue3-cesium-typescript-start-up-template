@@ -5,10 +5,10 @@
         <div class="flex-1">影像管理</div>
         <div class="flex flex-row flex-grow-0 flex-shrink-0">
           <div class="cursor-pointer" @click="plusImageries">
-            <i class="el-icon-circle-plus-outline"></i>
+            <el-icon><circle-plus /></el-icon>
           </div>
           <div class="cursor-pointer ml-3" @click="syncUIList">
-            <i class="el-icon-refresh"></i>
+            <el-icon><refresh /></el-icon>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
           class="flex flex-row justify-center items-center text-white py-2 select-none"
         >
           <el-checkbox
-            size="medium"
+            :size="'default'"
             v-model="imagery.show"
             @change="(checked, e) => changeImageryShow(index, checked)"
           >
@@ -32,10 +32,10 @@
             {{ imagery.name }}
           </div>
           <div class="cursor-pointer" @click="settingImagery(index)">
-            <i class="el-icon-setting"></i>
+            <el-icon><setting /></el-icon>
           </div>
           <div class="cursor-pointer ml-2" @click="removeImagery(index)">
-            <i class="el-icon-close"></i>
+            <el-icon><close /></el-icon>
           </div>
         </div>
       </div>
@@ -74,6 +74,7 @@ import {
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElIcon, ElCheckbox, ElDialog } from 'element-plus'
+import { CirclePlus, Refresh, Setting, Close } from '@element-plus/icons-vue'
 import imageryLayerOperate from './imagery-layer-operate.vue'
 import imagerySelect from './imagery-select.vue'
 import * as Cesium from 'cesium'
@@ -91,6 +92,10 @@ export default defineComponent({
     ElIcon,
     ElCheckbox,
     ElDialog,
+    CirclePlus,
+    Refresh,
+    Setting,
+    Close,
     imageryLayerOperate,
     imagerySelect,
     overlay,

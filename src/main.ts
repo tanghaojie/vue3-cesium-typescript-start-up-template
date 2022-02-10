@@ -10,8 +10,6 @@ import './assets/styles/index.css'
 // cesium vue
 import cesiumVue from './libs/cesium/cesium-vue'
 
-import 'element-plus/packages/theme-chalk/src/base.scss'
-
 const app = createApp(App)
 
 app.use(store, key).use(router).use(cesiumVue)

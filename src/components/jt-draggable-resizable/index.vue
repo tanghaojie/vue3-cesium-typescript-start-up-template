@@ -24,7 +24,7 @@
       </div>
       <div class="flex justify-center items-center cursor-pointer">
         <div class="px-3 py-1" @click="onClose">
-          <i class="el-icon-close text-white" />
+          <el-icon><close /></el-icon>
         </div>
       </div>
     </div>
@@ -49,6 +49,8 @@ import {
 } from 'vue'
 import { useStore } from '@/store'
 import vue3DraggableResizable from './vue3-draggable-resizable.vue'
+import { ElIcon } from 'element-plus'
+import { Close } from '@element-plus/icons-vue'
 
 export default defineComponent({
   inheritAttrs: true,
@@ -59,7 +61,7 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { vue3DraggableResizable },
+  components: { vue3DraggableResizable, ElIcon, Close },
   setup(props, context) {
     const store = useStore()
     const v3dr = ref<ComponentPublicInstance | null>(null)
