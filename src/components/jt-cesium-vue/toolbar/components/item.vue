@@ -38,7 +38,7 @@ import {
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { mapActions } from 'vuex'
-
+import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 import type { DropdownState } from '@/store/modules/jt-cesium-vue/modules/toolbar/state'
@@ -62,6 +62,7 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
+    const router = useRouter()
     const el = shallowRef<HTMLElement | null>(null)
     const icon = shallowRef<HTMLElement | null>(null)
 
@@ -102,6 +103,7 @@ export default defineComponent({
         viewer: viewer,
         item: item,
         store,
+        router,
       }
       const result = item.clickHandler && item.clickHandler(option)
       item.clickHandlerResult = result

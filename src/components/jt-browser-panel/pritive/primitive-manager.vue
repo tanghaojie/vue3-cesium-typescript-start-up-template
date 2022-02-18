@@ -201,8 +201,6 @@ export default defineComponent({
       } else {
         initDefaultData()
       }
-
-      initQuery()
     }
 
     const initDemoMode = (): void => {
@@ -216,27 +214,6 @@ export default defineComponent({
         show: true,
       })
       change3DTilesetHeight(w as Cesium.Cesium3DTileset, -422)
-
-      // const e = pm.add3DTileset({
-      //   name: '永利桥',
-      //   url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/YongLiQiao_3dt/tileset.json',
-      //   show: true,
-      // })
-      // change3DTilesetHeight(e as Cesium.Cesium3DTileset, -487)
-
-      // const q = pm.add3DTileset({
-      //   name: '刘氏宗祠',
-      //   url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/LiuShiZongCi_3dt/tileset.json',
-      //   show: true,
-      // })
-      // change3DTilesetHeight(q as Cesium.Cesium3DTileset, -426)
-
-      // const a = pm.add3DTileset({
-      //   name: '五凤关圣宫',
-      //   url: 'https://tanghaojie.dynv6.net:60450/GisData/models/wenwu/WuFengGuanShengGong_3dt/tileset.json',
-      //   show: true,
-      // })
-      // change3DTilesetHeight(a as Cesium.Cesium3DTileset, -325)
 
       const r = pm.add3DTileset({
         name: '清音溪摩崖造像',
@@ -297,52 +274,6 @@ export default defineComponent({
       syncJTPrimitive()
     }
 
-    const initQuery = (): void => {
-      const tile3DUrl = route.query[UrlQuery.Addition3DTile]
-      if (tile3DUrl) {
-        add3DTileset({
-          url: tile3DUrl,
-          show: true,
-        })
-
-        const flyToTile3D = route.query[UrlQuery.FlyToAddition3DTile]
-        if (flyToTile3D && tile3DUrl) {
-          syncJTPrimitive()
-          const { viewer } = cesiumRef || {}
-          if (!viewer) {
-            return
-          }
-          const pris = viewer.scene.primitives
-          const len = jtPrimitives.value.length
-          for (let i = 0; i < len; i++) {
-            const model = pris.get(jtPrimitives.value[i].cesiumPrimitiveIndex)
-            if (tile3DUrl === model._url || model.basePath) {
-              if (model.readyPromise) {
-                model.readyPromise.then((pri: any) => {
-                  const location = calculatePrimitiveCenter(pri)
-                  viewer.camera.flyTo({
-                    duration: 1,
-                    destination: Cesium.Cartesian3.fromDegrees(
-                      location.longitude,
-                      location.latitude - 0.001,
-                      location.height + 500
-                    ),
-                    orientation: {
-                      heading: Cesium.Math.toRadians(0),
-                      pitch: Cesium.Math.toRadians(-78),
-                      roll: 0.0,
-                    },
-                  })
-                })
-              }
-              return
-            }
-          }
-          return
-        }
-      }
-    }
-
     onMounted(() => {
       init()
     })
@@ -360,7 +291,6 @@ export default defineComponent({
       removePrimitive,
       primitiveNameDoubleClick,
       init,
-      initQuery,
       initDefaultData,
       initDemoMode,
     }

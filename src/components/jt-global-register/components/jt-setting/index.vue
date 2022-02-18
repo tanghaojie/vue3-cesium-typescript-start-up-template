@@ -75,6 +75,11 @@ export default defineComponent({
           `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_TOOLBAR}`,
           val
         )
+        // show setting button, if hide toolbar
+        store.dispatch(
+          `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_SETTING_BUTTON}`,
+          !val
+        )
       },
     })
 

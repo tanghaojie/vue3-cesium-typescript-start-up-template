@@ -1,6 +1,7 @@
 import * as Cesium from 'cesium'
 import type { RootState } from '@/store'
 import { Store } from 'vuex'
+import { Router } from 'vue-router'
 
 export type Content = {
   name: string
@@ -31,6 +32,7 @@ export type Item = {
 export type ClickHandlerOption = {
   viewer?: Cesium.Viewer
   item?: Item
+  router?: Router
   store: Store<RootState>
 }
 

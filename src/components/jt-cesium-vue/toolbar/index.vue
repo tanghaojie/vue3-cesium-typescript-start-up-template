@@ -56,7 +56,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const currentSelectIndex = ref(0)
+
     const el = shallowRef<HTMLElement | null>(null)
 
     const toolbarConfig = computed(() => {
@@ -67,6 +67,7 @@ export default defineComponent({
       return store.state.jtCesiumVue.toolbar.dropdown
     })
 
+    const currentSelectIndex = ref(0)
     const selectChange = (val: number) => {
       currentSelectIndex.value = val
     }
