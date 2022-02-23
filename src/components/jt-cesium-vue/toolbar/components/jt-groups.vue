@@ -8,7 +8,7 @@
             'cursor-not-allowed': !!group.disable || !!group.invisible,
           }"
         >
-          <group
+          <jt-group
             v-if="!group.invisible"
             :key="gIndex"
             :class="{
@@ -17,8 +17,8 @@
           >
             <template v-slot:name>{{ group.name || '组' }}</template>
 
-            <items :items="group.items" />
-          </group>
+            <jt-items :items="group.items" />
+          </jt-group>
         </div>
       </template>
     </div>
@@ -28,12 +28,12 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import type { Group } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
-import group from './group.vue'
-import items from './items.vue'
+import jtGroup from './jt-group.vue'
+import jtItems from './jt-items.vue'
 
 export default defineComponent({
-  name: '',
-  components: { group, items },
+  name: 'jt-groups',
+  components: { jtGroup, jtItems },
   props: {
     groups: {
       type: Object as PropType<Array<Group>[]>,

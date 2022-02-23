@@ -50,6 +50,7 @@ echarts.use([GridComponent, LineChart, CanvasRenderer])
 import { useStore } from '@/store'
 
 export default defineComponent({
+  name: 'jt-terrain-sample-chart',
   components: { ElIcon, jtDraggableResizable },
   setup() {
     const store = useStore()

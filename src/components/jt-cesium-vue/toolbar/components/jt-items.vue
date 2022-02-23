@@ -6,7 +6,7 @@
         'cursor-not-allowed': !!item.disable || !!item.invisible,
       }"
     >
-      <item
+      <jt-item
         v-if="!item.invisible"
         :item="item"
         :class="{
@@ -14,7 +14,7 @@
         }"
       >
         {{ item.name }}
-      </item>
+      </jt-item>
     </div>
   </template>
 </template>
@@ -23,11 +23,11 @@
 import { defineComponent, PropType } from 'vue'
 import type { Item } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 
-import item from './item.vue'
+import jtItem from './jt-item.vue'
 
 export default defineComponent({
-  name: '',
-  components: { item },
+  name: 'jt-items',
+  components: { jtItem },
   props: {
     items: {
       type: Object as PropType<Array<Item>[]>,

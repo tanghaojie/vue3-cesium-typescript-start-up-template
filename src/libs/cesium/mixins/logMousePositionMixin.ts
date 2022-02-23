@@ -1,5 +1,3 @@
-import define from 'cesium/Source/Core/defined'
-import DeveloperError from 'cesium/Source/Core/DeveloperError'
 import * as Cesium from 'cesium'
 
 type Options = {
@@ -12,8 +10,8 @@ function logMousePositionMixin(
     withHeight: false,
   }
 ): void {
-  if (!viewer || !define(viewer)) {
-    throw new DeveloperError('viewer is required.')
+  if (!viewer || !Cesium.defined(viewer)) {
+    throw new Cesium.DeveloperError('viewer is required.')
   }
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
   handler.setInputAction(function (e) {

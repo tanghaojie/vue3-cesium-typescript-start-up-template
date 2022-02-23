@@ -59,6 +59,7 @@
 import { defineComponent, ref, computed, onMounted } from 'vue'
 
 export default defineComponent({
+  name: 'jt-side-collapse',
   props: {
     defaultPin: {
       type: Boolean,

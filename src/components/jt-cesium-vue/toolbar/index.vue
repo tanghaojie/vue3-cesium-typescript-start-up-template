@@ -8,9 +8,9 @@
     }"
     @click="clearDropdown"
   >
-    <menus :contents="toolbarConfig" @selectChange="selectChange" />
+    <jt-menus :contents="toolbarConfig" @selectChange="selectChange" />
 
-    <groups
+    <jt-groups
       :key="currentSelectIndex"
       :groups="toolbarConfig[currentSelectIndex].groups"
     />
@@ -40,8 +40,8 @@ import type { DropdownState } from '@/store/modules/jt-cesium-vue/modules/toolba
 import { useStore } from '@/store'
 import tbConfig from './config'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
-import menus from './components/menus.vue'
-import groups from './components/groups.vue'
+import jtMenus from './components/jt-menus.vue'
+import jtGroups from './components/jt-groups.vue'
 import UrlQuery from '@/utils/url-query'
 
 // dropdown components
@@ -50,8 +50,8 @@ import dropdowns from './dropdown'
 export default defineComponent({
   name: 'tool-bar',
   components: {
-    menus,
-    groups,
+    jtMenus,
+    jtGroups,
     ...dropdowns,
   },
   setup() {

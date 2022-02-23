@@ -40,7 +40,7 @@ import { defineComponent, PropType, ref, watch } from 'vue'
 import type { Content } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
 
 export default defineComponent({
-  name: '',
+  name: 'jt-menus',
   props: {
     contents: {
       type: Object as PropType<Array<Content>[]>,

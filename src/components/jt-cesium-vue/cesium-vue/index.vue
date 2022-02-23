@@ -18,7 +18,7 @@ import {
 } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
-import 'cesium/Build/Cesium/Widgets/widgets.css'
+import 'cesium/Source/Widgets/widgets.css'
 import Jt from '@/libs/cesium/cesium-jt'
 
 export default defineComponent({

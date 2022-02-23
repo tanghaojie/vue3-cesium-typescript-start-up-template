@@ -20,3 +20,5 @@ export const store = createStore<RootState>({
 export function useStore(): Store<RootState> {
   return baseUseStore(key)
 }
+
+export default store

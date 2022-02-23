@@ -1,8 +1,11 @@
 class CoordinateTransform {
   // 定义一些常量
+  // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
   public static x_PI = (3.14159265358979324 * 3000.0) / 180.0
+  // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
   public static PI = 3.1415926535897932384626
   public static a = 6378245.0
+  // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
   public static ee = 0.00669342162296594323
 
   public static bd09togcj02(bd_lng: number, bd_lat: number): [number, number] {
