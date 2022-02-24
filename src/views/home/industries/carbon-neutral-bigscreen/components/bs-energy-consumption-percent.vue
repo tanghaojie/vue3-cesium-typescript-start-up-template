@@ -17,7 +17,7 @@ import {
 import * as echarts from 'echarts'
 
 export default defineComponent({
-  name: 'bs-energy-composition',
+  name: 'bs-energy-consumption-percent',
   components: {},
   props: {},
   setup(props, context) {
@@ -36,7 +36,7 @@ export default defineComponent({
       chart.value?.clear()
       const option = {
         title: {
-          text: '能源消费结构趋势',
+          text: '各能源品质在终端能源消费总量中所占比重',
           textStyle: {
             color: '#fff',
             fontSize: 14,
@@ -44,100 +44,98 @@ export default defineComponent({
           x: 'center',
           t: 'top',
         },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985',
-            },
-          },
+        grid: {
+          top: '20%',
+          left: '1%',
+          right: '6%',
+          bottom: '3%',
+          containLabel: true,
         },
         legend: {
           textStyle: {
             color: 'rgb(255, 255, 255)',
           },
           data: ['煤炭', '石油', '天然气', '电力', '热力', '其他'],
-          top: '25',
+          top: 25,
         },
-        grid: {
-          left: '1%',
-          right: '6%',
-          bottom: '3%',
-          containLabel: true,
+        xAxis: {
+          type: 'category',
+          data: [
+            '2005年',
+            '2006年',
+            '2007年',
+            '2008年',
+            '2009年',
+            '2010年',
+            '2011年',
+            '2012年',
+            '2013年',
+            '2014年',
+            '2015年',
+            '2016年',
+            '2017年',
+            '2018年',
+            '2019年',
+            '2020年',
+            '2021年',
+          ],
         },
-        xAxis: [
-          {
-            type: 'category',
-            boundaryGap: false,
-            data: ['2006年', '2009年', '2012年', '2015年', '2018年', '2021年'],
-          },
-        ],
         yAxis: [
           {
             type: 'value',
+            axisLine: {
+              show: true,
+            },
+            splitLine: {
+              show: false,
+            },
           },
         ],
         series: [
           {
             name: '煤炭',
             type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [1200, 1900, 2400, 1800, 1100, 300],
+            symbolSize: 12,
+            data: [
+              40, 41, 42, 41, 38, 36, 36, 35, 34, 33, 32, 31, 30, 28, 26, 25,
+              22,
+            ],
           },
           {
             name: '石油',
             type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [900, 1100, 1500, 1600, 1800, 2000],
+            symbolSize: 12,
+            data: [
+              25, 26, 28, 29, 30, 30, 31, 32, 33, 34, 32, 33, 36, 38, 37, 36,
+              39,
+            ],
           },
           {
             name: '天然气',
             type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [200, 250, 375, 550, 780, 1200],
+            symbolSize: 12,
+            data: [5, 6, 6, 7, 6, 7, 6, 7, 8, 9, 11, 13, 15, 16, 19, 24, 25],
           },
           {
             name: '电力',
             type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [800, 1240, 1500, 2000, 2600, 3400],
+            symbolSize: 12,
+            data: [
+              30, 31, 32, 35, 36, 37, 38, 40, 42, 43, 45, 46, 47, 48, 48, 47,
+              48,
+            ],
           },
           {
             name: '热力',
             type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [200, 250, 300, 350, 350, 350],
+            symbolSize: 12,
+            data: [4, 4, 5, 3, 3, 3, 4, 5, 3, 4, 3, 5, 4, 3, 4, 5, 6],
           },
           {
             name: '其他',
             type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [200, 210, 250, 300, 400, 600],
+            symbolSize: 12,
+            data: [2, 3, 4, 4, 5, 6, 6, 5, 6, 5, 6, 7, 8, 8, 9, 8, 9],
           },
         ],
       }

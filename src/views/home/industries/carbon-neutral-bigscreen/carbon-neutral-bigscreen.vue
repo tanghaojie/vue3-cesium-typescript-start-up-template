@@ -24,15 +24,23 @@
         <div class="flex-1">
           <bs-energy-composition />
         </div>
-        <div class="flex-1 bg-red-200"></div>
+        <div class="flex-1">
+          <bs-coal-pollution />
+        </div>
       </div>
       <div class="center flex-grow flex flex-col-reverse">
         <!-- <div class="center-bottom bg-gray-700"></div> -->
       </div>
       <div class="right pointer-events-auto flex flex-col">
-        <div class="flex-1 bg-gray-600"></div>
-        <div class="flex-1 bg-blue-400"></div>
-        <div class="flex-1 bg-red-200"></div>
+        <div class="flex-1">
+          <bs-energy-consumption-percent />
+        </div>
+        <div class="flex-1">
+          <bs-energy-consumption-average-per-day />
+        </div>
+        <div class="flex-1">
+          <bs-energy-consumption-per-person />
+        </div>
       </div>
     </div>
   </div>
@@ -46,10 +54,22 @@ import { useStore } from '@/store'
 import nowDate from './components/now-date.vue'
 import bsOverview from './components/bs-overview.vue'
 import bsEnergyComposition from './components/bs-energy-composition.vue'
+import bsCoalPollution from './components/bs-coal-pollution.vue'
+import bsEnergyConsumptionPercent from './components/bs-energy-consumption-percent.vue'
+import bsEnergyConsumptionAveragePerDay from './components/bs-energy-consumption-average-per-day.vue'
+import bsEnergyConsumptionPerPerson from './components/bs-energy-consumption-per-person.vue'
 
 export default defineComponent({
   name: 'carbon-neutral-bigscreen',
-  components: { nowDate, bsOverview, bsEnergyComposition },
+  components: {
+    nowDate,
+    bsOverview,
+    bsEnergyComposition,
+    bsCoalPollution,
+    bsEnergyConsumptionPercent,
+    bsEnergyConsumptionAveragePerDay,
+    bsEnergyConsumptionPerPerson,
+  },
   props: {},
   setup(props, context) {
     const store = useStore()
@@ -70,8 +90,9 @@ export default defineComponent({
   .content {
     .left,
     .right {
-      width: 25%;
+      width: 30%;
       min-width: 260px;
+      background-color: rgba(1, 6, 17, 0.9);
     }
     #left-checkBox:checked + div {
       background-color: green !important;
@@ -79,7 +100,6 @@ export default defineComponent({
       min-width: 0 !important;
     }
     .left {
-      background-color: rgba(1, 6, 17, 0.9);
       position: relative;
 
       .handler {

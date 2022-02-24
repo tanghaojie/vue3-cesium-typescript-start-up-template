@@ -37,7 +37,7 @@
 <script lang="ts">
 const SELECTCHANGE_EVENT = 'selectChange'
 import { defineComponent, PropType, ref, watch } from 'vue'
-import type { Content } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import type { Content } from '@/components/jt-toolbar/config/contents/Types'
 
 export default defineComponent({
   name: 'jt-menus',

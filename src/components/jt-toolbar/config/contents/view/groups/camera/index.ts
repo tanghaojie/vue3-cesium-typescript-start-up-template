@@ -1,7 +1,7 @@
 import { Group, ClickHandlerOption } from '../../../Types'
 
 const view: Group = {
-  name: '视角',
+  name: '相机',
   items: [
     {
       name: '全球',

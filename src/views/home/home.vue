@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="h-screen bg-green-200">
-      <toolBar v-show="toolbarShow" ref="toolbar" />
+      <jt-toolBar v-show="toolbarShow" ref="toolbar" />
 
       <div class="relative" :style="jtCesiumVueContainerStyle">
         <overlay v-if="cesiumLoaded">
@@ -30,7 +30,7 @@
             <jt-icon name="setting" class="text-3xl text-gray-300" />
           </div>
 
-          <locationbar v-if="cesiumLoaded && locationBarShow" />
+          <jt-locationbar v-if="cesiumLoaded && locationBarShow" />
         </overlay>
 
         <jt-cesium-vue @loaded="loaded" :depthTestAgainstTerrain="true" />
@@ -53,9 +53,9 @@ import {
 import { useStore } from '@/store'
 import overlay from '@/components/jt-overlay/index.vue'
 import { useRouter, useRoute } from 'vue-router'
-import jtCesiumVue from '@/components/jt-cesium-vue/cesium-vue/index.vue'
-import locationbar from '@/components/jt-cesium-vue/locationbar/index.vue'
-import toolBar from '@/components/jt-cesium-vue/toolbar/index.vue'
+import jtCesiumVue from '@/components/jt-cesium-vue/index.vue'
+import jtLocationbar from '@/components/jt-locationbar/index.vue'
+import jtToolBar from '@/components/jt-toolbar/index.vue'
 import jtSideCollapse from '@/components/jt-side-collapse/index.vue'
 import jtBrowserPanel from '@/components/jt-browser-panel/index.vue'
 import jtTerrainSampleChart from '@/components/jt-terrain-sample-chart/index.vue'
@@ -68,9 +68,9 @@ export default defineComponent({
   name: 'jt-home',
   components: {
     jtCesiumVue,
-    toolBar,
+    jtToolBar,
     overlay,
-    locationbar,
+    jtLocationbar,
     jtSideCollapse,
     jtBrowserPanel,
     jtTerrainSampleChart,

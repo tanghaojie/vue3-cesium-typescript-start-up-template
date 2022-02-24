@@ -48,7 +48,7 @@ import UrlQuery from '@/utils/url-query'
 import dropdowns from './dropdown'
 
 export default defineComponent({
-  name: 'tool-bar',
+  name: 'jt-toolbar',
   components: {
     jtMenus,
     jtGroups,

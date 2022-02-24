@@ -1,5 +1,5 @@
 import { Group } from '../../../Types'
-import type { OnMountedOption } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import type { OnMountedOption } from '@/components/jt-toolbar/config/contents/Types'
 
 const view: Group = {
   name: '地球颜色',

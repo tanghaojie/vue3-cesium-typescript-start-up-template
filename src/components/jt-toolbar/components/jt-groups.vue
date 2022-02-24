@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { Group } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import type { Group } from '@/components/jt-toolbar/config/contents/Types'
 import jtGroup from './jt-group.vue'
 import jtItems from './jt-items.vue'
 

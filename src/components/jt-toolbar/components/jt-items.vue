@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { Item } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import type { Item } from '@/components/jt-toolbar/config/contents/Types'
 
 import jtItem from './jt-item.vue'
 

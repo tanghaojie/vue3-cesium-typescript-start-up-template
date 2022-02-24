@@ -9,7 +9,7 @@
         <div ref="icon" class="text-4xl">
           <jt-icon :name="item.icon" />
         </div>
-        <div class="text-sm text-white">
+        <div class="text-sm text-white select-none">
           <slot></slot>
         </div>
       </div>
@@ -50,7 +50,7 @@ import type {
   ClickHandlerOption,
   OnMounted,
   OnMountedOption,
-} from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+} from '@/components/jt-toolbar/config/contents/Types'
 
 export default defineComponent({
   name: 'jt-item',
@@ -88,26 +88,10 @@ export default defineComponent({
 
     const dropdownVisible = computed((): boolean => {
       const { item } = props
-      return !!item.dropdown
+      return item.dropdownOnClick ? false : !!item.dropdown
     })
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
-
-    const itemClicked = () => {
-      const { item } = props
-      const { viewer } = cesiumRef || {}
-      if (!viewer) {
-        return
-      }
-      const option: ClickHandlerOption = {
-        viewer: viewer,
-        item: item,
-        store,
-        router,
-      }
-      const result = item.clickHandler && item.clickHandler(option)
-      item.clickHandlerResult = result
-    }
 
     const dropdownClicked = () => {
       const { item } = props
@@ -126,6 +110,27 @@ export default defineComponent({
         `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
         val
       )
+    }
+
+    const itemClicked = (e: PointerEvent) => {
+      const { item } = props
+      const { viewer } = cesiumRef || {}
+      if (!viewer) {
+        return
+      }
+      if (item.dropdownOnClick) {
+        dropdownClicked()
+        e.stopPropagation()
+        return
+      }
+      const option: ClickHandlerOption = {
+        viewer: viewer,
+        item: item,
+        store,
+        router,
+      }
+      const result = item.clickHandler && item.clickHandler(option)
+      item.clickHandlerResult = result
     }
 
     onMounted(() => {

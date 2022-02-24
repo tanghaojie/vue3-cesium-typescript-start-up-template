@@ -26,6 +26,8 @@ export type Item = {
   clickHandler?: ClickHandler
   clickHandlerResult?: any
   active?: Active
+  // if true, clickHandler / clickHandlerResult will not execute, and dropdown arrow will not show
+  dropdownOnClick?: boolean
   dropdown?: Dropdown
 }
 

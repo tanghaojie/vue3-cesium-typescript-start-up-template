@@ -5,7 +5,7 @@ import type { NatureState } from './state'
 import { NatureMutationTypes } from './mutation-types'
 import { NatureActionTypes } from './action-types'
 
-import { ClickHandlerOption } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import { ClickHandlerOption } from '@/components/jt-toolbar/config/contents/Types'
 import * as Cesium from 'cesium'
 
 export const actions: ActionTree<NatureState, RootState> = {

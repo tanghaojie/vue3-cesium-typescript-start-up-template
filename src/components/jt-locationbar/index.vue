@@ -60,7 +60,7 @@ import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/st
 import * as Cesium from 'cesium'
 
 export default defineComponent({
-  name: 'location-bar',
+  name: 'jt-locationbar',
   components: {},
   props: {
     // 范围[0,1]，数字越小越精确，但影响性能

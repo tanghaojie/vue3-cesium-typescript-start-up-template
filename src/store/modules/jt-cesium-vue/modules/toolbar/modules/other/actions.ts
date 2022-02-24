@@ -4,7 +4,7 @@ import { RootState } from '@/store'
 import type { OtherState } from './state'
 import { OtherMutationTypes } from './mutation-types'
 import { OtherActionTypes } from './action-types'
-import { ClickHandlerOption } from '@/components/jt-cesium-vue/toolbar/config/contents/Types'
+import { ClickHandlerOption } from '@/components/jt-toolbar/config/contents/Types'
 
 export const actions: ActionTree<OtherState, RootState> = {
   async [OtherActionTypes.RESET_STATE]({ commit }) {
