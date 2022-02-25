@@ -1,7 +1,7 @@
 import { Group, ClickHandlerOption } from '../../../Types'
 
 const view: Group = {
-  name: '相机',
+  name: '快速定位',
   items: [
     {
       name: '全球',

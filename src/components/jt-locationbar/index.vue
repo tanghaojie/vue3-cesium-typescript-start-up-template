@@ -1,36 +1,36 @@
 <template>
   <div
-    class="bg-gray-800 location-bar px-1 py-1 flex pointer-events-auto text-white opacity-80 absolute right-0 bottom-0 whitespace-nowrap"
+    class="bg-gray-800 location-bar px-1 flex pointer-events-auto text-white opacity-90 absolute right-0 bottom-0 whitespace-nowrap"
   >
     <div v-if="cameraLocationVisible" class="type">
       <span>视角:</span>
       <div class="item">
-        <span class="label">经度:</span>
-        <span class="value">{{ cameraLocationLongitudeFix5 }}</span>
+        <!-- <span class="label">经度:</span> -->
+        <span class="value">{{ cameraLocationLongitudeFix5 }}°</span>
       </div>
       <div class="item">
-        <span class="label">纬度:</span>
-        <span class="value">{{ cameraLocationLatitudeFix5 }}</span>
+        <!-- <span class="label">纬度:</span> -->
+        <span class="value">{{ cameraLocationLatitudeFix5 }}°</span>
       </div>
       <div class="item">
-        <span class="label">高度:</span>
-        <span class="value">{{ cameraLocationHeightFix0 }}</span>
+        <!-- <span class="label">高度:</span> -->
+        <span class="value">{{ cameraLocationHeightFix0 }}m</span>
       </div>
     </div>
 
     <div v-if="mouseLocationVisible" class="type">
       <span>鼠标:</span>
       <div class="item">
-        <span class="label">经度:</span>
-        <span class="value">{{ mouseLocationLongitudeFix5 }}</span>
+        <!-- <span class="label">经度:</span> -->
+        <span class="value">{{ mouseLocationLongitudeFix5 }}°</span>
       </div>
       <div class="item">
-        <span class="label">纬度:</span>
-        <span class="value">{{ mouseLocationLatitudeFix5 }}</span>
+        <!-- <span class="label">纬度:</span> -->
+        <span class="value">{{ mouseLocationLatitudeFix5 }}°</span>
       </div>
       <div class="item">
-        <span class="label">海拔:</span>
-        <span class="value">{{ mouseLocationHeightFix0 }}</span>
+        <!-- <span class="label">海拔:</span> -->
+        <span class="value">{{ mouseLocationHeightFix0 }}m</span>
       </div>
     </div>
 
@@ -58,6 +58,8 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { useStore } from '@/store'
 import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import * as Cesium from 'cesium'
+const LONG_LAT_VALUE_DECIMAL_PRECISION = 5
+const HEIGHT_VALUE_DECIMAL_PRECISION = 1
 
 export default defineComponent({
   name: 'jt-locationbar',
@@ -106,27 +108,27 @@ export default defineComponent({
     })
 
     const cameraLocationHeightFix0 = computed((): string => {
-      return cameraLocation.height.toFixed(0)
+      return cameraLocation.height.toFixed(HEIGHT_VALUE_DECIMAL_PRECISION)
     })
 
     const cameraLocationLongitudeFix5 = computed((): string => {
-      return cameraLocation.longitude.toFixed(5)
+      return cameraLocation.longitude.toFixed(LONG_LAT_VALUE_DECIMAL_PRECISION)
     })
 
     const cameraLocationLatitudeFix5 = computed((): string => {
-      return cameraLocation.latitude.toFixed(5)
+      return cameraLocation.latitude.toFixed(LONG_LAT_VALUE_DECIMAL_PRECISION)
     })
 
     const mouseLocationHeightFix0 = computed((): string => {
-      return mouseLocation.height.toFixed(0)
+      return mouseLocation.height.toFixed(HEIGHT_VALUE_DECIMAL_PRECISION)
     })
 
     const mouseLocationLongitudeFix5 = computed((): string => {
-      return mouseLocation.longitude.toFixed(5)
+      return mouseLocation.longitude.toFixed(LONG_LAT_VALUE_DECIMAL_PRECISION)
     })
 
     const mouseLocationLatitudeFix5 = computed((): string => {
-      return mouseLocation.latitude.toFixed(5)
+      return mouseLocation.latitude.toFixed(LONG_LAT_VALUE_DECIMAL_PRECISION)
     })
 
     const fpxFix0 = computed((): string => {
@@ -316,12 +318,12 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .type {
-  @apply flex justify-center items-center py-1.5 px-1;
+  @apply flex justify-center items-center py-1 px-1;
   span {
     @apply inline-block whitespace-nowrap;
   }
   .item {
-    @apply mx-0.5 my-0.5;
+    @apply mx-1.5 my-0.5;
   }
 }
 </style>

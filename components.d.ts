@@ -28,6 +28,7 @@ declare module 'vue' {
     ImagerySelect: typeof import('./src/components/jt-browser-panel/imagery/imagery-select.vue')['default']
     ImagerySplitPosition: typeof import('./src/components/jt-toolbar/dropdown/imagery-split-position/index.vue')['default']
     JtBrowserPanel: typeof import('./src/components/jt-browser-panel/index.vue')['default']
+    JtCameraSetting: typeof import('./src/components/jt-global-register/components/jt-camera-setting/index.vue')['default']
     JtCesiumVue: typeof import('./src/components/jt-cesium-vue/index.vue')['default']
     JtDraggableResizable: typeof import('./src/components/jt-draggable-resizable/index.vue')['default']
     JtFloodAnalysis: typeof import('./src/components/jt-global-register/components/jt-flood-analysis/index.vue')['default']
