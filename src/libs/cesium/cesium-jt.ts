@@ -12,6 +12,8 @@ import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
 import ImageryManager from '@/libs/cesium/libs/imagery-manager/ImageryManager'
 import PrimitiveManager from '@/libs/cesium/libs/primitive-manager/PrimitiveManager'
 import ClippingPlane from '@/libs/cesium/libs/clipping-plane/ClippingPlane'
+import Viewshed from '@/libs/cesium/libs/viewshed/Viewshed'
+import type { Option } from '@/libs/cesium/libs/viewshed/Viewshed'
 
 class Jt {
   protected viewer: Cesium.Viewer
@@ -121,6 +123,14 @@ class Jt {
       this._clippingPlane = new ClippingPlane(this.viewer)
     }
     return this._clippingPlane
+  }
+
+  private _viewshed?: Viewshed
+  public get viewshed(): Viewshed {
+    if (!this._viewshed) {
+      this._viewshed = new Viewshed(this.viewer)
+    }
+    return this._viewshed
   }
 }
 
