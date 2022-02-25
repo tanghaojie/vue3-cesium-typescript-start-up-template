@@ -1,68 +1,76 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Color,
+  Cartesian3,
+  Scene,
+  defined,
+  JulianDate,
+  SunLight,
+  DirectionalLight,
+  Matrix3,
+  Transforms,
+  Simon1994PlanetaryPositions,
+} from 'cesium'
 
 class Light {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
-  public static updateFlashLightListener(scene: Cesium.Scene): void {
-    ;(scene.light as any).direction = Cesium.Cartesian3.clone(
+  public static updateFlashLightListener(scene: Scene): void {
+    ;(scene.light as any).direction = Cartesian3.clone(
       scene.camera.directionWC,
       (scene.light as any).direction
     )
   }
 
-  public getSunLight(): Cesium.SunLight {
-    return new Cesium.SunLight()
+  public getSunLight(): SunLight {
+    return new SunLight()
   }
 
-  public getFlashLight(): Cesium.DirectionalLight {
-    return new Cesium.DirectionalLight({
+  public getFlashLight(): DirectionalLight {
+    return new DirectionalLight({
       direction: this.viewer.scene.camera.directionWC,
     })
   }
 
-  public static getMoonDirection(
-    currentTime: Cesium.JulianDate
-  ): Cesium.Cartesian3 {
-    const icrfToFixed = new Cesium.Matrix3()
-    const scratchMoonPosition = new Cesium.Cartesian3()
-    const scratchMoonDirection = new Cesium.Cartesian3()
+  public static getMoonDirection(currentTime: JulianDate): Cartesian3 {
+    const icrfToFixed = new Matrix3()
+    const scratchMoonPosition = new Cartesian3()
+    const scratchMoonDirection = new Cartesian3()
     if (
-      !Cesium.defined(
-        Cesium.Transforms.computeIcrfToFixedMatrix(currentTime, icrfToFixed)
-      )
+      !defined(Transforms.computeIcrfToFixedMatrix(currentTime, icrfToFixed))
     ) {
-      Cesium.Transforms.computeTemeToPseudoFixedMatrix(currentTime, icrfToFixed)
+      Transforms.computeTemeToPseudoFixedMatrix(currentTime, icrfToFixed)
     }
     const moonPosition =
-      Cesium.Simon1994PlanetaryPositions.computeMoonPositionInEarthInertialFrame(
+      Simon1994PlanetaryPositions.computeMoonPositionInEarthInertialFrame(
         currentTime,
         scratchMoonPosition
       )
-    Cesium.Matrix3.multiplyByVector(icrfToFixed, moonPosition, moonPosition)
-    const moonDirection = Cesium.Cartesian3.normalize(
+    Matrix3.multiplyByVector(icrfToFixed, moonPosition, moonPosition)
+    const moonDirection = Cartesian3.normalize(
       moonPosition,
       scratchMoonDirection
     )
-    return Cesium.Cartesian3.negate(moonDirection, new Cesium.Cartesian3())
+    return Cartesian3.negate(moonDirection, new Cartesian3())
   }
 
-  public getMoonLight(currentTime: Cesium.JulianDate): Cesium.DirectionalLight {
-    return new Cesium.DirectionalLight({
+  public getMoonLight(currentTime: JulianDate): DirectionalLight {
+    return new DirectionalLight({
       direction: Light.getMoonDirection(currentTime),
-      color: new Cesium.Color(0.9, 0.925, 1.0),
+      color: new Color(0.9, 0.925, 1.0),
       intensity: 1,
     })
   }
 
   public static updateMoonLightListener(
-    scene: Cesium.Scene,
-    currentTime: Cesium.JulianDate
+    scene: Scene,
+    currentTime: JulianDate
   ): void {
-    ;(scene.light as Cesium.DirectionalLight).direction =
+    ;(scene.light as DirectionalLight).direction =
       Light.getMoonDirection(currentTime)
   }
 }

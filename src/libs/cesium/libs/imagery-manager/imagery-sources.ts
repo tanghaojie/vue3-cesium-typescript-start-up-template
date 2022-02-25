@@ -1,4 +1,11 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Credit,
+  Math,
+  GeographicTilingScheme,
+  WebMercatorTilingScheme,
+  Rectangle,
+} from 'cesium'
 import sampleData from '@/resources/sample-data'
 import { CoordinateType } from '@/libs/cesium/libs/imagery-layer-coordinate-transform/ImageryLayerCoordinateTransform'
 
@@ -33,8 +40,8 @@ export default [
           '17',
           '18',
         ],
-        tilingScheme: new Cesium.GeographicTilingScheme(),
-        credit: new Cesium.Credit('天地图全球影像服务'),
+        tilingScheme: new GeographicTilingScheme(),
+        credit: new Credit('天地图全球影像服务'),
         subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
         maximumLevel: 18,
         show: true,
@@ -70,8 +77,8 @@ export default [
           '17',
           '18',
         ],
-        tilingScheme: new Cesium.GeographicTilingScheme(),
-        credit: new Cesium.Credit('天地图全球影像服务'),
+        tilingScheme: new GeographicTilingScheme(),
+        credit: new Credit('天地图全球影像服务'),
         subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
         maximumLevel: 18,
         show: true,
@@ -107,8 +114,8 @@ export default [
           '17',
           '18',
         ],
-        tilingScheme: new Cesium.GeographicTilingScheme(),
-        credit: new Cesium.Credit('天地图全球影像服务'),
+        tilingScheme: new GeographicTilingScheme(),
+        credit: new Credit('天地图全球影像服务'),
         subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
         maximumLevel: 18,
         show: true,
@@ -144,8 +151,8 @@ export default [
           '17',
           '18',
         ],
-        tilingScheme: new Cesium.GeographicTilingScheme(),
-        credit: new Cesium.Credit('天地图全球影像服务'),
+        tilingScheme: new GeographicTilingScheme(),
+        credit: new Credit('天地图全球影像服务'),
         subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
         maximumLevel: 18,
         show: true,
@@ -233,7 +240,7 @@ export default [
     options: {
       url: sampleData.satellite,
       fileExtension: 'png',
-      rectangle: Cesium.Rectangle.fromRadians(
+      rectangle: Rectangle.fromRadians(
         1.8735054237781372,
         0.5907873200661897,
         1.8824726243189496,
@@ -241,8 +248,8 @@ export default [
       ),
     },
     providerName: 'UrlTemplateImageryProvider',
-    afterReady: function (viewer: Cesium.Viewer, success: boolean): void {
-      const rect = Cesium.Rectangle.fromRadians(
+    afterReady: function (viewer: Viewer, success: boolean): void {
+      const rect = Rectangle.fromRadians(
         1.8735054237781372,
         0.5907873200661897,
         1.8824726243189496,
@@ -252,8 +259,8 @@ export default [
         viewer.camera.flyTo({
           destination: rect,
           orientation: {
-            heading: Cesium.Math.toRadians(0),
-            pitch: Cesium.Math.toRadians(-90),
+            heading: Math.toRadians(0),
+            pitch: Math.toRadians(-90),
             roll: 0.0,
           },
         })
@@ -270,7 +277,7 @@ export default [
       iconImageUrl: 'tile_coordinates.jpg',
       name: 'Web Mercator切片网',
       options: {
-        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        tilingScheme: new WebMercatorTilingScheme(),
       },
       providerName: 'TileCoordinatesImageryProvider',
     },
@@ -278,7 +285,7 @@ export default [
       iconImageUrl: 'tile.jpg',
       name: 'Web Mercator网',
       options: {
-        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        tilingScheme: new WebMercatorTilingScheme(),
       },
       providerName: 'GridImageryProvider',
     },

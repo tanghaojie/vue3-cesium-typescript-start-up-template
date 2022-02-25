@@ -1,4 +1,11 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Color,
+  Cartesian3,
+  Entity,
+  Cartographic,
+  CallbackProperty,
+} from 'cesium'
 import Draw from '../draw/Draw'
 import { DrawMode } from '../draw/Draw'
 
@@ -51,7 +58,7 @@ class FloodAnalysis extends Draw {
     this._maxHeight = val
   }
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     super(viewer)
   }
 
@@ -62,8 +69,8 @@ class FloodAnalysis extends Draw {
     const self = this
     this.drawPolygon({
       nameAddition: FloodAnalysis.FLOOD_ANALYSIS_DRAWED_POLYGON_NAME_ADDITION,
-      color: Cesium.Color.YELLOW,
-      material: Cesium.Color.fromCssColorString('#6191daa1'),
+      color: Color.YELLOW,
+      material: Color.fromCssColorString('#6191daa1'),
       stoped: () => {
         option && option.stoped && option.stoped()
       },
@@ -78,7 +85,7 @@ class FloodAnalysis extends Draw {
     )
   }
 
-  private currentFloodArea(): Cesium.Entity | undefined {
+  private currentFloodArea(): Entity | undefined {
     const { viewer, drawShapeEntityName } = this
     const entities = viewer.entities.values
     let index = 0
@@ -97,7 +104,7 @@ class FloodAnalysis extends Draw {
     return undefined
   }
 
-  private calcFloodAreaMinMaxHeight(points: Cesium.Cartesian3[]): void {
+  private calcFloodAreaMinMaxHeight(points: Cartesian3[]): void {
     if (!points) {
       return
     }
@@ -113,8 +120,8 @@ class FloodAnalysis extends Draw {
     // }
 
     // calculate from pick position
-    const calcHeight = (cartesian3: Cesium.Cartesian3) => {
-      return Cesium.Cartographic.fromCartesian(cartesian3).height
+    const calcHeight = (cartesian3: Cartesian3) => {
+      return Cartographic.fromCartesian(cartesian3).height
     }
 
     let minH = calcHeight(points[0])
@@ -139,7 +146,7 @@ class FloodAnalysis extends Draw {
       return
     }
     this.stopFloodAnimate()
-    floodArea.polygon.extrudedHeight = new Cesium.CallbackProperty(() => {
+    floodArea.polygon.extrudedHeight = new CallbackProperty(() => {
       return val
     }, isConstant)
   }
@@ -172,7 +179,7 @@ class FloodAnalysis extends Draw {
         return
       }
       const currentHeight = minHeight + heightGrow * index
-      floodArea.polygon.extrudedHeight = new Cesium.CallbackProperty(() => {
+      floodArea.polygon.extrudedHeight = new CallbackProperty(() => {
         return currentHeight
       }, false)
       currentHeightChange && currentHeightChange(currentHeight)

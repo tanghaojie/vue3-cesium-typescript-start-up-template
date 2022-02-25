@@ -1,4 +1,4 @@
-import * as Cesium from 'cesium'
+import { Cartesian3, Cartographic, Math, ImageryLayer } from 'cesium'
 import CoordinateTransform from '@/libs/utils/CoordinateTransform'
 
 export enum CoordinateType {
@@ -8,7 +8,7 @@ export enum CoordinateType {
 }
 
 class ImageryLayerCoordinateTransform {
-  protected layer: Cesium.ImageryLayer
+  protected layer: ImageryLayer
 
   private projectionTransform: (x: number, y: number) => [number, number]
   private unprojectionTransform: (x: number, y: number) => [number, number]
@@ -41,34 +41,29 @@ class ImageryLayerCoordinateTransform {
       ;(projection as any)[
         ImageryLayerCoordinateTransform.OLD_PROJECT_PROPERTY_NAME
       ] = projection.project
-      projection.project = function (cartographic: Cesium.Cartographic) {
+      projection.project = function (cartographic: Cartographic) {
         const point = projectionTransform(
-          Cesium.Math.toDegrees(cartographic.longitude),
-          Cesium.Math.toDegrees(cartographic.latitude)
+          Math.toDegrees(cartographic.longitude),
+          Math.toDegrees(cartographic.latitude)
         )
         return (projection as any)[
           ImageryLayerCoordinateTransform.OLD_PROJECT_PROPERTY_NAME
-        ](
-          new Cesium.Cartographic(
-            Cesium.Math.toRadians(point[0]),
-            Cesium.Math.toRadians(point[1])
-          )
-        )
+        ](new Cartographic(Math.toRadians(point[0]), Math.toRadians(point[1])))
       }
       ;(projection as any)[
         ImageryLayerCoordinateTransform.OLD_UNPROJECT_PROPERTY_NAME
       ] = projection.unproject
-      projection.unproject = function (cartesian: Cesium.Cartesian3) {
+      projection.unproject = function (cartesian: Cartesian3) {
         const cartographic = (projection as any)[
           ImageryLayerCoordinateTransform.OLD_UNPROJECT_PROPERTY_NAME
         ](cartesian)
         const point = unprojectionTransform(
-          Cesium.Math.toDegrees(cartographic.longitude),
-          Cesium.Math.toDegrees(cartographic.latitude)
+          Math.toDegrees(cartographic.longitude),
+          Math.toDegrees(cartographic.latitude)
         )
-        return new Cesium.Cartographic(
-          Cesium.Math.toRadians(point[0]),
-          Cesium.Math.toRadians(point[1])
+        return new Cartographic(
+          Math.toRadians(point[0]),
+          Math.toRadians(point[1])
         )
       }
     } else {
@@ -91,7 +86,7 @@ class ImageryLayerCoordinateTransform {
   }
 
   constructor(
-    layer: Cesium.ImageryLayer,
+    layer: ImageryLayer,
     coordinateType: CoordinateType,
     defaultCorrentOffset: boolean = false
   ) {

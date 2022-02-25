@@ -1,9 +1,9 @@
-import * as Cesium from 'cesium'
+import { Viewer } from 'cesium'
 
 class PercentageChange {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 

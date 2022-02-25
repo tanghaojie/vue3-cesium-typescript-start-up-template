@@ -1,3 +1,4 @@
+import { Viewer, ImageryLayer } from 'cesium'
 import * as Cesium from 'cesium'
 import ImageryLayerCoordinateTransform, {
   CoordinateType,
@@ -8,7 +9,7 @@ export type ImagerySource = {
   name: string
   iconImageUrl: string
   providerName: string
-  afterReady?: (viewer: Cesium.Viewer, success: boolean) => void
+  afterReady?: (viewer: Viewer, success: boolean) => void
   options?: any
   coordinateType?: CoordinateType
 }
@@ -22,11 +23,11 @@ export type Imagery = {
 }
 
 class ImageryManager {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
   public imageries: Imagery[] = []
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
@@ -38,7 +39,7 @@ class ImageryManager {
     const ils = viewer.imageryLayers
     const len = ils.length
     for (let i = len - 1; i >= 0; --i) {
-      const layer: Cesium.ImageryLayer = ils.get(i)
+      const layer: ImageryLayer = ils.get(i)
       this.imageries.push({
         name: layer.name || '<Unknown>',
         uuid: layer.uuid || '<Unknown>',
@@ -50,7 +51,7 @@ class ImageryManager {
     return this.imageries
   }
 
-  public addImagery(item: ImagerySource): Cesium.ImageryLayer | undefined {
+  public addImagery(item: ImagerySource): ImageryLayer | undefined {
     const { viewer } = this
     const provider = new (Cesium as any)[item.providerName]({
       ...(item.options || {}),
@@ -59,7 +60,7 @@ class ImageryManager {
     provider.readyPromise.then((success: boolean): void => {
       item.afterReady && item.afterReady(viewer, success)
     })
-    const layer = new Cesium.ImageryLayer(provider)
+    const layer = new ImageryLayer(provider)
     layer.name = item.name
     layer.uuid = uuid()
 
@@ -77,7 +78,7 @@ class ImageryManager {
     return layer
   }
 
-  public getLayer(index: number): Cesium.ImageryLayer {
+  public getLayer(index: number): ImageryLayer {
     this.syncImageries()
     return this.viewer.imageryLayers.get(this.imageries[index].cesiumLayerIndex)
   }

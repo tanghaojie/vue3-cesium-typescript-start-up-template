@@ -1,3 +1,26 @@
+import {
+  Viewer,
+  Color,
+  HeightReference,
+  Cartesian2,
+  Cartesian3,
+  Entity,
+  CustomDataSource,
+  DataSource,
+  LabelStyle,
+  VerticalOrigin,
+  HorizontalOrigin,
+  ConstantPositionProperty,
+  ScreenSpaceEventHandler,
+  Cartographic,
+  defined,
+  Math,
+  ScreenSpaceEventType,
+  JulianDate,
+  ColorMaterialProperty,
+  CallbackProperty,
+  PolygonHierarchy,
+} from 'cesium'
 import * as Cesium from 'cesium'
 
 export type MeasureUserCallBackOption = {
@@ -30,21 +53,21 @@ class Measure {
   private static MEASURED_POLYGONS_DATASOURCE_NAME =
     '_MEASURED_POLYGONS_DATASOURCE_NAME'
 
-  protected viewer: Cesium.Viewer
+  protected viewer: Viewer
 
-  private currentPoint: Cesium.Entity | undefined
-  private activeShapePoints: Cesium.Cartesian3[] = []
-  private activeShape: Cesium.Entity | undefined
-  private mousePoint: Cesium.Entity | undefined
-  private preMousePoint: Cesium.Entity | undefined
-  private firstPoint: Cesium.Entity | undefined
+  private currentPoint: Entity | undefined
+  private activeShapePoints: Cartesian3[] = []
+  private activeShape: Entity | undefined
+  private mousePoint: Entity | undefined
+  private preMousePoint: Entity | undefined
+  private firstPoint: Entity | undefined
   private sumLength = 0
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
-  private measurePointDataSources(): Cesium.DataSource {
+  private measurePointDataSources(): DataSource {
     const ds = this.viewer.dataSources
     const len = ds.length
     for (let i = 0; i < len; i++) {
@@ -53,33 +76,28 @@ class Measure {
         return d
       }
     }
-    const pds = new Cesium.CustomDataSource(
-      Measure.MEASURED_POINTS_DATASOURCE_NAME
-    )
+    const pds = new CustomDataSource(Measure.MEASURED_POINTS_DATASOURCE_NAME)
     this.viewer.dataSources.add(pds)
     return pds
   }
 
-  private createLabelPoint(
-    ds: Cesium.DataSource,
-    position: any = undefined
-  ): Cesium.Entity {
+  private createLabelPoint(ds: DataSource, position: any = undefined): Entity {
     return ds.entities.add({
-      position: position || Cesium.Cartesian3.fromDegrees(0, 0, 0),
+      position: position || Cartesian3.fromDegrees(0, 0, 0),
       point: {
-        color: Cesium.Color.RED,
+        color: Color.RED,
         pixelSize: 15,
       },
       label: {
         text: '',
         font: '16px Source Han Sans CN',
-        fillColor: Cesium.Color.WHITE,
-        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        fillColor: Color.WHITE,
+        style: LabelStyle.FILL_AND_OUTLINE,
         outlineWidth: 8,
-        outlineColor: Cesium.Color.BLACK,
-        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-        pixelOffset: new Cesium.Cartesian2(0, -30),
+        outlineColor: Color.BLACK,
+        verticalOrigin: VerticalOrigin.BOTTOM,
+        horizontalOrigin: HorizontalOrigin.CENTER,
+        pixelOffset: new Cartesian2(0, -30),
       },
     })
   }
@@ -91,12 +109,12 @@ class Measure {
   }
 
   private setPointProperty(
-    point: Cesium.Entity,
-    position: Cesium.Cartesian3 | undefined = undefined,
+    point: Entity,
+    position: Cartesian3 | undefined = undefined,
     text: string | undefined = undefined
   ): void {
     if (position && point.position) {
-      ;(point.position as Cesium.ConstantPositionProperty).setValue(position)
+      ;(point.position as ConstantPositionProperty).setValue(position)
     }
     if (text && point.label) {
       ;(point.label.text as any) = text
@@ -109,7 +127,7 @@ class Measure {
     const pds = this.measurePointDataSources()
 
     const hasDepthTest = this.viewer.scene.globe.depthTestAgainstTerrain
-    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
     const self = this
     handler.setInputAction(function (e) {
       let position
@@ -121,15 +139,15 @@ class Measure {
           self.viewer.scene.globe.ellipsoid
         )
       }
-      if (!position || !Cesium.defined(position)) {
+      if (!position || !defined(position)) {
         return
       }
       if (!self.currentPoint) {
         self.currentPoint = self.createLabelPoint(pds)
       }
-      const cartographic = Cesium.Cartographic.fromCartesian(position)
-      const lon = Cesium.Math.toDegrees(cartographic.longitude)
-      const lat = Cesium.Math.toDegrees(cartographic.latitude)
+      const cartographic = Cartographic.fromCartesian(position)
+      const lon = Math.toDegrees(cartographic.longitude)
+      const lat = Math.toDegrees(cartographic.latitude)
       const hei = cartographic.height || 0
 
       self.setPointProperty(
@@ -137,11 +155,11 @@ class Measure {
         position,
         self.measurePointText(lon, lat, hei)
       )
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    }, ScreenSpaceEventType.MOUSE_MOVE)
 
     handler.setInputAction(function (e) {
       self.currentPoint = undefined
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
     handler.setInputAction(function (movement) {
       if (self.currentPoint) {
@@ -150,7 +168,7 @@ class Measure {
       }
       handler.destroy()
       stoped && stoped()
-    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+    }, ScreenSpaceEventType.RIGHT_CLICK)
     started && started()
   }
 
@@ -207,7 +225,7 @@ class Measure {
     this.removeMeasuredPolygons()
   }
 
-  private datasource(measureMode: MeasureMode): Cesium.DataSource {
+  private datasource(measureMode: MeasureMode): DataSource {
     let dsName: string
     if (measureMode === MeasureMode.Polyline) {
       dsName = Measure.MEASURED_POLYLINES_DATASOURCE_NAME
@@ -225,30 +243,28 @@ class Measure {
         return d
       }
     }
-    const pds = new Cesium.CustomDataSource(dsName)
+    const pds = new CustomDataSource(dsName)
     this.viewer.dataSources.add(pds)
     return pds
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  private buildShape(measureMode: MeasureMode, data: any): Cesium.Entity {
-    let entity: Cesium.Entity | Cesium.Entity.ConstructorOptions
+  private buildShape(measureMode: MeasureMode, data: any): Entity {
+    let entity: Entity | Entity.ConstructorOptions
     if (measureMode === MeasureMode.Polyline) {
       entity = {
         polyline: {
           positions: data,
           clampToGround: false,
           width: 5,
-          material: Cesium.Color.RED,
+          material: Color.RED,
         },
       }
     } else if (measureMode === MeasureMode.Polygon) {
       entity = {
         polygon: {
           hierarchy: data,
-          material: new Cesium.ColorMaterialProperty(
-            Cesium.Color.RED.withAlpha(0.7)
-          ),
+          material: new ColorMaterialProperty(Color.RED.withAlpha(0.7)),
         },
       }
     } else {
@@ -261,17 +277,17 @@ class Measure {
   private buildShapeLabelPoint(
     measureMode: MeasureMode,
     position: any
-  ): Cesium.Entity {
-    let entity: Cesium.Entity
+  ): Entity {
+    let entity: Entity
     if (measureMode === MeasureMode.Polyline) {
       entity = this.createLabelPoint(this.datasource(measureMode), position)
     } else if (measureMode === MeasureMode.Polygon) {
       entity = this.viewer.entities.add({
         position: position,
         point: {
-          color: Cesium.Color.YELLOW,
+          color: Color.YELLOW,
           pixelSize: 10,
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          heightReference: HeightReference.CLAMP_TO_GROUND,
         },
       })
     } else {
@@ -288,7 +304,7 @@ class Measure {
       if (this.mousePoint && this.mousePoint.position && area) {
         const areaLP = this.createLabelPoint(
           this.datasource(measureMode),
-          this.mousePoint.position.getValue(new Cesium.JulianDate())
+          this.mousePoint.position.getValue(new JulianDate())
         )
         this.setPointProperty(areaLP, undefined, `${area.toFixed(3)}㎡`)
       }
@@ -320,10 +336,10 @@ class Measure {
     }
 
     const hasDepthTest = scene.globe.depthTestAgainstTerrain
-    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
     const self = this
     handler.setInputAction(function (event) {
-      let position: Cesium.Cartesian3 | undefined
+      let position: Cartesian3 | undefined
       if (hasDepthTest) {
         position = scene.pickPosition(event.position)
       } else {
@@ -332,7 +348,7 @@ class Measure {
           scene.globe.ellipsoid
         )
       }
-      if (!position || !Cesium.defined(position)) {
+      if (!position || !defined(position)) {
         return
       }
 
@@ -342,9 +358,9 @@ class Measure {
         self.activeShapePoints.push(position)
         self.activeShape = self.buildShape(
           measureMode,
-          new Cesium.CallbackProperty(() => {
+          new CallbackProperty(() => {
             if (measureMode === MeasureMode.Polygon) {
-              return new Cesium.PolygonHierarchy(self.activeShapePoints)
+              return new PolygonHierarchy(self.activeShapePoints)
             }
             return self.activeShapePoints
           }, false)
@@ -354,13 +370,13 @@ class Measure {
       self.activeShapePoints.push(position)
       if (measureMode === MeasureMode.Polyline) {
         const lp = self.buildShapeLabelPoint(measureMode, position)
-        const jd = new Cesium.JulianDate()
+        const jd = new JulianDate()
         if (self.activeShapePoints.length === 2) {
           self.firstPoint = lp
         }
         if (self.activeShapePoints.length > 2 && self.preMousePoint) {
           if (self.preMousePoint.position && lp.position) {
-            const dis = Cesium.Cartesian3.distance(
+            const dis = Cartesian3.distance(
               self.preMousePoint.position.getValue(jd),
               lp.position.getValue(jd)
             )
@@ -377,10 +393,10 @@ class Measure {
         }
         self.preMousePoint = lp
       }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
     handler.setInputAction(function (event) {
-      let newPosition: Cesium.Cartesian3 | undefined
+      let newPosition: Cartesian3 | undefined
       if (hasDepthTest) {
         newPosition = scene.pickPosition(event.endPosition)
       } else {
@@ -392,8 +408,8 @@ class Measure {
       if (
         !newPosition ||
         !self.mousePoint ||
-        !Cesium.defined(self.mousePoint) ||
-        !Cesium.defined(newPosition)
+        !defined(self.mousePoint) ||
+        !defined(newPosition)
       ) {
         return
       }
@@ -401,24 +417,24 @@ class Measure {
         //   setLabelPoint(mousePoint, newPosition, '123')
       } else {
         self.mousePoint.position &&
-          (
-            self.mousePoint.position as Cesium.ConstantPositionProperty
-          ).setValue(newPosition)
+          (self.mousePoint.position as ConstantPositionProperty).setValue(
+            newPosition
+          )
       }
       self.activeShapePoints.pop()
       self.activeShapePoints.push(newPosition)
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    }, ScreenSpaceEventType.MOUSE_MOVE)
 
     handler.setInputAction(function (event) {
       self.terminateShape(measureMode)
       handler.destroy()
       stoped && stoped()
-    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+    }, ScreenSpaceEventType.RIGHT_CLICK)
 
     started && started()
   }
 
-  private getArea(theEntity: Cesium.Entity): number | undefined {
+  private getArea(theEntity: Entity): number | undefined {
     const polygon = theEntity.polygon
     if (!polygon || !polygon.hierarchy) {
       return
@@ -436,24 +452,12 @@ class Measure {
       const vector2 = hierarchy.positions[indices[i + 1]]
       const vector3 = hierarchy.positions[indices[i + 2]]
 
-      const vectorC = Cesium.Cartesian3.subtract(
-        vector2,
-        vector1,
-        new Cesium.Cartesian3()
-      )
-      const vectorD = Cesium.Cartesian3.subtract(
-        vector3,
-        vector1,
-        new Cesium.Cartesian3()
-      )
+      const vectorC = Cartesian3.subtract(vector2, vector1, new Cartesian3())
+      const vectorD = Cartesian3.subtract(vector3, vector1, new Cartesian3())
 
-      const areaVector = Cesium.Cartesian3.cross(
-        vectorC,
-        vectorD,
-        new Cesium.Cartesian3()
-      )
+      const areaVector = Cartesian3.cross(vectorC, vectorD, new Cartesian3())
 
-      area += Cesium.Cartesian3.magnitude(areaVector) / 2.0
+      area += Cartesian3.magnitude(areaVector) / 2.0
     }
 
     return area

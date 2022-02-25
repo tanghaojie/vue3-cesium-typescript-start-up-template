@@ -1,9 +1,22 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Color,
+  ClassificationType,
+  ScreenSpaceEventHandler,
+  defined,
+  ScreenSpaceEventType,
+  Primitive,
+  Geometry,
+  GeometryFactory,
+  ClassificationPrimitive,
+  GeometryInstance,
+  ColorGeometryInstanceAttribute,
+} from 'cesium'
 
 type Classified = {
   id: string | undefined
-  primitive: Cesium.Primitive | undefined
-  color: Cesium.Color | undefined
+  primitive: Primitive | undefined
+  color: Color | undefined
 }
 
 type AddClassificationOption = {
@@ -16,7 +29,7 @@ type InvertClassificationOption = {
 
 type Add3DTileClassificationPrimitiveOption = {
   id: string
-  geometry: Cesium.Geometry | Cesium.GeometryFactory
+  geometry: Geometry | GeometryFactory
 }
 
 type remove3DTileClassificationPrimitiveOption = {
@@ -24,7 +37,7 @@ type remove3DTileClassificationPrimitiveOption = {
 }
 
 class Classification {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
   private classified: Classified = {
     id: undefined,
@@ -32,7 +45,7 @@ class Classification {
     color: undefined,
   }
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
@@ -40,8 +53,8 @@ class Classification {
     const { primitive, color, id } = this.classified
     if (
       primitive &&
-      Cesium.defined(primitive) &&
-      Cesium.defined(primitive.getGeometryInstanceAttributes)
+      defined(primitive) &&
+      defined(primitive.getGeometryInstanceAttributes)
     ) {
       const attributes = primitive.getGeometryInstanceAttributes(id)
       attributes.color = color
@@ -53,31 +66,27 @@ class Classification {
 
   public addClassification(
     option: AddClassificationOption
-  ): Cesium.ScreenSpaceEventHandler | undefined {
+  ): ScreenSpaceEventHandler | undefined {
     const { color } = option
     const { scene } = this.viewer
     const self = this
-    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
     handler.setInputAction(function (movement) {
       const pickedObject = scene.pick(movement.endPosition)
-      if (
-        pickedObject &&
-        Cesium.defined(pickedObject) &&
-        Cesium.defined(pickedObject.id)
-      ) {
+      if (pickedObject && defined(pickedObject) && defined(pickedObject.id)) {
         if (pickedObject.id === self.classified.id) {
           return
         }
-        if (self.classified.id && Cesium.defined(self.classified.id)) {
+        if (self.classified.id && defined(self.classified.id)) {
           self.removeClassification()
         }
       }
 
       if (
-        Cesium.defined(pickedObject) &&
-        Cesium.defined(pickedObject.primitive) &&
-        Cesium.defined(pickedObject.id) &&
-        Cesium.defined(pickedObject.primitive.getGeometryInstanceAttributes)
+        defined(pickedObject) &&
+        defined(pickedObject.primitive) &&
+        defined(pickedObject.id) &&
+        defined(pickedObject.primitive.getGeometryInstanceAttributes)
       ) {
         self.classified.id = pickedObject.id
         self.classified.primitive = pickedObject.primitive
@@ -89,10 +98,10 @@ class Classification {
           self.classified.color = attributes.color
           attributes.color = color || [0, 255, 0, 128]
         }
-      } else if (Cesium.defined(self.classified.id)) {
+      } else if (defined(self.classified.id)) {
         self.removeClassification()
       }
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    }, ScreenSpaceEventType.MOUSE_MOVE)
 
     return handler
   }
@@ -101,26 +110,26 @@ class Classification {
     const { invert } = option
     const { scene } = this.viewer
     scene.invertClassification = invert
-    scene.invertClassificationColor = new Cesium.Color(0.1, 0.1, 0.1, 0)
+    scene.invertClassificationColor = new Color(0.1, 0.1, 0.1, 0)
   }
 
-  public addInvertClassification(): Cesium.ScreenSpaceEventHandler {
+  public addInvertClassification(): ScreenSpaceEventHandler {
     const { scene } = this.viewer
     const self = this
-    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
     handler.setInputAction(function (movement) {
       const pickedObject = scene.pick(movement.position)
       if (
         pickedObject &&
-        Cesium.defined(pickedObject) &&
-        Cesium.defined(pickedObject.primitive) &&
-        Cesium.defined(pickedObject.id) &&
-        Cesium.defined(pickedObject.primitive.getGeometryInstanceAttributes)
+        defined(pickedObject) &&
+        defined(pickedObject.primitive) &&
+        defined(pickedObject.id) &&
+        defined(pickedObject.primitive.getGeometryInstanceAttributes)
       ) {
         const toValue = !scene.invertClassification
         self.invertClassification({ invert: toValue })
       }
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
     return handler
   }
@@ -136,17 +145,17 @@ class Classification {
     const { scene } = this.viewer
 
     scene.primitives.add(
-      new Cesium.ClassificationPrimitive({
-        geometryInstances: new Cesium.GeometryInstance({
+      new ClassificationPrimitive({
+        geometryInstances: new GeometryInstance({
           id: id,
           geometry: geometry,
           attributes: {
-            color: Cesium.ColorGeometryInstanceAttribute.fromColor(
-              new Cesium.Color(1.0, 0.0, 0.0, 0)
+            color: ColorGeometryInstanceAttribute.fromColor(
+              new Color(1.0, 0.0, 0.0, 0)
             ),
           },
         }),
-        classificationType: Cesium.ClassificationType.CESIUM_3D_TILE,
+        classificationType: ClassificationType.CESIUM_3D_TILE,
       })
     )
   }
@@ -159,7 +168,7 @@ class Classification {
     const len = primitives.length
     for (let i = 0; i < len; i++) {
       const p = primitives.get(i)
-      if (!(p instanceof Cesium.ClassificationPrimitive)) {
+      if (!(p instanceof ClassificationPrimitive)) {
         continue
       }
       if (id.indexOf((p as any)._primitive._instanceIds) !== -1) {

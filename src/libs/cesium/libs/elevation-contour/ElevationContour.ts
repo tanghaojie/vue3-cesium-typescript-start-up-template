@@ -1,15 +1,15 @@
-import * as Cesium from 'cesium'
+import { Viewer, Material } from 'cesium'
 
 class ElevationContour {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
   public show(): void {
     const { viewer } = this
-    viewer.scene.globe.material = Cesium.Material.fromType('ElevationContour')
+    viewer.scene.globe.material = Material.fromType('ElevationContour')
   }
 
   public remove(): void {

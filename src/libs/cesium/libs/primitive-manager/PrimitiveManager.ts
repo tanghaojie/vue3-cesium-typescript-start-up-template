@@ -1,4 +1,22 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Color,
+  HeightReference,
+  Cesium3DTileset,
+  Model,
+  Resource,
+  ShadowMode,
+  Matrix4,
+  ClippingPlaneCollection,
+  ClassificationType,
+  Ellipsoid,
+  Cartesian2,
+  Cartesian3,
+  Scene,
+  DistanceDisplayCondition,
+  ColorBlendMode,
+  Credit,
+} from 'cesium'
 import uuid from '@/libs/utils/uuid'
 
 export type JTPrimitive = {
@@ -9,12 +27,12 @@ export type JTPrimitive = {
 }
 
 class PrimitiveManager {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
   public jtPrimitives: JTPrimitive[] = []
   public static PRIMITIVE_MANAGER_FLAG_VALUE = '__JT_PRI_F'
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
@@ -26,12 +44,7 @@ class PrimitiveManager {
     const len = pris.length
     for (let i = len - 1; i >= 0; --i) {
       const model = pris.get(i)
-      if (
-        !(
-          model instanceof Cesium.Cesium3DTileset ||
-          model instanceof Cesium.Model
-        )
-      ) {
+      if (!(model instanceof Cesium3DTileset || model instanceof Model)) {
         continue
       }
       if (
@@ -53,10 +66,10 @@ class PrimitiveManager {
   public add3DTileset(option: {
     name: string
     // cesium default
-    url: Cesium.Resource | string | Promise<Cesium.Resource> | Promise<string>
+    url: Resource | string | Promise<Resource> | Promise<string>
     show?: boolean
-    modelMatrix?: Cesium.Matrix4
-    shadows?: Cesium.ShadowMode
+    modelMatrix?: Matrix4
+    shadows?: ShadowMode
     maximumScreenSpaceError?: number
     maximumMemoryUsage?: number
     cullWithChildrenBounds?: boolean
@@ -73,7 +86,7 @@ class PrimitiveManager {
     foveatedScreenSpaceError?: boolean
     foveatedConeSize?: number
     foveatedMinimumScreenSpaceErrorRelaxation?: number
-    foveatedInterpolationCallback?: Cesium.Cesium3DTileset.foveatedInterpolationCallback
+    foveatedInterpolationCallback?: Cesium3DTileset.foveatedInterpolationCallback
     foveatedTimeDelay?: number
     skipLevelOfDetail?: boolean
     baseScreenSpaceError?: number
@@ -81,14 +94,14 @@ class PrimitiveManager {
     skipLevels?: number
     immediatelyLoadDesiredLevelOfDetail?: boolean
     loadSiblings?: boolean
-    clippingPlanes?: Cesium.ClippingPlaneCollection
-    classificationType?: Cesium.ClassificationType
-    ellipsoid?: Cesium.Ellipsoid
+    clippingPlanes?: ClippingPlaneCollection
+    classificationType?: ClassificationType
+    ellipsoid?: Ellipsoid
     pointCloudShading?: any
-    imageBasedLightingFactor?: Cesium.Cartesian2
-    lightColor?: Cesium.Cartesian3
+    imageBasedLightingFactor?: Cartesian2
+    lightColor?: Cartesian3
     luminanceAtZenith?: number
-    sphericalHarmonicCoefficients?: Cesium.Cartesian3[]
+    sphericalHarmonicCoefficients?: Cartesian3[]
     specularEnvironmentMaps?: string
     backFaceCulling?: boolean
     showOutline?: boolean
@@ -105,8 +118,8 @@ class PrimitiveManager {
     debugShowRenderingStatistics?: boolean
     debugShowMemoryUsage?: boolean
     debugShowUrl?: boolean
-  }): Cesium.Cesium3DTileset {
-    const c3Dtileset = new Cesium.Cesium3DTileset({
+  }): Cesium3DTileset {
+    const c3Dtileset = new Cesium3DTileset({
       ...option,
     })
 
@@ -124,10 +137,10 @@ class PrimitiveManager {
   public addGltf(option: {
     name: string
     // cesium default
-    url: Cesium.Resource | string
-    basePath?: Cesium.Resource | string
+    url: Resource | string
+    basePath?: Resource | string
     show?: boolean
-    modelMatrix?: Cesium.Matrix4
+    modelMatrix?: Matrix4
     scale?: number
     minimumPixelSize?: number
     maximumScale?: number
@@ -136,24 +149,24 @@ class PrimitiveManager {
     incrementallyLoadTextures?: boolean
     asynchronous?: boolean
     clampAnimations?: boolean
-    shadows?: Cesium.ShadowMode
+    shadows?: ShadowMode
     debugShowBoundingVolume?: boolean
     debugWireframe?: boolean
-    heightReference?: Cesium.HeightReference
-    scene?: Cesium.Scene
-    distanceDisplayCondition?: Cesium.DistanceDisplayCondition
-    color?: Cesium.Color
-    colorBlendMode?: Cesium.ColorBlendMode
+    heightReference?: HeightReference
+    scene?: Scene
+    distanceDisplayCondition?: DistanceDisplayCondition
+    color?: Color
+    colorBlendMode?: ColorBlendMode
     colorBlendAmount?: number
-    silhouetteColor?: Cesium.Color
+    silhouetteColor?: Color
     silhouetteSize?: number
-    clippingPlanes?: Cesium.ClippingPlaneCollection
+    clippingPlanes?: ClippingPlaneCollection
     dequantizeInShader?: boolean
-    credit?: Cesium.Credit | string
+    credit?: Credit | string
     backFaceCulling?: boolean
     showOutline?: boolean
-  }): Cesium.Model {
-    const gltf = Cesium.Model.fromGltf({
+  }): Model {
+    const gltf = Model.fromGltf({
       ...option,
     })
 
@@ -195,10 +208,7 @@ class PrimitiveManager {
     let model = this.viewer.scene.primitives.get(0)
 
     while (model) {
-      if (
-        model instanceof Cesium.Cesium3DTileset ||
-        model instanceof Cesium.Model
-      ) {
+      if (model instanceof Cesium3DTileset || model instanceof Model) {
         if (
           inManagedPrimitiveOnly &&
           model._PriManagFlag !== PrimitiveManager.PRIMITIVE_MANAGER_FLAG_VALUE

@@ -1,32 +1,38 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Color,
+  Cesium3DTileset,
+  Model,
+  ClippingPlaneCollection,
+  Cartesian3,
+  ClippingPlane as CesiumClippingPlane,
+} from 'cesium'
 
 class ClippingPlane {
-  private viewer: Cesium.Viewer
+  private viewer: Viewer
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
   public createOrUpdateOnly1Plane(
-    primitive: Cesium.Cesium3DTileset | Cesium.Model,
+    primitive: Cesium3DTileset | Model,
     x: number,
     y: number,
     z: number,
     distance: number,
     option: {
-      edgeColor: Cesium.Color
+      edgeColor: Color
       edgeWidth: number
     } = {
-      edgeColor: Cesium.Color.RED,
+      edgeColor: Color.RED,
       edgeWidth: 10,
     }
   ): void {
     // not has clippingPlanes
     if (!primitive.clippingPlanes || primitive.clippingPlanes.isDestroyed()) {
-      primitive.clippingPlanes = new Cesium.ClippingPlaneCollection({
-        planes: [
-          new Cesium.ClippingPlane(new Cesium.Cartesian3(x, y, z), distance),
-        ],
+      primitive.clippingPlanes = new ClippingPlaneCollection({
+        planes: [new CesiumClippingPlane(new Cartesian3(x, y, z), distance)],
         edgeWidth: option.edgeWidth,
         edgeColor: option.edgeColor,
       })
@@ -38,10 +44,8 @@ class ClippingPlane {
         cpLen > 0 && primitive.clippingPlanes.removeAll()
         ;(primitive as any).clippingPlanes = undefined
 
-        primitive.clippingPlanes = new Cesium.ClippingPlaneCollection({
-          planes: [
-            new Cesium.ClippingPlane(new Cesium.Cartesian3(x, y, z), distance),
-          ],
+        primitive.clippingPlanes = new ClippingPlaneCollection({
+          planes: [new CesiumClippingPlane(new Cartesian3(x, y, z), distance)],
           edgeWidth: option.edgeWidth,
           edgeColor: option.edgeColor,
         })
@@ -75,10 +79,7 @@ class ClippingPlane {
     const len = jtPris.length
     for (let i = 0; i < len; i++) {
       const primitive = pm.getPrimitiveByJTPrimitive(jtPris[i])
-      if (
-        primitive instanceof Cesium.Cesium3DTileset ||
-        primitive instanceof Cesium.Model
-      ) {
+      if (primitive instanceof Cesium3DTileset || primitive instanceof Model) {
         if (
           primitive.clippingPlanes &&
           !primitive.clippingPlanes.isDestroyed()

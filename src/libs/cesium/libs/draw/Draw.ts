@@ -1,24 +1,40 @@
-import * as Cesium from 'cesium'
+import {
+  Viewer,
+  Color,
+  HeightReference,
+  Cartesian3,
+  Entity,
+  ConstantPositionProperty,
+  ScreenSpaceEventHandler,
+  defined,
+  ScreenSpaceEventType,
+  ColorMaterialProperty,
+  CallbackProperty,
+  PolygonHierarchy,
+  PointPrimitiveCollection,
+  BlendOption,
+  clone,
+} from 'cesium'
 
 export type DrawUserCallBackOption = {
   started?: () => void
-  beforeStop?: (pickedPositions: Cesium.Cartesian3[]) => void
+  beforeStop?: (pickedPositions: Cartesian3[]) => void
   stoped?: () => void
 }
 
 export type DrawPointOption = DrawUserCallBackOption & {
   pixelSize?: number
-  color?: Cesium.Color
+  color?: Color
 }
 
 type ShapeActivePointOption = {
   pixelSize?: number
-  color?: Cesium.Color
-  heightReference?: Cesium.HeightReference
+  color?: Color
+  heightReference?: HeightReference
 }
 
 type DrawShapeEntityPropertyOption = {
-  material?: Cesium.Color | Cesium.ColorMaterialProperty
+  material?: Color | ColorMaterialProperty
   clampToGround?: boolean
   width?: number
 }
@@ -56,35 +72,30 @@ class Draw {
   private static DRAWED_SHAPES_POLYLINE_FLAG = '_POLYLINE'
   private static DRAWED_SHAPES_POLYGON_FLAG = '_POLYGON'
 
-  protected viewer: Cesium.Viewer
+  protected viewer: Viewer
 
-  private activeShapePoints: Cesium.Cartesian3[] = []
-  private drawShapePickedPositions: Cesium.Cartesian3[] = []
-  private activeShape: Cesium.Entity | undefined
-  private mousePoint: Cesium.Entity | undefined
+  private activeShapePoints: Cartesian3[] = []
+  private drawShapePickedPositions: Cartesian3[] = []
+  private activeShape: Entity | undefined
+  private mousePoint: Entity | undefined
 
-  constructor(viewer: Cesium.Viewer) {
+  constructor(viewer: Viewer) {
     this.viewer = viewer
   }
 
   public drawPoint(option?: DrawPointOption): void {
     const { viewer } = this
-    const {
-      started,
-      stoped,
-      pixelSize = 10,
-      color = Cesium.Color.RED,
-    } = option || {}
+    const { started, stoped, pixelSize = 10, color = Color.RED } = option || {}
     const { scene } = viewer
 
-    const pointPrimitives = new Cesium.PointPrimitiveCollection({
-      blendOption: Cesium.BlendOption.TRANSLUCENT,
+    const pointPrimitives = new PointPrimitiveCollection({
+      blendOption: BlendOption.TRANSLUCENT,
     })
     ;(pointPrimitives as any).name = Draw.DRAWED_POINTS_FLAG
     scene.primitives.add(pointPrimitives)
 
     const hasDepthTest = scene.globe.depthTestAgainstTerrain
-    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
     handler.setInputAction(function (e) {
       let cartesian
       if (hasDepthTest) {
@@ -101,12 +112,12 @@ class Draw {
         pixelSize,
         color,
       })
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
     handler.setInputAction(function (movement) {
       handler.destroy()
       stoped && stoped()
-    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+    }, ScreenSpaceEventType.RIGHT_CLICK)
 
     started && started()
   }
@@ -129,11 +140,11 @@ class Draw {
   private createShapeActivePoint(
     position: any,
     option: ShapeActivePointOption
-  ): Cesium.Entity {
+  ): Entity {
     const {
-      color = Cesium.Color.YELLOW,
+      color = Color.YELLOW,
       pixelSize = 10,
-      heightReference = Cesium.HeightReference.CLAMP_TO_GROUND,
+      heightReference = HeightReference.CLAMP_TO_GROUND,
     } = option
     const { viewer } = this
     return viewer.entities.add({
@@ -150,14 +161,10 @@ class Draw {
     drawMode: DrawMode,
     data: any,
     option: DrawShapeEntityPropertyOption
-  ): Cesium.Entity | undefined {
+  ): Entity | undefined {
     const { viewer } = this
     if (drawMode === DrawMode.Polyline) {
-      const {
-        clampToGround = true,
-        width = 5,
-        material = Cesium.Color.RED,
-      } = option
+      const { clampToGround = true, width = 5, material = Color.RED } = option
       return viewer.entities.add({
         polyline: {
           positions: data,
@@ -167,11 +174,8 @@ class Draw {
         },
       })
     } else if (drawMode === DrawMode.Polygon) {
-      const {
-        material = new Cesium.ColorMaterialProperty(
-          Cesium.Color.RED.withAlpha(0.7)
-        ),
-      } = option
+      const { material = new ColorMaterialProperty(Color.RED.withAlpha(0.7)) } =
+        option
       return viewer.entities.add({
         polygon: {
           hierarchy: data,
@@ -245,9 +249,9 @@ class Draw {
     }
 
     const hasDepthTest = scene.globe.depthTestAgainstTerrain
-    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas)
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
     handler.setInputAction(function (event) {
-      let position: Cesium.Cartesian3 | undefined
+      let position: Cartesian3 | undefined
       if (hasDepthTest) {
         position = scene.pickPosition(event.position)
       } else {
@@ -256,7 +260,7 @@ class Draw {
           scene.globe.ellipsoid
         )
       }
-      if (!position || !Cesium.defined(position)) {
+      if (!position || !defined(position)) {
         return
       }
 
@@ -265,9 +269,9 @@ class Draw {
         self.activeShapePoints.push(position)
         self.activeShape = self.buildShape(
           drawMode,
-          new Cesium.CallbackProperty(() => {
+          new CallbackProperty(() => {
             if (drawMode === DrawMode.Polygon) {
-              return new Cesium.PolygonHierarchy(self.activeShapePoints)
+              return new PolygonHierarchy(self.activeShapePoints)
             }
             return self.activeShapePoints
           }, false),
@@ -275,9 +279,9 @@ class Draw {
         )
       }
       self.activeShapePoints.push(position)
-      self.drawShapePickedPositions.push(Cesium.clone(position))
+      self.drawShapePickedPositions.push(clone(position))
       // createShapeActivePoint(position, option)
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
     handler.setInputAction(function (event) {
       let newPosition
@@ -293,27 +297,25 @@ class Draw {
       if (
         !mousePoint ||
         !newPosition ||
-        !Cesium.defined(mousePoint) ||
-        !Cesium.defined(newPosition)
+        !defined(mousePoint) ||
+        !defined(newPosition)
       ) {
         return
       }
 
       if (mousePoint.position) {
-        ;(mousePoint.position as Cesium.ConstantPositionProperty).setValue(
-          newPosition
-        )
+        ;(mousePoint.position as ConstantPositionProperty).setValue(newPosition)
       }
 
       self.activeShapePoints.pop()
       self.activeShapePoints.push(newPosition)
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    }, ScreenSpaceEventType.MOUSE_MOVE)
 
     handler.setInputAction(function (event) {
       self.terminateShape(drawMode, option)
       handler.destroy()
       stoped && stoped()
-    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+    }, ScreenSpaceEventType.RIGHT_CLICK)
 
     started && started()
   }
