@@ -7,67 +7,74 @@
     :initialPosition="'tr'"
     class="pointer-events-auto"
   >
-    <template v-slot:title>地图范围限制</template>
+    <template v-slot:title>
+      {{ t('jtCartographicLimit.title', '地图范围限制') }}
+    </template>
     <div class="w-full bg-gray-800 bg-opacity-70">
       <div
         class="w-full flex flex-col px-6 rounded-lg text-white pb-3"
         @click.stop
       >
         <div class="my-1">
-          东经:
+          {{ t('jtCartographicLimit.east', '东经') }}:
           <el-input-number
             v-model="eastLongitude"
             :min="westLongitude"
             :max="180"
-            :step="1"
+            :step="0.2"
             @change="handleEastLongitudeChange"
           />
         </div>
 
         <div class="my-1">
-          西经:
+          {{ t('jtCartographicLimit.west', '西经') }}:
           <el-input-number
             v-model="westLongitude"
             :min="-180"
             :max="eastLongitude"
-            :step="1"
+            :step="0.2"
             @change="handleWestLongitudeChange"
           />
         </div>
 
         <div class="my-1">
-          北纬:
+          {{ t('jtCartographicLimit.north', '北纬') }}:
           <el-input-number
             v-model="northLatitude"
             :min="southLatitude"
             :max="180"
-            :step="1"
+            :step="0.2"
             @change="handleNorthLatitudeChange"
           />
         </div>
 
         <div class="my-1">
-          南纬:
+          {{ t('jtCartographicLimit.south', '南纬') }}:
           <el-input-number
             v-model="southLatitude"
             :min="-180"
             :max="northLatitude"
-            :step="1"
+            :step="0.2"
             @change="handleSouthLatitudeChange"
           />
         </div>
 
         <button class="btn" @click="calculateViewRectangle">
-          当前视口范围
+          {{
+            t(
+              'jtCartographicLimit.currentViewExtend',
+              '当前视口范围(3D模式有效)'
+            )
+          }}
         </button>
 
         <div class="flex justify-center align-middle mt-3">
           <button class="btn" @click="setCartographicLimitRectangle">
-            确定
+            {{ t('jtCartographicLimit.confirm', '确定') }}
           </button>
 
           <button class="btn ml-3" @click="resetCartographicLimitRectangle">
-            重置
+            {{ t('jtCartographicLimit.reset', '重置') }}
           </button>
         </div>
       </div>
@@ -96,6 +103,7 @@ import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import { Rectangle, Math as CesiumMath } from 'cesium'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'jt-cartographic-limit-rectangle',
@@ -200,6 +208,7 @@ export default defineComponent({
       southLatitude.value = south
     })
 
+    const { t } = useI18n()
     return {
       isShow,
       westLongitude,
@@ -214,6 +223,7 @@ export default defineComponent({
       resetCartographicLimitRectangle,
       rectangleToDegree,
       calculateViewRectangle,
+      t,
     }
   },
 })

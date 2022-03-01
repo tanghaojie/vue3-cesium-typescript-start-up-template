@@ -2,7 +2,9 @@
   <div>
     <div class="pb-4">
       <div class="text-lg text-white flex flex-row">
-        <div class="flex-1">地形管理</div>
+        <div class="flex-1">
+          {{ t('browserPanel.terrain.terrainManage', '地形管理') }}
+        </div>
         <div class="flex flex-row flex-grow-0 flex-shrink-0">
           <div class="plus cursor-pointer" @click="showTerrainSettingDialog">
             <el-icon><setting /></el-icon>
@@ -44,6 +46,7 @@ import sampleData from '@/resources/sample-data'
 import terrainSetting from '../terrain/terrain-setting.vue'
 import { ElSelect, ElOption, ElDialog, ElSlider } from 'element-plus'
 import { Setting } from '@element-plus/icons-vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'terrain-manager',
@@ -56,16 +59,18 @@ export default defineComponent({
     terrainSetting,
   },
   setup() {
+    const { t } = useI18n()
+
     const terrains = reactive([
       {
-        name: '无地形',
+        name: t('browserPanel.terrain.noTerrain', '地形管理'),
         terrainProviderName: 'EllipsoidTerrainProvider',
         options: {
           tilingScheme: new Cesium.GeographicTilingScheme(),
         },
       },
       {
-        name: '全球简略地形',
+        name: t('browserPanel.terrain.globeTerrain', '全球简略地形'),
         terrainProvider: Cesium.createWorldTerrain({
           // required for water effects
           requestWaterMask: true,
@@ -74,7 +79,7 @@ export default defineComponent({
         }),
       },
       {
-        name: '测试001-地形(12m)',
+        name: t('browserPanel.terrain.testTerrain', '测试001-地形(12m)'),
         terrainProviderName: 'CesiumTerrainProvider',
         options: {
           url: sampleData.terrain,
@@ -101,7 +106,7 @@ export default defineComponent({
       exaggeration: 1,
     })
 
-    const currentTerrainName = ref<string>('无地形')
+    const currentTerrainName = ref<string>(terrains[0].name)
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
@@ -156,6 +161,7 @@ export default defineComponent({
       selectChange,
       showTerrainSettingDialog,
       terrainExaggerationChange,
+      t,
     }
   },
 })

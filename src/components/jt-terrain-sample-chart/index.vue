@@ -8,7 +8,9 @@
     class="pointer-events-auto"
     @resizing="terrainSampleChartResizing"
   >
-    <template v-slot:title>地形采样</template>
+    <template v-slot:title>
+      {{ t('jtTerrainSampleChart.title', '地形采样') }}
+    </template>
     <div
       class="w-full h-full flex justify-center items-center px-5 py-2 bg-gray-800 bg-opacity-70"
     >
@@ -44,6 +46,7 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 import debounce from '@/libs/utils/debounce'
+import { useI18n } from 'vue-i18n'
 
 echarts.use([GridComponent, LineChart, CanvasRenderer])
 
@@ -171,6 +174,8 @@ export default defineComponent({
       chart.value?.setOption(option)
     }
 
+    const { t } = useI18n()
+
     onMounted(() => {
       nextTick(() => {
         initChart()
@@ -192,6 +197,7 @@ export default defineComponent({
       initChart,
       terrianSampleChartShow,
       terrainSampleChartResizing,
+      t,
     }
   },
 })

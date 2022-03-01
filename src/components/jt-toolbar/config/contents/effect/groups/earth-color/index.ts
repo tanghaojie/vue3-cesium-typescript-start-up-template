@@ -1,13 +1,18 @@
-import { Group } from '../../../Types'
+import { Group, T } from '../../../Types'
 import type { OnMountedOption } from '@/components/jt-toolbar/config/contents/Types'
 
 const view: Group = {
-  name: '地球颜色',
+  name: (t: T): string => {
+    return t('toolbar.effect.earthColor', '地球颜色')
+  },
   items: [
     {
-      name: '无覆盖时颜色',
+      name: (t: T): string => {
+        return t('toolbar.effect.uncoverColor', '无覆盖时颜色')
+      },
       icon: 'earth',
       disable: false,
+      dropdownOnClick: true,
       dropdown: {
         componentName: 'earth-surface-color-picker',
       },

@@ -1,4 +1,4 @@
-import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
+import { Group, ClickHandlerOption, ActiveOption, T } from '../../../Types'
 import * as Cesium from 'cesium'
 import { Tool3DTileActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/tool3DTile/action-types'
 
@@ -119,10 +119,14 @@ const removeYinTaiIn99ClassificationPrimitive = function (
 }
 
 const view: Group = {
-  name: '3DTiles',
+  name: (t: T): string => {
+    return t('toolbar.tool.d3DTile', '3DTiles')
+  },
   items: [
     {
-      name: '高亮',
+      name: (t: T): string => {
+        return t('toolbar.tool.highLight', '高亮')
+      },
       icon: 'classification',
       clickHandler: (option: ClickHandlerOption): any => {
         if (!option || !option.viewer || !option.viewer.jt) {
@@ -161,7 +165,9 @@ const view: Group = {
       },
     },
     {
-      name: '分类(滑动)',
+      name: (t: T): string => {
+        return t('toolbar.tool.classifyMove', '分类(滑动)')
+      },
       icon: 'move',
       clickHandler: (option: ClickHandlerOption): any => {
         if (!option || !option.viewer || !option.viewer.jt) {
@@ -211,7 +217,9 @@ const view: Group = {
       },
     },
     {
-      name: '分类(点击)',
+      name: (t: T): string => {
+        return t('toolbar.tool.classifyClick', '分类(点击)')
+      },
       icon: 'select',
       clickHandler: (option: ClickHandlerOption): any => {
         if (!option || !option.viewer || !option.viewer.jt) {

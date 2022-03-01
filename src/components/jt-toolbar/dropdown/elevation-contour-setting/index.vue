@@ -1,7 +1,9 @@
 <template>
   <div class="elevation-contour-setting" @click.stop>
     <div class="flex flex-row w-full justify-center items-center">
-      <div class="flex-0 w-16">等高距</div>
+      <div class="flex-0 w-16">
+        {{ t('toolbar.terrainTool.contourDistance', '等高距') }}
+      </div>
       <div class="flex-0 w-40 ml-3">
         <el-slider
           :disabled="!elevationContourActive"
@@ -31,7 +33,9 @@
     </div>
 
     <div class="flex flex-row w-full justify-center items-center">
-      <div class="flex-0 w-16">线宽</div>
+      <div class="flex-0 w-16">
+        {{ t('toolbar.terrainTool.contourWidth', '线宽') }}
+      </div>
       <div class="flex-0 w-40 ml-3">
         <el-slider
           :disabled="!elevationContourActive"
@@ -56,7 +60,9 @@
     </div>
 
     <div class="flex flex-row w-full justify-center items-center">
-      <div class="flex-0 w-12">颜色</div>
+      <div class="flex-0 w-12">
+        {{ t('toolbar.terrainTool.contourColor', '颜色') }}
+      </div>
       <div class="flex-1">
         <el-color-picker
           :disabled="!elevationContourActive"
@@ -76,6 +82,7 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElSlider, ElInputNumber, ElColorPicker } from 'element-plus'
 import { useStore } from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'jt-elevation-contour-setting',
@@ -147,6 +154,8 @@ export default defineComponent({
       //   uniforms.color.alpha = rgba.a
     }
 
+    const { t } = useI18n()
+
     return {
       contourDistance,
       contourMinDistance,
@@ -159,6 +168,7 @@ export default defineComponent({
       contourDistanceChange,
       contourWidthChange,
       contourColorChange,
+      t,
     }
   },
 })

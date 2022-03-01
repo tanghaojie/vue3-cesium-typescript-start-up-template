@@ -15,7 +15,7 @@
               'pointer-events-none': !!group.disable || !!group.invisible,
             }"
           >
-            <template v-slot:name>{{ group.name || '组' }}</template>
+            <template v-slot:name>{{ groupName(group) || '组' }}</template>
 
             <jt-items :items="group.items" />
           </jt-group>
@@ -30,6 +30,7 @@ import { defineComponent, PropType } from 'vue'
 import type { Group } from '@/components/jt-toolbar/config/contents/Types'
 import jtGroup from './jt-group.vue'
 import jtItems from './jt-items.vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'jt-groups',
@@ -39,6 +40,19 @@ export default defineComponent({
       type: Object as PropType<Array<Group>[]>,
       required: true,
     },
+  },
+  setup(props) {
+    const { t } = useI18n()
+    const groupName = (group: Group): string => {
+      if (group.name instanceof Function) {
+        return group.name(t)
+      }
+      return group.name as string
+    }
+
+    return {
+      groupName,
+    }
   },
 })
 </script>

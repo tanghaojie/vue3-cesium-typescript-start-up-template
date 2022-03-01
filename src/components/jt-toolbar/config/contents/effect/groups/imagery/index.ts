@@ -3,6 +3,7 @@ import {
   ClickHandlerOption,
   ActiveOption,
   OnMountedOption,
+  T,
 } from '../../../Types'
 import * as Cesium from 'cesium'
 import type { SplitType } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/state'
@@ -12,10 +13,14 @@ import { ImageryMutationTypes } from '@/store/modules/jt-cesium-vue/modules/tool
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 const view: Group = {
-  name: '影像',
+  name: (t: T): string => {
+    return t('toolbar.effect.imagery', '影像')
+  },
   items: [
     {
-      name: '分屏',
+      name: (t: T): string => {
+        return t('toolbar.effect.splitScreen', '分屏')
+      },
       icon: 'split',
 
       dropdown: {
@@ -83,7 +88,9 @@ const view: Group = {
     },
 
     {
-      name: '偏移纠正',
+      name: (t: T): string => {
+        return t('toolbar.effect.correctOffset', '偏移纠正')
+      },
       icon: 'overlap',
 
       clickHandler: (option: ClickHandlerOption): void => {

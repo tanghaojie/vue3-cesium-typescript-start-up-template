@@ -7,14 +7,22 @@
     :initialPosition="'tr'"
     class="pointer-events-auto"
   >
-    <template v-slot:title>淹没分析</template>
+    <template v-slot:title>
+      {{ t('jtFloodAnalysis.title', '淹没分析') }}
+    </template>
     <div class="w-full h-full p-4 bg-gray-800 opacity-90">
-      <button class="btn" @click="drawFloodArea">点击绘制范围</button>
-      <label class="text-gray-100"> （左键开始，右键结束） </label>
+      <button class="btn" @click="drawFloodArea">
+        {{ t('jtFloodAnalysis.drawArea', '点击绘制范围') }}
+      </button>
+      <label class="text-gray-100">
+        {{ t('jtFloodAnalysis.drawAreaDescription', '(左键开始,右键结束)') }}
+      </label>
       <div class="mt-4 w-96">
         <div class="flex justify-between">
           <div class="flex flex-col">
-            <label class="text-white">最小高度</label>
+            <label class="text-white">
+              {{ t('jtFloodAnalysis.minHeight', '最小高度') }}
+            </label>
             <el-input-number
               v-model="minInput.h"
               @change="handleMinHeightChange"
@@ -27,7 +35,9 @@
             ></el-input-number>
           </div>
           <div class="flex flex-col">
-            <label class="text-white">最大高度</label>
+            <label class="text-white">
+              {{ t('jtFloodAnalysis.maxHeight', '最大高度') }}
+            </label>
             <el-input-number
               v-model="maxInput.h"
               @change="handleMaxHeightChange"
@@ -58,7 +68,9 @@
       <div class="w-96">
         <div class="flex">
           <div class="flex flex-col">
-            <label class="text-white">动画时长</label>
+            <label class="text-white">
+              {{ t('jtFloodAnalysis.animateTime', '动画时长') }}
+            </label>
             <el-input-number
               v-model="animate.totalSecond"
               :disabled="!animate.enable"
@@ -69,7 +81,9 @@
           </div>
 
           <div class="flex-grow ml-3">
-            <label class="text-white">动画细粒度</label>
+            <label class="text-white">
+              {{ t('jtFloodAnalysis.animateDetail', '动画细粒度') }}
+            </label>
             <div class="px-4">
               <el-slider
                 v-model="animate.detailPercent"
@@ -84,7 +98,9 @@
           </div>
         </div>
 
-        <button class="btn mt-4" @click="startAnimate">开始动画</button>
+        <button class="btn mt-4" @click="startAnimate">
+          {{ t('jtFloodAnalysis.startAnimate', '开始动画') }}
+        </button>
       </div>
     </div>
   </jtDraggableResizable>
@@ -98,14 +114,16 @@ import { useStore } from '@/store'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
+import { useI18n } from 'vue-i18n'
 
 const componentName = 'jt-flood-analysis'
 
 export default defineComponent({
-  name: 'jt-flood-analysis',
+  name: componentName,
   components: { ElInputNumber, ElSlider, jtDraggableResizable },
   setup() {
     const store = useStore()
+    const { t } = useI18n()
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
     const viewShow = computed({
       get(): boolean {
@@ -223,6 +241,7 @@ export default defineComponent({
       handleMaxHeightChange,
       handleMinHeightChange,
       handleCurrentHeightChange,
+      t,
     }
   },
 })

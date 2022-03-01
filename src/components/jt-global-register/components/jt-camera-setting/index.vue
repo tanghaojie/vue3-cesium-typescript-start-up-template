@@ -7,12 +7,14 @@
     :initialPosition="'tr'"
     class="pointer-events-auto"
   >
-    <template v-slot:title>相机设置</template>
+    <template v-slot:title>
+      {{ t('jtCameraSetting.cameraSetting', '相机设置') }}
+    </template>
     <div class="w-full bg-gray-800 bg-opacity-70">
       <div class="w-full flex flex-col px-6 rounded-lg" @click.stop>
         <div class="my-1">
           <el-checkbox
-            label="最小镜头距离设置:"
+            :label="enableMinimumDistanceTitle"
             size="large"
             class="text-white"
             v-model="enableMinimumDistance"
@@ -29,7 +31,7 @@
 
         <div class="my-1">
           <el-checkbox
-            label="最大镜头距离设置:"
+            :label="enableMaximumDistanceTitle"
             size="large"
             class="text-white"
             v-model="enableMaximumDistance"
@@ -46,7 +48,7 @@
 
         <div class="my-1">
           <el-checkbox
-            label="启动相机旋转"
+            :label="enableRotateTitle"
             size="large"
             class="text-white"
             v-model="enableRotate"
@@ -56,7 +58,7 @@
 
         <div class="my-1">
           <el-checkbox
-            label="启动相机平移"
+            :label="enableTranslateTitle"
             size="large"
             class="text-white"
             v-model="enableTranslate"
@@ -66,7 +68,7 @@
 
         <div class="my-1">
           <el-checkbox
-            label="启动相机缩放"
+            :label="enableZoomTitle"
             size="large"
             class="text-white"
             v-model="enableZoom"
@@ -76,7 +78,7 @@
 
         <div class="my-1">
           <el-checkbox
-            label="启动相机倾斜"
+            :label="enableTiltTitle"
             size="large"
             class="text-white"
             v-model="enableTilt"
@@ -103,6 +105,7 @@ import { ElCheckbox, ElCheckboxGroup, ElInputNumber } from 'element-plus'
 import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'jt-camera-setting',
@@ -114,6 +117,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+
+    const { t } = useI18n()
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
@@ -176,6 +181,10 @@ export default defineComponent({
         handleMinimumZoomDistanceChange()
       }
     }
+    const enableMinimumDistanceTitle = t(
+      'jtCameraSetting.enableMinCameraDistance',
+      '最小镜头距离设置'
+    )
 
     const maximumZoomDistance = ref(minimumZoomDistance.value)
     const handleMaximumZoomDistanceChange = () => {
@@ -195,6 +204,10 @@ export default defineComponent({
         handleMaximumZoomDistanceChange()
       }
     }
+    const enableMaximumDistanceTitle = t(
+      'jtCameraSetting.enableMaxCameraDistance',
+      '最大镜头距离设置'
+    )
 
     const enableRotate = ref(true)
     const handleEnableRotateChange = () => {
@@ -203,6 +216,7 @@ export default defineComponent({
         (viewer.scene.screenSpaceCameraController.enableRotate =
           enableRotate.value)
     }
+    const enableRotateTitle = t('jtCameraSetting.enableRotate', '启动相机旋转')
 
     const enableTranslate = ref(true)
     const handleEnableTranslateChange = () => {
@@ -211,6 +225,10 @@ export default defineComponent({
         (viewer.scene.screenSpaceCameraController.enableTranslate =
           enableTranslate.value)
     }
+    const enableTranslateTitle = t(
+      'jtCameraSetting.enableTranslate',
+      '启动相机平移'
+    )
 
     const enableZoom = ref(true)
     const handleEnableZoomChange = () => {
@@ -218,6 +236,7 @@ export default defineComponent({
       viewer &&
         (viewer.scene.screenSpaceCameraController.enableZoom = enableZoom.value)
     }
+    const enableZoomTitle = t('jtCameraSetting.enableZoom', '启动相机缩放')
 
     const enableTilt = ref(true)
     const handleEnableTiltChange = () => {
@@ -225,6 +244,7 @@ export default defineComponent({
       viewer &&
         (viewer.scene.screenSpaceCameraController.enableTilt = enableTilt.value)
     }
+    const enableTiltTitle = t('jtCameraSetting.enableTilt', '启动相机倾斜')
 
     return {
       isShow,
@@ -232,24 +252,31 @@ export default defineComponent({
       minimumZoomDistance,
       handleMinimumZoomDistanceChange,
       enableMinimumDistance,
+      enableMinimumDistanceTitle,
       handleEnableMinimumDistanceChange,
 
       maximumZoomDistance,
       handleMaximumZoomDistanceChange,
       enableMaximumDistance,
+      enableMaximumDistanceTitle,
       handleEnableMaximumDistanceChange,
 
       enableRotate,
+      enableRotateTitle,
       handleEnableRotateChange,
 
       enableTranslate,
+      enableTranslateTitle,
       handleEnableTranslateChange,
 
       enableZoom,
+      enableZoomTitle,
       handleEnableZoomChange,
 
       enableTilt,
+      enableTiltTitle,
       handleEnableTiltChange,
+      t,
     }
   },
 })

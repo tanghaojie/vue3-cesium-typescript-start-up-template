@@ -7,17 +7,21 @@
     :initialPosition="'tr'"
     class="pointer-events-auto"
   >
-    <template v-slot:title>模型剖分</template>
+    <template v-slot:title>
+      {{ t('jtPrimitiveClipPlane.title', '模型剖分') }}
+    </template>
     <div class="w-full bg-gray-800 bg-opacity-70 p-2">
       <div class="w-full flex flex-col px-8 rounded-lg" @click.stop>
         <button class="btn-small" @click="cleanAllPrimitivesClippingPlane">
-          全部清除
+          {{ t('jtPrimitiveClipPlane.clear', '全部清除') }}
         </button>
 
         <div class="mt-4">
           <div class="flex">
             <div class="flex flex-col">
-              <label class="text-white">选择模型</label>
+              <label class="text-white">
+                {{ t('jtPrimitiveClipPlane.selectModel', '选择模型') }}
+              </label>
               <el-select
                 v-model="selectedPrimitive"
                 placeholder="选择模型"
@@ -35,8 +39,10 @@
             </div>
 
             <div class="flex flex-col ml-4">
-              <label class="text-white">选择方向</label
-              ><el-select
+              <label class="text-white">
+                {{ t('jtPrimitiveClipPlane.selectDir', '选择方向') }}
+              </label>
+              <el-select
                 v-model="selectClippingDirection.value"
                 placeholder="选择方向"
                 :disabled="!selectClippingDirection.enable"
@@ -58,7 +64,9 @@
         <div class="mt-4">
           <div class="flex justify-between">
             <div class="flex flex-col">
-              <label class="text-white">最小值</label>
+              <label class="text-white">
+                {{ t('jtPrimitiveClipPlane.minValue', '最小值') }}
+              </label>
               <el-input-number
                 v-model="minClippingDistanceInput.h"
                 :min="minClippingDistanceInput.limit"
@@ -70,7 +78,9 @@
               ></el-input-number>
             </div>
             <div class="flex flex-col">
-              <label class="text-white">最大值</label>
+              <label class="text-white">
+                {{ t('jtPrimitiveClipPlane.maxValue', '最大值') }}
+              </label>
               <el-input-number
                 v-model="maxClippingDistanceInput.h"
                 :min="minClippingDistanceInput.h"
@@ -124,6 +134,7 @@ import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
 import { JTPrimitiveActionTypes } from '@/store/modules/jt-cesium-vue/modules/cesium-data/modules/jt-primitive/action-types'
+import { useI18n } from 'vue-i18n'
 
 type SelectClippingDirection = {
   value: number | undefined
@@ -336,6 +347,8 @@ export default defineComponent({
       onMountedLoadDefaultExample()
     })
 
+    const { t } = useI18n()
+
     return {
       visible,
       jtPrimitives,
@@ -352,6 +365,7 @@ export default defineComponent({
       handleSelectClippingDirectionChange,
       createOrUpdateClippingPlanes,
       onMountedLoadDefaultExample,
+      t,
     }
   },
 })

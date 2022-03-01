@@ -3,14 +3,19 @@ import {
   ClickHandlerOption,
   OnMountedOption,
   ActiveOption,
+  T,
 } from '../../../Types'
 import { NatureActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/nature/action-types'
 
 const view: Group = {
-  name: '自然环境',
+  name: (t: T): string => {
+    return t('toolbar.effect.nature', '自然环境')
+  },
   items: [
     {
-      name: '太阳',
+      name: (t: T): string => {
+        return t('toolbar.effect.sun', '太阳')
+      },
       icon: 'sun',
 
       clickHandler: (option: ClickHandlerOption): void => {
@@ -29,7 +34,9 @@ const view: Group = {
       },
     },
     {
-      name: '月亮',
+      name: (t: T): string => {
+        return t('toolbar.effect.moon', '月亮')
+      },
       icon: 'moon',
 
       clickHandler: (option: ClickHandlerOption): void => {
@@ -48,7 +55,9 @@ const view: Group = {
       },
     },
     {
-      name: '大气层',
+      name: (t: T): string => {
+        return t('toolbar.effect.atmosphere', '大气层')
+      },
       icon: 'atmosphere',
 
       clickHandler: (option: ClickHandlerOption): void => {
@@ -67,7 +76,9 @@ const view: Group = {
       },
     },
     {
-      name: '日照',
+      name: (t: T): string => {
+        return t('toolbar.effect.light', '日照')
+      },
       icon: 'shadow2',
 
       clickHandler: (option: ClickHandlerOption): void => {
@@ -93,7 +104,9 @@ const view: Group = {
       },
     },
     {
-      name: '天空盒',
+      name: (t: T): string => {
+        return t('toolbar.effect.skybox', '天空盒')
+      },
       icon: 'universe',
 
       clickHandler: (option: ClickHandlerOption): void => {
@@ -113,7 +126,9 @@ const view: Group = {
     },
 
     {
-      name: '阴影',
+      name: (t: T): string => {
+        return t('toolbar.effect.shadow', '阴影')
+      },
       icon: 'shadow3',
       disable: false,
 

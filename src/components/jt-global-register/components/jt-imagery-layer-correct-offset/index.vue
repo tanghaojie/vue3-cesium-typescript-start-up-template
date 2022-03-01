@@ -7,7 +7,9 @@
     :initialPosition="'tr'"
     class="pointer-events-auto"
   >
-    <template v-slot:title>偏移纠正</template>
+    <template v-slot:title>
+      {{ t('jtImageryCorrectOffset.title', '偏移纠正') }}
+    </template>
     <div class="w-full bg-gray-800 bg-opacity-70">
       <div class="w-full flex flex-col px-8 rounded-lg" @click.stop>
         <div class="my-0">
@@ -23,7 +25,9 @@
             >
               {{
                 item.name +
-                (item.correctOffset === undefined ? '(无须纠正)' : '')
+                (item.correctOffset === undefined
+                  ? t('jtImageryCorrectOffset.notNeed', '(无须纠正)')
+                  : '')
               }}
             </el-checkbox>
           </el-checkbox-group>
@@ -48,6 +52,7 @@ import { ElCheckbox, ElCheckboxGroup } from 'element-plus'
 import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
+import { useI18n } from 'vue-i18n'
 
 type ImageryOffset = {
   checked: ImageryOffsetItem[]
@@ -141,11 +146,14 @@ export default defineComponent({
       syncUIList()
     })
 
+    const { t } = useI18n()
+
     return {
       imageryCorrectOffsetShow,
       imageryOffset,
       syncUIList,
       correctOffsetChange,
+      t,
     }
   },
 })

@@ -1,12 +1,16 @@
-import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
+import { Group, ClickHandlerOption, ActiveOption, T } from '../../../Types'
 import { MeasureActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/measure/action-types'
 import type { MeasureUserCallBackOption } from '@/libs/cesium/libs/measure/Measure'
 
 const view: Group = {
-  name: '测量',
+  name: (t: T): string => {
+    return t('toolbar.tool.measure', '测量')
+  },
   items: [
     {
-      name: '点',
+      name: (t: T): string => {
+        return t('toolbar.tool.measurePoint', '点')
+      },
       icon: 'ruler-point',
       clickHandler: (option: ClickHandlerOption): void => {
         if (
@@ -39,7 +43,9 @@ const view: Group = {
       },
     },
     {
-      name: '线',
+      name: (t: T): string => {
+        return t('toolbar.tool.measureLine', '线')
+      },
       icon: 'ruler-line',
       clickHandler: (option: ClickHandlerOption): void => {
         if (
@@ -73,7 +79,9 @@ const view: Group = {
       },
     },
     {
-      name: '面',
+      name: (t: T): string => {
+        return t('toolbar.tool.measurePolygon', '面')
+      },
       icon: 'polygon2',
       clickHandler: (option: ClickHandlerOption): void => {
         if (
@@ -106,7 +114,9 @@ const view: Group = {
       },
     },
     {
-      name: '移除',
+      name: (t: T): string => {
+        return t('toolbar.tool.removeMeasure', '移除')
+      },
       icon: 'delete',
       clickHandler: (option: ClickHandlerOption): void => {
         if (!option || !option.viewer || !option.viewer.jt) {

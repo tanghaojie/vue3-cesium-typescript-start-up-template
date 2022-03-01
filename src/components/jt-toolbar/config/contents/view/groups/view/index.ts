@@ -1,11 +1,15 @@
-import { Group, ClickHandlerOption } from '../../../Types'
+import { Group, ClickHandlerOption, T } from '../../../Types'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 const view: Group = {
-  name: '视图',
+  name: (t: T): string => {
+    return t('toolbar.view.view', '视图')
+  },
   items: [
     {
-      name: '切换视图',
+      name: (t: T): string => {
+        return t('toolbar.view.changeView', '切换视图')
+      },
       icon: 'view-lp',
       dropdownOnClick: true,
       dropdown: {
@@ -14,7 +18,9 @@ const view: Group = {
     },
 
     {
-      name: '相机设置',
+      name: (t: T): string => {
+        return t('toolbar.view.cameraSetting', '相机设置')
+      },
       icon: 'setting-config',
 
       clickHandler: (option: ClickHandlerOption): void => {
@@ -26,7 +32,9 @@ const view: Group = {
     },
 
     {
-      name: '范围限制',
+      name: (t: T): string => {
+        return t('toolbar.view.areaLimit', '范围限制')
+      },
       icon: 'rectangle',
 
       clickHandler: (option: ClickHandlerOption): void => {

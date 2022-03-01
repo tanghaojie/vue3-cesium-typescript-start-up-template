@@ -16,7 +16,7 @@ import UrlQuery from '@/utils/url-query'
 
 import imageryManager from './imagery/imagery-manager.vue'
 import terrainManager from './terrain/terrain-manager.vue'
-import primitiveManager from './pritive/primitive-manager.vue'
+import primitiveManager from './primitive/primitive-manager.vue'
 
 export default defineComponent({
   name: 'jt-browser-panel',

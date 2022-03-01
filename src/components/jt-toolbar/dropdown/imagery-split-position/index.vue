@@ -1,6 +1,8 @@
 <template>
   <div class="w-40">
-    <div class="name">分屏位置设置</div>
+    <div class="name">
+      {{ t('toolbar.effect.splitPosition', '分屏位置设置') }}
+    </div>
     <el-slider
       v-model="value"
       :min="0"
@@ -24,7 +26,7 @@ import { useStore } from '@/store'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ImageryActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/action-types'
 import type { SplitType } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/state'
-
+import { useI18n } from 'vue-i18n'
 import { ElSlider } from 'element-plus'
 
 export default defineComponent({
@@ -64,10 +66,13 @@ export default defineComponent({
       }
     })
 
+    const { t } = useI18n()
+
     return {
       value,
       afterChange,
       disable,
+      t,
     }
   },
 })

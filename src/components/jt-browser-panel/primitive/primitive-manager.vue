@@ -2,7 +2,9 @@
   <div>
     <div class="pb-4">
       <div class="text-lg text-white flex flex-row">
-        <div class="flex-1">模型管理</div>
+        <div class="flex-1">
+          {{ t('browserPanel.primitive.primitiveManage', '模型管理') }}
+        </div>
         <div class="flex flex-row flex-grow-0 flex-shrink-0">
           <div class="plus cursor-pointer" @click="showAdd3DTilesetDialog">
             <el-icon><circle-plus /></el-icon>
@@ -40,13 +42,13 @@
 
     <el-dialog
       v-model="add3DTilesetDialog.dialogVisible"
-      title="添加 3D Tileset 模型"
+      :title="add3DTilsetDialogTitle"
       destroyOnClose
       @close="add3DTilsetDialogClose"
     >
       <div>
         <div>
-          名称：
+          {{ t('browserPanel.primitive.addPrimitiveName', '名称') }}:
           <el-input v-model="add3DTilesetDialog.name"> </el-input>
         </div>
         <div class="mt-4">
@@ -54,8 +56,8 @@
           <el-input v-model="add3DTilesetDialog.url"> </el-input>
         </div>
       </div>
-      <el-button class="mt-4" type="primary" @click="add3DTilsetConfirm"
-        >确定</el-button
+      <el-button class="mt-4" type="primary" @click="add3DTilsetConfirm">
+        {{ t('browserPanel.primitive.confirm', '确定') }}</el-button
       >
     </el-dialog>
   </div>
@@ -78,6 +80,7 @@ import {
   change3DTilesetHeight,
 } from '@/libs/cesium/libs/transform'
 import { JTPrimitiveActionTypes } from '@/store/modules/jt-cesium-vue/modules/cesium-data/modules/jt-primitive/action-types'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'PrimitiveManager',
@@ -278,6 +281,15 @@ export default defineComponent({
       init()
     })
 
+    const { t } = useI18n()
+
+    const add3DTilsetDialogTitle = computed(() => {
+      return t(
+        'browserPanel.primitive.add3DTilePrimitive',
+        '添加 3D Tileset 模型'
+      )
+    })
+
     return {
       jtPrimitives,
       add3DTilesetDialog,
@@ -293,6 +305,8 @@ export default defineComponent({
       init,
       initDefaultData,
       initDemoMode,
+      t,
+      add3DTilsetDialogTitle,
     }
   },
 })

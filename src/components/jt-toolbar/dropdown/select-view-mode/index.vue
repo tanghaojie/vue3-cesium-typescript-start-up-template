@@ -24,6 +24,7 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElRadioGroup, ElRadioButton } from 'element-plus'
 import changeSceneMode from '@/libs/cesium/libs/scene-mode/index'
 import { SceneMode } from 'cesium'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'select-view-mode',
@@ -38,6 +39,8 @@ export default defineComponent({
       throw new Error('Viewer not loaded.')
     }
 
+    const { t } = useI18n()
+
     const sceneModeTypes = reactive([
       {
         name: '2D',
@@ -48,7 +51,7 @@ export default defineComponent({
         mode: SceneMode.SCENE3D,
       },
       {
-        name: '哥伦布',
+        name: t('toolbar.view.columbusViewMode', '哥伦布'),
         mode: SceneMode.COLUMBUS_VIEW,
       },
     ])
@@ -75,6 +78,7 @@ export default defineComponent({
       currentSceneModeType,
       sceneModeChange,
       sceneModeTypes,
+      t,
     }
   },
 })

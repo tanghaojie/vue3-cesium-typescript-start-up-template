@@ -1,8 +1,10 @@
-import { Content } from '../Types'
+import { Content, T } from '../Types'
 import groups from './groups'
 
 const content: Content = {
-  name: '其他',
+  name: (t: T): string => {
+    return t('toolbar.other.content', '其他')
+  },
   groups,
 }
 

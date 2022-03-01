@@ -1,11 +1,15 @@
-import { Group, ClickHandlerOption } from '../../../Types'
+import { Group, ClickHandlerOption, T } from '../../../Types'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 
 const view: Group = {
-  name: '采样',
+  name: (t: T): string => {
+    return t('toolbar.terrainTool.sample', '采样')
+  },
   items: [
     {
-      name: '地形采样',
+      name: (t: T): string => {
+        return t('toolbar.terrainTool.terrianSample', '地形采样')
+      },
       icon: 'terrain',
       clickHandler: (option: ClickHandlerOption): void => {
         if (!option || !option.viewer || !option.viewer.jt) {
@@ -24,7 +28,9 @@ const view: Group = {
       },
     },
     {
-      name: '移除',
+      name: (t: T): string => {
+        return t('toolbar.terrainTool.remove', '移除')
+      },
       icon: 'delete',
       clickHandler: (option: ClickHandlerOption): void => {
         if (!option || !option.viewer || !option.viewer.jt) {

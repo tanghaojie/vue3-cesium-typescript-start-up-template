@@ -8,7 +8,9 @@
     :title="title"
   >
     <div class="my-0">
-      <div class="text-gray-50">alpha:</div>
+      <div class="text-gray-50">
+        {{ t('browserPanel.imagery.alpha', 'Alpha') }}:
+      </div>
       <el-slider
         v-model="alpha"
         :min="0"
@@ -18,7 +20,9 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">亮度:</div>
+      <div class="text-gray-50">
+        {{ t('browserPanel.imagery.brightness', '亮度') }}:
+      </div>
       <el-slider
         v-model="brightness"
         :min="0"
@@ -28,7 +32,9 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">对比度:</div>
+      <div class="text-gray-50">
+        {{ t('browserPanel.imagery.contrast', '对比度') }}:
+      </div>
       <el-slider
         v-model="contrast"
         :min="0"
@@ -38,7 +44,9 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">色调:</div>
+      <div class="text-gray-50">
+        {{ t('browserPanel.imagery.hue', '色调') }}:
+      </div>
       <el-slider
         v-model="hue"
         :min="0"
@@ -48,7 +56,9 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">饱和度:</div>
+      <div class="text-gray-50">
+        {{ t('browserPanel.imagery.saturation', '饱和度') }}:
+      </div>
       <el-slider
         v-model="saturation"
         :min="0"
@@ -67,6 +77,7 @@ import {
   PROPERTY_CHANGE_EVENT,
   UPDATE_MODEL_EVENT,
 } from '@/libs/utils/vue-const'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'imagery-layer-operate',
@@ -133,6 +144,8 @@ export default defineComponent({
       saturation.value = props.s || 0
     })
 
+    const { t } = useI18n()
+
     return {
       alpha,
       brightness,
@@ -142,6 +155,7 @@ export default defineComponent({
       visible,
       afterChange,
       title,
+      t,
     }
   },
   emits: {

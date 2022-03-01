@@ -1,11 +1,15 @@
-import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
+import { Group, ClickHandlerOption, ActiveOption, T } from '../../../Types'
 import { ToolbarActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/action-types'
 
 const view: Group = {
-  name: '地形着色',
+  name: (t: T): string => {
+    return t('toolbar.terrainTool.terrainColor', '地形着色')
+  },
   items: [
     {
-      name: '等高线',
+      name: (t: T): string => {
+        return t('toolbar.terrainTool.elevationContour', '等高线')
+      },
       icon: 'contour2',
       dropdown: {
         componentName: 'elevationContourSetting',

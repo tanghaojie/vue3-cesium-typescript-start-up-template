@@ -1,10 +1,14 @@
-import { Group, ClickHandlerOption } from '../../../Types'
+import { Group, ClickHandlerOption, T } from '../../../Types'
 
 const view: Group = {
-  name: '快速定位',
+  name: (t: T): string => {
+    return t('toolbar.view.flyTo', '快速定位')
+  },
   items: [
     {
-      name: '全球',
+      name: (t: T): string => {
+        return t('toolbar.view.earth', '全球')
+      },
       icon: 'earth',
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         const viewer = options?.viewer
@@ -15,7 +19,9 @@ const view: Group = {
       },
     },
     {
-      name: '中国',
+      name: (t: T): string => {
+        return t('toolbar.view.china', '中国')
+      },
       icon: 'china_compressed',
       clickHandler: (options: ClickHandlerOption | undefined): void => {
         const viewer = options?.viewer

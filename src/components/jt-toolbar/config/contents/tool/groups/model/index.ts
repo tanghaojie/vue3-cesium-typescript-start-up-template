@@ -1,12 +1,16 @@
-import { Group, ClickHandlerOption } from '../../../Types'
+import { Group, ClickHandlerOption, T } from '../../../Types'
 
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 const view: Group = {
-  name: '模型',
+  name: (t: T): string => {
+    return t('toolbar.tool.model', '模型')
+  },
   items: [
     {
-      name: '剖分',
+      name: (t: T): string => {
+        return t('toolbar.tool.clip', '剖分')
+      },
       icon: 'overlap',
 
       clickHandler: (option: ClickHandlerOption): void => {

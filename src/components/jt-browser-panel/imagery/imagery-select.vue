@@ -9,7 +9,9 @@
       :initialPosition="'tm'"
       class="pointer-events-auto"
     >
-      <template v-slot:title>添加影像</template>
+      <template v-slot:title>
+        {{ t('browserPanel.imagery.addImagery', '添加影像') }}
+      </template>
       <div
         class="w-full p-3 flex flex-row flex-wrap bg-gray-800 bg-opacity-70"
         @click.stop
@@ -90,6 +92,7 @@ import ImageryManager, {
   ImagerySource,
   Imagery,
 } from '@/libs/cesium/libs/imagery-manager/ImageryManager'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'ImagerySelect',
@@ -128,10 +131,13 @@ export default defineComponent({
       context.emit(UPDATE_MODEL_EVENT, val)
     })
 
+    const { t } = useI18n()
+
     return {
       visible,
       imagerySourceDblClick,
       toolbarHeight,
+      t,
     }
   },
   emits: {

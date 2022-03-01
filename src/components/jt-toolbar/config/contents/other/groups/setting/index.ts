@@ -1,12 +1,16 @@
-import { Group, ClickHandlerOption } from '../../../Types'
+import { Group, ClickHandlerOption, T } from '../../../Types'
 
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 
 const view: Group = {
-  name: '设置',
+  name: (t: T): string => {
+    return t('toolbar.other.setting', '设置')
+  },
   items: [
     {
-      name: '设置',
+      name: (t: T): string => {
+        return t('toolbar.other.setting', '设置')
+      },
       icon: 'setting',
       clickHandler: (option: ClickHandlerOption): void => {
         option.store.dispatch(

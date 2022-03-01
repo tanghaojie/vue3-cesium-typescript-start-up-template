@@ -23,6 +23,7 @@ import {
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElRadioGroup, ElRadioButton } from 'element-plus'
 import Light from '@/libs/cesium/libs/light/Light'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'earth-light-setting',
@@ -41,15 +42,17 @@ export default defineComponent({
     const flashLight = viewer.jt.light.getFlashLight()
     const moonLight = viewer.jt.light.getMoonLight(viewer.clock.currentTime)
 
+    const { t } = useI18n()
+
     const lightTypes = reactive([
       {
-        name: '太阳光',
+        name: t('toolbar.effect.sunLight', '太阳光'),
         set: () => {
           resetLight()
         },
       },
       {
-        name: '月光',
+        name: t('toolbar.effect.moonLight', '月光'),
         set: () => {
           resetLight()
           const { viewer } = cesiumRef || {}
@@ -63,7 +66,7 @@ export default defineComponent({
         },
       },
       {
-        name: '视角光',
+        name: t('toolbar.effect.cameraLigth', '视角光'),
         set: () => {
           resetLight()
           const { viewer } = cesiumRef || {}

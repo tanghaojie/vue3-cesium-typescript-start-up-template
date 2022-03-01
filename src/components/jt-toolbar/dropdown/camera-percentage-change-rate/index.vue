@@ -1,6 +1,8 @@
 <template>
   <div class="w-40">
-    <div class="name">采样率(越小越精确)</div>
+    <div class="name">
+      {{ t('toolbar.view.viewPosSampleDetail', '采样率(越小越精确)') }}
+    </div>
     <el-slider
       v-model="value"
       :min="0"
@@ -22,6 +24,7 @@ import { defineComponent, ref, onMounted, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 
 import { ElSlider } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'camera-percentage-change-rate',
@@ -39,9 +42,12 @@ export default defineComponent({
       value.value = cesiumRef?.viewer?.jt?.percentageChange.get() || 0
     })
 
+    const { t } = useI18n()
+
     return {
       value,
       afterChange,
+      t,
     }
   },
 })

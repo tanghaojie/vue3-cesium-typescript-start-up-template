@@ -1,8 +1,10 @@
-import { Content } from '../Types'
+import { Content, T } from '../Types'
 import groups from './groups'
 
 const content: Content = {
-  name: '地形',
+  name: (t: T): string => {
+    return t('toolbar.terrainTool.content', '地形')
+  },
   groups,
   disable: false,
 }

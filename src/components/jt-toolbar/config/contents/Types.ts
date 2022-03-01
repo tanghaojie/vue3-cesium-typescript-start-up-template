@@ -4,21 +4,22 @@ import { Store } from 'vuex'
 import { Router } from 'vue-router'
 
 export type Content = {
-  name: string
+  name: string | ((t: T) => string)
   groups: Array<Group>
   invisible?: boolean
   disable?: boolean
 }
 
 export type Group = {
-  name: string
+  name: string | ((t: T) => string)
   items: Array<Item>
   invisible?: boolean
   disable?: boolean
 }
 
 export type Item = {
-  name: string
+  // string for name, function for i18n convert
+  name: string | ((t: T) => string)
   icon: string
   onMounted?: OnMounted
   invisible?: boolean
@@ -30,6 +31,8 @@ export type Item = {
   dropdownOnClick?: boolean
   dropdown?: Dropdown
 }
+
+export type T = (key: string | number, defaultMsg?: string) => string
 
 export type ClickHandlerOption = {
   viewer?: Cesium.Viewer

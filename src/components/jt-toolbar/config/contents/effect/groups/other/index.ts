@@ -3,16 +3,21 @@ import {
   ClickHandlerOption,
   OnMountedOption,
   ActiveOption,
+  T,
 } from '../../../Types'
 
 import { OtherActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/other/action-types'
 import { OtherMutationTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/other/mutation-types'
 
 const view: Group = {
-  name: '其他',
+  name: (t: T): string => {
+    return t('toolbar.effect.other', '其他')
+  },
   items: [
     {
-      name: '深度检测',
+      name: (t: T): string => {
+        return t('toolbar.effect.depthTest', '深度检测')
+      },
       icon: '360',
 
       clickHandler: (option: ClickHandlerOption): void => {

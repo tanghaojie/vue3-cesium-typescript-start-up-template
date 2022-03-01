@@ -2,7 +2,9 @@
   <div>
     <div class="pb-4">
       <div class="text-lg text-white flex flex-row">
-        <div class="flex-1">影像管理</div>
+        <div class="flex-1">
+          {{ t('browserPanel.imagery.imageryManage', '影像管理') }}
+        </div>
         <div class="flex flex-row flex-grow-0 flex-shrink-0">
           <div class="cursor-pointer" @click="plusImageries">
             <el-icon><circle-plus /></el-icon>
@@ -85,6 +87,7 @@ import {
   Imagery,
 } from '@/libs/cesium/libs/imagery-manager/ImageryManager'
 import imagerySourcesList from '@/libs/cesium/libs/imagery-manager/imagery-sources'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'ImageryManager',
@@ -220,6 +223,8 @@ export default defineComponent({
       }
     )
 
+    const { t } = useI18n()
+
     onMounted(() => {
       init()
     })
@@ -238,6 +243,7 @@ export default defineComponent({
       settingImagery,
       init,
       imageryLayerPropertyChange,
+      t,
     }
   },
 })

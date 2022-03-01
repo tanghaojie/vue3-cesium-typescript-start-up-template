@@ -8,11 +8,17 @@
     :initialPosition="'tm'"
     class="pointer-events-auto"
   >
-    <template v-slot:title>设置</template>
+    <template v-slot:title>
+      {{ t('jtSetting.title', '设置') }}
+    </template>
     <div class="w-full h-full p-4 flex justify-center items-center bg-white">
       <div>
-        <el-checkbox v-model="toolbarShow">工具栏</el-checkbox>
-        <el-checkbox v-model="browserPanelShow">数据列表</el-checkbox>
+        <el-checkbox v-model="toolbarShow">
+          {{ t('jtSetting.toolbar', '工具栏') }}
+        </el-checkbox>
+        <el-checkbox v-model="browserPanelShow">
+          {{ t('jtSetting.browserPanel', '数据列表') }}
+        </el-checkbox>
         <el-checkbox
           v-for="(inspector, index) in inspectors"
           :key="index"
@@ -23,7 +29,7 @@
         </el-checkbox>
 
         <el-checkbox v-model="showCoordinateWhenClick">
-          点击输出鼠标经纬度
+          {{ t('jtSetting.logLonLatCoordOnClick', '点击输出鼠标经纬度') }}
         </el-checkbox>
       </div>
     </div>
@@ -41,21 +47,23 @@ import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import logMousePositionMixin, {
   additionPropertyName,
 } from '@/libs/cesium/mixins/logMousePositionMixin'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'jt-setting',
   components: { ElCheckbox, jtDraggableResizable },
   setup() {
     const store = useStore()
+    const { t } = useI18n()
     const inspectors = reactive([
       {
-        name: 'Cesium调试器',
+        name: t('jtSetting.cesiumInspector', 'Cesium调试器'),
         namespace: 'viewerCesiumInspectorMixin',
         property: 'cesiumInspector',
         show: false,
       },
       {
-        name: '3D Tiles调试器',
+        name: t('jtSetting.d3dtileInspector', '3D Tiles调试器'),
         namespace: 'viewerCesium3DTilesInspectorMixin',
         property: 'cesium3DTilesInspector',
         show: false,
@@ -152,6 +160,7 @@ export default defineComponent({
       browserPanelShow,
       inspectorCheckChange,
       showCoordinateWhenClick,
+      t,
     }
   },
 })

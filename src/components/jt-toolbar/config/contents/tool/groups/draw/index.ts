@@ -1,12 +1,16 @@
-import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
+import { Group, ClickHandlerOption, ActiveOption, T } from '../../../Types'
 import { DrawActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/draw/action-types'
 import type { DrawUserCallBackOption } from '@/libs/cesium/libs/draw/Draw'
 
 const view: Group = {
-  name: '绘制(左键开始，右键结束)',
+  name: (t: T): string => {
+    return t('toolbar.tool.draw', '绘制(左键开始，右键结束)')
+  },
   items: [
     {
-      name: '画点',
+      name: (t: T): string => {
+        return t('toolbar.tool.drawPoint', '画点')
+      },
       icon: 'point',
       clickHandler: (option: ClickHandlerOption): void => {
         if (
@@ -38,7 +42,9 @@ const view: Group = {
       },
     },
     {
-      name: '画线',
+      name: (t: T): string => {
+        return t('toolbar.tool.drawLine', '画线')
+      },
       icon: 'line',
       clickHandler: (option: ClickHandlerOption): void => {
         if (
@@ -70,7 +76,9 @@ const view: Group = {
       },
     },
     {
-      name: '画面',
+      name: (t: T): string => {
+        return t('toolbar.tool.drawPolygon', '画面')
+      },
       icon: 'polygon',
       clickHandler: (option: ClickHandlerOption): void => {
         if (
@@ -102,7 +110,9 @@ const view: Group = {
       },
     },
     {
-      name: '移除',
+      name: (t: T): string => {
+        return t('toolbar.tool.removeDraw', '移除')
+      },
       icon: 'delete',
       clickHandler: (option: ClickHandlerOption): void => {
         if (!option || !option.viewer || !option.viewer.jt) {

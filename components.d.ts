@@ -48,7 +48,7 @@ declare module 'vue' {
     JtSideCollapse: typeof import('./src/components/jt-side-collapse/index.vue')['default']
     JtTerrainSampleChart: typeof import('./src/components/jt-terrain-sample-chart/index.vue')['default']
     JtToolbar: typeof import('./src/components/jt-toolbar/index.vue')['default']
-    PrimitiveManager: typeof import('./src/components/jt-browser-panel/pritive/primitive-manager.vue')['default']
+    PrimitiveManager: typeof import('./src/components/jt-browser-panel/primitive/primitive-manager.vue')['default']
     SelectViewMode: typeof import('./src/components/jt-toolbar/dropdown/select-view-mode/index.vue')['default']
     TerrainManager: typeof import('./src/components/jt-browser-panel/terrain/terrain-manager.vue')['default']
     TerrainSetting: typeof import('./src/components/jt-browser-panel/terrain/terrain-setting.vue')['default']

@@ -13,7 +13,7 @@
           'pointer-events-none': !!item.disable || !!item.invisible,
         }"
       >
-        {{ item.name }}
+        {{ itemName(item) }}
       </jt-item>
     </div>
   </template>
@@ -22,8 +22,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import type { Item } from '@/components/jt-toolbar/config/contents/Types'
-
 import jtItem from './jt-item.vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'jt-items',
@@ -33,6 +33,19 @@ export default defineComponent({
       type: Object as PropType<Array<Item>[]>,
       required: true,
     },
+  },
+  setup(props) {
+    const { t } = useI18n()
+    const itemName = (item: Item): string => {
+      if (item.name instanceof Function) {
+        return item.name(t)
+      }
+      return item.name as string
+    }
+
+    return {
+      itemName,
+    }
   },
 })
 </script>

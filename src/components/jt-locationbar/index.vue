@@ -3,7 +3,7 @@
     class="bg-gray-800 location-bar px-1 flex pointer-events-auto text-white opacity-90 absolute right-0 bottom-0 whitespace-nowrap"
   >
     <div v-if="cameraLocationVisible" class="type">
-      <span>视角:</span>
+      <span> {{ t('locationBar.view', '视角') }}: </span>
       <div class="item">
         <!-- <span class="label">经度:</span> -->
         <span class="value">{{ cameraLocationLongitudeFix5 }}°</span>
@@ -19,7 +19,7 @@
     </div>
 
     <div v-if="mouseLocationVisible" class="type">
-      <span>鼠标:</span>
+      <span>{{ t('locationBar.mouse', '鼠标') }}:</span>
       <div class="item">
         <!-- <span class="label">经度:</span> -->
         <span class="value">{{ mouseLocationLongitudeFix5 }}°</span>
@@ -58,6 +58,7 @@ import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { useStore } from '@/store'
 import type { State } from '@/store/modules/jt-cesium-vue/modules/locationbar/state'
 import * as Cesium from 'cesium'
+import { useI18n } from 'vue-i18n'
 const LONG_LAT_VALUE_DECIMAL_PRECISION = 5
 const HEIGHT_VALUE_DECIMAL_PRECISION = 1
 
@@ -288,6 +289,8 @@ export default defineComponent({
       unbindAll()
     })
 
+    const { t } = useI18n()
+
     return {
       cameraLocation,
       mouseLocation,
@@ -311,6 +314,7 @@ export default defineComponent({
       bindFPS,
       bindAll,
       unbindAll,
+      t,
     }
   },
 })

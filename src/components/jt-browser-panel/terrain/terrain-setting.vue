@@ -8,12 +8,16 @@
       :initialPosition="'tr'"
       class="pointer-events-auto"
     >
-      <template v-slot:title>地形设置</template>
+      <template v-slot:title>
+        {{ t('browserPanel.terrain.terrainSetting', '地形设置') }}
+      </template>
       <div
         class="w-96 p-3 flex flex-row flex-wrap bg-gray-800 bg-opacity-70"
         @click.stop
       >
-        <div class="text-gray-100">地形缩放</div>
+        <div class="text-gray-100">
+          {{ t('browserPanel.terrain.terrainScale', '地形缩放') }}
+        </div>
         <div class="w-96">
           <el-slider
             :min="0"
@@ -47,6 +51,7 @@ import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
 import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'terrain-setting',
@@ -86,11 +91,14 @@ export default defineComponent({
       context.emit(CHANGE, val)
     }
 
+    const { t } = useI18n()
+
     return {
       visible,
       toolbarHeight,
       exaggeration,
       exaggerationValueChange,
+      t,
     }
   },
   emits: {

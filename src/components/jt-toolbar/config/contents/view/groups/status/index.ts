@@ -1,12 +1,16 @@
-import { Group, ClickHandlerOption, ActiveOption } from '../../../Types'
+import { Group, ClickHandlerOption, ActiveOption, T } from '../../../Types'
 
 import { LocationBarActionTypes } from '@/store/modules/jt-cesium-vue/modules/locationbar/action-types'
 
 const view: Group = {
-  name: '状态栏',
+  name: (t: T): string => {
+    return t('toolbar.view.statusbar', '状态栏')
+  },
   items: [
     {
-      name: '视角坐标',
+      name: (t: T): string => {
+        return t('toolbar.view.viewPosition', '视角坐标')
+      },
       icon: 'camera2',
       clickHandler: (option: ClickHandlerOption): void => {
         const payload: boolean =
@@ -26,7 +30,9 @@ const view: Group = {
       },
     },
     {
-      name: '鼠标坐标',
+      name: (t: T): string => {
+        return t('toolbar.view.mousePosition', '鼠标坐标')
+      },
       icon: 'click',
       clickHandler: (option: ClickHandlerOption): void => {
         const payload: boolean =
@@ -41,7 +47,9 @@ const view: Group = {
       },
     },
     {
-      name: 'FPS',
+      name: (t: T): string => {
+        return t('toolbar.view.fps', 'FPS')
+      },
       icon: 'fps',
       clickHandler: (option: ClickHandlerOption): void => {
         const payload: boolean =

@@ -1,11 +1,15 @@
-import { Group, ClickHandlerOption } from '../../../Types'
+import { Group, ClickHandlerOption, T } from '../../../Types'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
 const componentName = 'jt-flood-analysis'
 const view: Group = {
-  name: '分析',
+  name: (t: T): string => {
+    return t('toolbar.terrainTool.analysis', '分析')
+  },
   items: [
     {
-      name: '淹没分析',
+      name: (t: T): string => {
+        return t('toolbar.terrainTool.flood', '淹没分析')
+      },
       icon: 'flooded-house',
       clickHandler: (option: ClickHandlerOption): void => {
         option.store.dispatch(
