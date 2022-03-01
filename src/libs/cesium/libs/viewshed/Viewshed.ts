@@ -24,6 +24,7 @@ import {
   Transforms,
   HeadingPitchRoll,
   CallbackProperty,
+  ConstantProperty,
 } from 'cesium'
 import glsl from './glsl'
 
@@ -79,7 +80,7 @@ class Viewshed {
 
   public start({
     viewPosition,
-    viewDistance = 100,
+    viewDistance = 500,
     horizontalViewAngle = 90,
     verticalViewAngle = 60,
     viewHeading = 0,
@@ -132,6 +133,7 @@ class Viewshed {
       this.sketch = null
     }
     if (this.frustumOutline) {
+      this.viewer.scene.primitives.remove(this.frustumOutline)
       !this.frustumOutline.isDestroyed && this.frustumOutline.destroy()
       this.frustumOutline = null
     }
@@ -280,17 +282,13 @@ class Viewshed {
 
     const instance = new GeometryInstance({
       geometry: new FrustumOutlineGeometry({
-        frustum: this.lightCamera.frustum as
-          | PerspectiveFrustum
-          | OrthographicFrustum,
+        frustum: this.lightCamera.frustum as PerspectiveFrustum,
         origin: this.viewPosition,
         orientation: orientation,
       }),
-      id: Math.random().toString(36).substr(2),
+      id: Math.random().toString(36).substring(2),
       attributes: {
-        color: ColorGeometryInstanceAttribute.fromColor(
-          Color.YELLOWGREEN //new Cesium Color(0.0, 1.0, 0.0, 1.0)
-        ),
+        color: ColorGeometryInstanceAttribute.fromColor(Color.YELLOWGREEN),
         show: new ShowGeometryInstanceAttribute(true),
       },
     })
@@ -308,10 +306,12 @@ class Viewshed {
 
   // 创建视网
   private drawSketch(): Entity | Entity.ConstructorOptions {
-    return {
+    const halfHorizontalAngle = this.horizontalViewAngle / 2
+    const halfVerticalAngle = this.verticalViewAngle / 2
+    const entity = {
       name: 'sketch',
       position: this.viewPosition,
-      orientation: new CallbackProperty(() => {
+      orientation: new ConstantProperty(
         Transforms.headingPitchRollQuaternion(
           this.viewPosition,
           HeadingPitchRoll.fromDegrees(
@@ -320,7 +320,7 @@ class Viewshed {
             0.0
           )
         )
-      }, false),
+      ),
       ellipsoid: {
         radii: new Cartesian3(
           this.viewDistance,
@@ -328,10 +328,10 @@ class Viewshed {
           this.viewDistance
         ),
         // innerRadii: new Cesium.Cartesian3(2.0, 2.0, 2.0),
-        minimumClock: CesiumMath.toRadians(-this.horizontalViewAngle / 2),
-        maximumClock: CesiumMath.toRadians(this.horizontalViewAngle / 2),
-        minimumCone: CesiumMath.toRadians(this.verticalViewAngle + 7.75),
-        maximumCone: CesiumMath.toRadians(180 - this.verticalViewAngle - 7.75),
+        minimumClock: CesiumMath.toRadians(-halfHorizontalAngle),
+        maximumClock: CesiumMath.toRadians(halfHorizontalAngle),
+        minimumCone: CesiumMath.toRadians(90 - halfVerticalAngle),
+        maximumCone: CesiumMath.toRadians(90 + halfVerticalAngle),
         fill: false,
         outline: true,
         subdivisions: 256,
@@ -340,6 +340,7 @@ class Viewshed {
         outlineColor: Color.YELLOWGREEN,
       },
     }
+    return entity
   }
 
   // 获得偏航角

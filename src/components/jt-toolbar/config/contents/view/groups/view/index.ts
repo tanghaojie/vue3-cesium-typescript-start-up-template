@@ -24,6 +24,18 @@ const view: Group = {
         )
       },
     },
+
+    {
+      name: '范围限制',
+      icon: 'rectangle',
+
+      clickHandler: (option: ClickHandlerOption): void => {
+        option.store.dispatch(
+          `jtCesiumVue/layout/${LayoutActionTypes.ADD_UNIQUE_NAME_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
+          'jt-cartographic-limit-rectangle'
+        )
+      },
+    },
   ],
   invisible: false,
   disable: false,
