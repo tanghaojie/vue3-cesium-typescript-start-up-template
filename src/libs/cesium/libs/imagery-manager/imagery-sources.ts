@@ -295,35 +295,35 @@ export default [
       providerName: 'GridImageryProvider',
     },
   ],
-  [
-    {
-      iconImageUrl: 'tile.jpg',
-      name: '生态林',
-      providerName: 'ArcGisMapServerImageryProvider',
-      options: {
-        // url: 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer',
-        url: 'http://192.168.0.171/ArcGIS/rest/services/stl/MapServer',
-      },
-    },
+  // [
+  //   {
+  //     iconImageUrl: 'tile.jpg',
+  //     name: '生态林',
+  //     providerName: 'ArcGisMapServerImageryProvider',
+  //     options: {
+  //       // url: 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer',
+  //       url: 'http://192.168.0.171/ArcGIS/rest/services/stl/MapServer',
+  //     },
+  //   },
 
-    {
-      iconImageUrl: 'tile.jpg',
-      name: '行政区乡镇',
-      providerName: 'ArcGisMapServerImageryProvider',
-      options: {
-        // url: 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer',
-        url: 'http://192.168.0.171/ArcGIS/rest/services/xzqxz/MapServer',
-      },
-    },
+  //   {
+  //     iconImageUrl: 'tile.jpg',
+  //     name: '行政区乡镇',
+  //     providerName: 'ArcGisMapServerImageryProvider',
+  //     options: {
+  //       // url: 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer',
+  //       url: 'http://192.168.0.171/ArcGIS/rest/services/xzqxz/MapServer',
+  //     },
+  //   },
 
-    {
-      iconImageUrl: 'tile.jpg',
-      name: '行政区村',
-      providerName: 'ArcGisMapServerImageryProvider',
-      options: {
-        // url: 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer',
-        url: 'http://192.168.0.171/ArcGIS/rest/services/xzqc/MapServer',
-      },
-    },
-  ],
+  //   {
+  //     iconImageUrl: 'tile.jpg',
+  //     name: '行政区村',
+  //     providerName: 'ArcGisMapServerImageryProvider',
+  //     options: {
+  //       // url: 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer',
+  //       url: 'http://192.168.0.171/ArcGIS/rest/services/xzqc/MapServer',
+  //     },
+  //   },
+  // ],
 ]

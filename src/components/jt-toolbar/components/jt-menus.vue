@@ -31,7 +31,7 @@
           <div
             :class="{
               'font-bold': currentLanguage === 'zh',
-              'text-sm': currentLanguage != 'zh',
+              'text-xs': currentLanguage != 'zh',
             }"
           >
             中文
@@ -40,7 +40,7 @@
           <div
             :class="{
               'font-bold': currentLanguage === 'en',
-              'text-sm': currentLanguage != 'en',
+              'text-xs': currentLanguage != 'en',
             }"
           >
             EN

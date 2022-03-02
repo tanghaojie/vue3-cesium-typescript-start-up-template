@@ -6,7 +6,7 @@ const content: Content = {
     return t('toolbar.industry.content', '应用')
   },
   groups,
-  invisible: false,
+  invisible: true,
 }
 
 export default content
