@@ -138,7 +138,7 @@ export default defineComponent({
         homeButton: props.homeButton, // 是否显示Home按钮
         infoBox: props.infoBox, // 是否显示信息框
         sceneModePicker: props.sceneModePicker, // 是否显示3D/2D选择器
-        selectionIndicator: props.sceneModePicker, // 是否显示选取指示器组件
+        selectionIndicator: props.selectionIndicator, // 是否显示选取指示器组件
         timeline: props.timeline, // 是否显示时间轴
         navigationHelpButton: props.navigationHelpButton, // 是否显示右上角的帮助按钮
         scene3DOnly: props.scene3DOnly, // 如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
