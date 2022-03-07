@@ -121,8 +121,6 @@ _Note: do not use cesium versions from 1.81.0 to 1.82.1, it exists a [bug](https
 
 _可能需要跨过[墙]才能访问_
 
-国内访问不了可以试试[这里](https://tanghaojie.dynv6.net:60443/vue3-cesium-typescript-start-up-template/#/)
-
 ## 用法说明
 
 _注意：需要先安装[Node.js](https://nodejs.org)环境_
