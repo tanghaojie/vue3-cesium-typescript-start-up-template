@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "node ./scripts/cesium-fix.js && vue-cli-service serve",
     "build": "node ./scripts/cesium-fix.js && vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "build:local": "node ./scripts/cesium-fix.js && vue-cli-service build --mode localproduction"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "autoprefixer": "^9",
