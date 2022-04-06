@@ -16,9 +16,6 @@ import {
   clone,
 } from 'cesium'
 
-import DrawBase from './DrawBase'
-import type { DrawBaseOption } from './DrawBase'
-
 export type DrawUserCallBackOption = {
   started?: () => void
   beforeStop?: (pickedPositions: Cartesian3[]) => void
@@ -69,18 +66,21 @@ export enum DrawMode {
   Polygon,
 }
 
-class Draw extends DrawBase {
+class Draw {
   private static DRAWED_POINTS_FLAG = '_DRAWED_POINTS_FLAG'
   private static DRAWED_SHAPES_FLAG = '_DRAWED_SHAPES_FLAG'
   private static DRAWED_SHAPES_POLYLINE_FLAG = '_POLYLINE'
   private static DRAWED_SHAPES_POLYGON_FLAG = '_POLYGON'
 
+  protected viewer: Viewer
+
   private activeShapePoints: Cartesian3[] = []
   private drawShapePickedPositions: Cartesian3[] = []
   private activeShape: Entity | undefined
+  private mousePoint: Entity | undefined
 
   constructor(viewer: Viewer) {
-    super(viewer)
+    this.viewer = viewer
   }
 
   public drawPoint(option?: DrawPointOption): void {
@@ -94,29 +94,32 @@ class Draw extends DrawBase {
     ;(pointPrimitives as any).name = Draw.DRAWED_POINTS_FLAG
     scene.primitives.add(pointPrimitives)
 
-    const drawStarted = () => {
-      started && started()
-    }
+    const hasDepthTest = scene.globe.depthTestAgainstTerrain
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
+    handler.setInputAction(function (e) {
+      let cartesian
+      if (hasDepthTest) {
+        cartesian = scene.pickPosition(e.position)
+      } else {
+        cartesian = scene.camera.pickEllipsoid(
+          e.position,
+          scene.globe.ellipsoid
+        )
+      }
 
-    const drawStoped = () => {
-      stoped && stoped()
-    }
-
-    const addingPosition = (position: Cartesian3) => {
       pointPrimitives.add({
-        position: position,
+        position: cartesian,
         pixelSize,
         color,
       })
-    }
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
-    const drawBaseOption: DrawBaseOption = {
-      drawStarted,
-      drawStoped,
-      addingPosition,
-    }
+    handler.setInputAction(function (movement) {
+      handler.destroy()
+      stoped && stoped()
+    }, ScreenSpaceEventType.RIGHT_CLICK)
 
-    this.draw(drawBaseOption)
+    started && started()
   }
 
   public removeDrawedPoints(): void {
@@ -134,13 +137,32 @@ class Draw extends DrawBase {
     }
   }
 
-  private generateShape(
+  private createShapeActivePoint(
+    position: any,
+    option: ShapeActivePointOption
+  ): Entity {
+    const {
+      color = Color.YELLOW,
+      pixelSize = 10,
+      heightReference = HeightReference.CLAMP_TO_GROUND,
+    } = option
+    const { viewer } = this
+    return viewer.entities.add({
+      position: position,
+      point: {
+        color,
+        pixelSize,
+        heightReference,
+      },
+    })
+  }
+
+  private buildShape(
     drawMode: DrawMode,
     data: any,
     option: DrawShapeEntityPropertyOption
   ): Entity | undefined {
     const { viewer } = this
-
     if (drawMode === DrawMode.Polyline) {
       const { clampToGround = true, width = 5, material = Color.RED } = option
       return viewer.entities.add({
@@ -173,6 +195,7 @@ class Draw extends DrawBase {
       viewer,
       activeShapePoints,
       drawShapePickedPositions,
+      mousePoint,
       activeShape,
       drawShapeEntityName,
     } = this
@@ -180,16 +203,22 @@ class Draw extends DrawBase {
 
     option && option.beforeStop && option.beforeStop(drawShapePickedPositions)
 
-    const entity = this.generateShape(drawMode, activeShapePoints, option)
+    const entity = this.buildShape(drawMode, activeShapePoints, option)
     if (!entity) {
       return
     }
+
     entity.name = drawShapeEntityName(drawMode, option.nameAddition)
+
+    if (mousePoint) {
+      viewer.entities.remove(mousePoint)
+    }
 
     if (activeShape) {
       viewer.entities.remove(activeShape)
     }
 
+    this.mousePoint = undefined
     this.activeShape = undefined
     this.activeShapePoints = []
     this.drawShapePickedPositions = []
@@ -210,54 +239,85 @@ class Draw extends DrawBase {
 
   private drawShape(option: DrawShapeOption): void {
     const { started, stoped, drawMode } = option
+    const { viewer } = this
+    const { scene } = viewer
     const self = this
 
-    const drawStarted = () => {
-      started && started()
+    if (!scene.pickPositionSupported) {
+      window.alert('This browser does not support pickPosition.')
+      return
     }
 
-    const drawStoped = () => {
-      self.terminateShape(drawMode, option)
-      stoped && stoped()
-    }
-
-    const addingPosition = (position: Cartesian3) => {
-      if (self.activeShape) {
-        self.viewer.entities.remove(self.activeShape)
-        self.activeShape = undefined
+    const hasDepthTest = scene.globe.depthTestAgainstTerrain
+    const handler = new ScreenSpaceEventHandler(scene.canvas)
+    handler.setInputAction(function (event) {
+      let position: Cartesian3 | undefined
+      if (hasDepthTest) {
+        position = scene.pickPosition(event.position)
+      } else {
+        position = scene.camera.pickEllipsoid(
+          event.position,
+          scene.globe.ellipsoid
+        )
+      }
+      if (!position || !defined(position)) {
+        return
       }
 
+      if (self.activeShapePoints.length === 0) {
+        self.mousePoint = self.createShapeActivePoint(position, option)
+        self.activeShapePoints.push(position)
+        self.activeShape = self.buildShape(
+          drawMode,
+          new CallbackProperty(() => {
+            if (drawMode === DrawMode.Polygon) {
+              return new PolygonHierarchy(self.activeShapePoints)
+            }
+            return self.activeShapePoints
+          }, false),
+          option
+        )
+      }
       self.activeShapePoints.push(position)
-
-      self.activeShape = self.generateShape(
-        drawMode,
-        new CallbackProperty(() => {
-          if (drawMode === DrawMode.Polygon) {
-            return new PolygonHierarchy(self.activeShapePoints)
-          }
-          return self.activeShapePoints
-        }, false),
-        option
-      )
-
       self.drawShapePickedPositions.push(clone(position))
-    }
+      // createShapeActivePoint(position, option)
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
-    const movingPosition = (position: Cartesian3) => {
+    handler.setInputAction(function (event) {
+      let newPosition
+      if (hasDepthTest) {
+        newPosition = viewer.scene.pickPosition(event.endPosition)
+      } else {
+        newPosition = viewer.scene.camera.pickEllipsoid(
+          event.endPosition,
+          viewer.scene.globe.ellipsoid
+        )
+      }
+      const { mousePoint } = self
+      if (
+        !mousePoint ||
+        !newPosition ||
+        !defined(mousePoint) ||
+        !defined(newPosition)
+      ) {
+        return
+      }
+
+      if (mousePoint.position) {
+        ;(mousePoint.position as ConstantPositionProperty).setValue(newPosition)
+      }
+
       self.activeShapePoints.pop()
-      self.activeShapePoints.push(position)
-    }
+      self.activeShapePoints.push(newPosition)
+    }, ScreenSpaceEventType.MOUSE_MOVE)
 
-    const drawBaseOption: DrawBaseOption = {
-      drawStarted,
-      drawStoped,
-      addingPosition,
-      movingPosition,
-      useMove: true,
-      showMousePosition: false,
-    }
+    handler.setInputAction(function (event) {
+      self.terminateShape(drawMode, option)
+      handler.destroy()
+      stoped && stoped()
+    }, ScreenSpaceEventType.RIGHT_CLICK)
 
-    this.draw(drawBaseOption)
+    started && started()
   }
 
   private removeDrawedShapes(
