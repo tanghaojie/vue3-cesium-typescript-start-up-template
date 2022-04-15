@@ -181,6 +181,11 @@ export default defineComponent({
 
       viewer.scene.primitives.removeAll()
 
+      // // 设置完毕后，坑锯齿效果有效
+      viewer.resolutionScale = window.devicePixelRatio;
+      viewer.scene.postProcessStages.fxaa.enabled = true;
+
+
       //eslint-disable-next-line
       ;(viewer.cesiumWidget.creditContainer as any).style.display = 'none'
 
