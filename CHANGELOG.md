@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/compare/v0.2.0...v0.3.0) (2022-04-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **scope:** Breaking Change
+
+* **scope:** short ([538636a](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/commit/538636a8b3b29a4984e59d497f0dbc9d3abc5d1d)), closes [#5](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/issues/5)
+
 ## 0.2.0 (2022-04-25)
 
 
