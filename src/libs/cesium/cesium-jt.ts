@@ -28,7 +28,6 @@ class Jt {
     }
     return this._draw
   }
-
   private _elevationContour?: ElevationContour
   public get elevationContour(): ElevationContour {
     if (!this._elevationContour) {
