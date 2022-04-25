@@ -14,7 +14,6 @@ class FlyTo {
   constructor(viewer: Viewer) {
     this.viewer = viewer
   }
-
   flyTo(options: {
     destination: Cartesian3 | Rectangle
     orientation?: any
