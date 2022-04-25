@@ -5,7 +5,7 @@
 // 1.
 // 直接去 node_modules 里面的 cesium 包，修改 cesium 包的 package.json 文件，在 exports 中添加："./Source/Widgets/widgets.css": "./Source/Widgets/widgets.css"
 // 2.创建本文件
-// 然后在 package.json 的所有调试方法前面加上  node ./scripts/cesium-fix.js && 
+// 然后在 package.json 的所有调试方法前面加上  node ./scripts/cesium-fix.js &&
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs')

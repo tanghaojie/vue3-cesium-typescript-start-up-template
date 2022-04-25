@@ -253,7 +253,6 @@ class Draw extends DrawBase {
       drawStoped,
       addingPosition,
       movingPosition,
-      useMove: true,
       showMousePosition: false,
     }
 

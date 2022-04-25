@@ -200,7 +200,7 @@ export default defineComponent({
 
     const init = (): Cesium.Viewer => {
       initializeCesiumDefault()
-      const viewer = initializeCesium('cesiumContainer')
+      const viewer = initializeCesium()
       viewer.jt = new Jt(viewer)
       return viewer
     }

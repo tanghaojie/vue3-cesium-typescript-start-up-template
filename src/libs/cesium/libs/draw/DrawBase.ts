@@ -26,7 +26,6 @@ export type DrawBaseCallBackOption = {
 export type DrawBaseOption = DrawBaseCallBackOption & {
   addingEventType?: ScreenSpaceEventType
   stopEventType?: ScreenSpaceEventType
-  useMove?: Boolean
   showMousePosition?: Boolean
   mousePosPixelSize?: number
   mousePosColor?: Color
@@ -80,7 +79,6 @@ abstract class DrawBase {
       drawStoped,
       addingEventType = ScreenSpaceEventType.LEFT_CLICK,
       stopEventType = ScreenSpaceEventType.RIGHT_CLICK,
-      useMove = false,
       showMousePosition = false,
     } = option || {}
 
@@ -107,32 +105,34 @@ abstract class DrawBase {
       addingPosition && addingPosition(position)
     }, addingEventType)
 
-    handler.setInputAction(function (e) {
-      let position: Cartesian3 | undefined
-      if (hasDepthTest) {
-        position = scene.pickPosition(e.endPosition)
-      } else {
-        position = scene.camera.pickEllipsoid(
-          e.endPosition,
-          scene.globe.ellipsoid
-        )
-      }
-      if (!position || !defined(position)) {
-        return
-      }
+    if (movingPosition) {
+      handler.setInputAction(function (e) {
+        let position: Cartesian3 | undefined
+        if (hasDepthTest) {
+          position = scene.pickPosition(e.endPosition)
+        } else {
+          position = scene.camera.pickEllipsoid(
+            e.endPosition,
+            scene.globe.ellipsoid
+          )
+        }
+        if (!position || !defined(position)) {
+          return
+        }
 
-      movingPosition && movingPosition(position)
+        movingPosition(position)
 
-      if (
-        showMousePosition &&
-        self.mousePositionShape &&
-        self.mousePositionShape.position
-      ) {
-        ;(
-          self.mousePositionShape.position as ConstantPositionProperty
-        ).setValue(position)
-      }
-    }, ScreenSpaceEventType.MOUSE_MOVE)
+        if (
+          showMousePosition &&
+          self.mousePositionShape &&
+          self.mousePositionShape.position
+        ) {
+          ;(
+            self.mousePositionShape.position as ConstantPositionProperty
+          ).setValue(position)
+        }
+      }, ScreenSpaceEventType.MOUSE_MOVE)
+    }
 
     handler.setInputAction(function (e) {
       if (self.mousePositionShape) {
