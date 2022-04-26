@@ -22,3 +22,19 @@ try {
 } catch (err) {
   console.log(err)
 }
+
+// try {
+//   const globalCssPath = './src/assets/styles/index.css'
+//   const baseUrl = 'https://t7.baidu.com/it/'
+//   const cssStr = `
+// :root {
+//   --url1: url('${baseUrl}111111');
+//   --url2: url('${baseUrl}22222');
+//   --url3: url('${baseUrl}333');
+//   --url4: url('${baseUrl}44444');
+// }
+// `
+//   const res = fs.appendFileSync(globalCssPath, cssStr, 'utf-8')
+// } catch (err) {
+//   console.log(err)
+// }

@@ -174,7 +174,7 @@ class FloodAnalysis extends Draw {
 
     let index = 0
     const self = this
-    this.intervalId = setInterval(() => {
+    this.intervalId = window.setInterval(() => {
       if (!floodArea || !floodArea.polygon) {
         return
       }

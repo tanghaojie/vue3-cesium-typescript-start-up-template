@@ -3,7 +3,7 @@ const debounce = (fn: any, delay: number) => {
   let timer: number = -1
   function debounced() {
     clearTimeout(timer)
-    timer = setTimeout(function () {
+    timer = window.setTimeout(function () {
       fn()
     }, delay)
   }

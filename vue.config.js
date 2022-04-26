@@ -44,6 +44,8 @@ module.exports = {
       .use('@open-wc/webpack-import-meta-loader')
       .loader('@open-wc/webpack-import-meta-loader')
 
+    config.resolve.alias.set('vue-i18n', 'vue-i18n/dist/vue-i18n.cjs.js')
+
     config.plugin('html').tap((args) => {
       args[0].title = '在线地球'
       return args

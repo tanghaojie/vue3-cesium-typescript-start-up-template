@@ -29,9 +29,11 @@ class ImageryLayerCoordinateTransform {
     if (this._correctOffset === val) {
       return
     }
+
     this._correctOffset = val
     const { layer } = this
     const provider = layer.imageryProvider
+
     if (val) {
       const webMercatorTilingScheme = provider.tilingScheme
       const projection = (webMercatorTilingScheme as any).projection
@@ -41,6 +43,7 @@ class ImageryLayerCoordinateTransform {
       ;(projection as any)[
         ImageryLayerCoordinateTransform.OLD_PROJECT_PROPERTY_NAME
       ] = projection.project
+
       projection.project = function (cartographic: Cartographic) {
         const point = projectionTransform(
           Math.toDegrees(cartographic.longitude),
@@ -53,6 +56,7 @@ class ImageryLayerCoordinateTransform {
       ;(projection as any)[
         ImageryLayerCoordinateTransform.OLD_UNPROJECT_PROPERTY_NAME
       ] = projection.unproject
+
       projection.unproject = function (cartesian: Cartesian3) {
         const cartographic = (projection as any)[
           ImageryLayerCoordinateTransform.OLD_UNPROJECT_PROPERTY_NAME

@@ -46,7 +46,7 @@ export default defineComponent({
             enable: true,
             position: val,
           }
-          viewer.scene.imagerySplitPosition = val
+          viewer.scene.splitPosition = val
           store.dispatch(
             `jtCesiumVue/toolbar/imagery/${ImageryActionTypes.SET_SPLIT}`,
             split

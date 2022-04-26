@@ -58,19 +58,19 @@ class ImageryManager {
     })
 
     provider.readyPromise.then((success: boolean): void => {
+      if (item.coordinateType) {
+        layer.coordinateTransform = new ImageryLayerCoordinateTransform(
+          layer,
+          item.coordinateType,
+          true
+        )
+      }
+
       item.afterReady && item.afterReady(viewer, success)
     })
     const layer = new ImageryLayer(provider)
     layer.name = item.name
     layer.uuid = uuid()
-
-    if (item.coordinateType) {
-      layer.coordinateTransform = new ImageryLayerCoordinateTransform(
-        layer,
-        item.coordinateType,
-        true
-      )
-    }
 
     const ils = viewer.imageryLayers
     ils.add(layer)

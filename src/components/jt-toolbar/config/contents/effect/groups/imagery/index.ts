@@ -35,7 +35,7 @@ const view: Group = {
 
           let split: SplitType
           let switchToPosition: number
-          const position = viewer.scene.imagerySplitPosition
+          const position = viewer.scene.splitPosition
           if (position <= 0 && layerLen >= 2) {
             // do split
             switchToPosition = 0.5
@@ -46,8 +46,8 @@ const view: Group = {
             const tFirst: Cesium.ImageryLayer = ils.get(layerLen - 1)
             // const tSecond: Cesium.ImageryLayer = ils.get(layerLen - 2)
 
-            tFirst.splitDirection = Cesium.ImagerySplitDirection.RIGHT
-            // tSecond.splitDirection = Cesium.ImagerySplitDirection.LEFT
+            tFirst.splitDirection = Cesium.SplitDirection.RIGHT
+            // tSecond.splitDirection = Cesium.SplitDirection.LEFT
           } else {
             // cancel split
             switchToPosition = 0
@@ -56,11 +56,11 @@ const view: Group = {
               position: switchToPosition,
             }
             for (let i = layerLen - 1; i >= 0; --i) {
-              ils.get(i).splitDirection = Cesium.ImagerySplitDirection.NONE
+              ils.get(i).splitDirection = Cesium.SplitDirection.NONE
             }
           }
 
-          viewer.scene.imagerySplitPosition = switchToPosition
+          viewer.scene.splitPosition = switchToPosition
           option.store.dispatch(
             `jtCesiumVue/toolbar/imagery/${ImageryActionTypes.SET_SPLIT}`,
             split
@@ -74,7 +74,7 @@ const view: Group = {
       onMounted: (option: OnMountedOption): void => {
         const viewer = option?.viewer
         if (viewer) {
-          const position = viewer.scene.imagerySplitPosition
+          const position = viewer.scene.splitPosition
           const split: SplitType = {
             enable: position > 0,
             position: position,
