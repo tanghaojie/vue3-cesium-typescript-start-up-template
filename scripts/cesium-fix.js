@@ -34,7 +34,14 @@ try {
 //   --url4: url('${baseUrl}44444');
 // }
 // `
-//   const res = fs.appendFileSync(globalCssPath, cssStr, 'utf-8')
+//   let str = fs.readFileSync(globalCssPath, 'utf8')
+
+//   str = str.replace(
+//     /\/\* start style inject \*\/[\s\S]*\/\* end style inject \*\//,
+//     ''
+//   )
+
+//   const res = fs.writeFileSync(globalCssPath, str + cssStr, 'utf8')
 // } catch (err) {
 //   console.log(err)
 // }

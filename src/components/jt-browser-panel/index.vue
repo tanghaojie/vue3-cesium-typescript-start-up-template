@@ -27,10 +27,7 @@ export default defineComponent({
       const store = useStore()
       const hideBrowserPanel = route.query[UrlQuery.HideBrowserPanel]
       if (hideBrowserPanel) {
-        store.dispatch(
-          `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_BROWSER_PANEL}`,
-          false
-        )
+        store.dispatch(`jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_BROWSER_PANEL}`, false)
       }
     })
   },
