@@ -10,14 +10,14 @@ const sampleDataConfigDefault: SampleDataConfig = {
   'sample-data-base': 'https://sample-data-jt.vercel.app/',
 }
 
-const sampleDataConfigStr = process.env.VUE_APP_SAMPLE_DATA_CONFIG as string
+// const sampleDataConfigStr = process.env.VUE_APP_SAMPLE_DATA_CONFIG as string
 let sampleDataConfig: SampleDataConfig
-try {
-  sampleDataConfig = JSON.parse(sampleDataConfigStr) as SampleDataConfig
-} catch (e) {
-  console.warn('Sample data config error.', e)
-  sampleDataConfig = sampleDataConfigDefault
-}
+// try {
+//   sampleDataConfig = JSON.parse(sampleDataConfigStr) as SampleDataConfig
+// } catch (e) {
+//   console.warn('Sample data config error.', e)
+sampleDataConfig = sampleDataConfigDefault
+// }
 
 export default {
   satellite: `${sampleDataConfig['satellite-base']}{z}/{x}/{y}.png`,

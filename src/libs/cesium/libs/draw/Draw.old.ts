@@ -96,7 +96,7 @@ class Draw {
 
     const hasDepthTest = scene.globe.depthTestAgainstTerrain
     const handler = new ScreenSpaceEventHandler(scene.canvas)
-    handler.setInputAction(function (e) {
+    handler.setInputAction(function (e: any) {
       let cartesian
       if (hasDepthTest) {
         cartesian = scene.pickPosition(e.position)
@@ -114,7 +114,7 @@ class Draw {
       })
     }, ScreenSpaceEventType.LEFT_CLICK)
 
-    handler.setInputAction(function (movement) {
+    handler.setInputAction(function (movement: any) {
       handler.destroy()
       stoped && stoped()
     }, ScreenSpaceEventType.RIGHT_CLICK)
@@ -250,7 +250,7 @@ class Draw {
 
     const hasDepthTest = scene.globe.depthTestAgainstTerrain
     const handler = new ScreenSpaceEventHandler(scene.canvas)
-    handler.setInputAction(function (event) {
+    handler.setInputAction(function (event: any) {
       let position: Cartesian3 | undefined
       if (hasDepthTest) {
         position = scene.pickPosition(event.position)
@@ -283,7 +283,7 @@ class Draw {
       // createShapeActivePoint(position, option)
     }, ScreenSpaceEventType.LEFT_CLICK)
 
-    handler.setInputAction(function (event) {
+    handler.setInputAction(function (event: any) {
       let newPosition
       if (hasDepthTest) {
         newPosition = viewer.scene.pickPosition(event.endPosition)
@@ -311,7 +311,7 @@ class Draw {
       self.activeShapePoints.push(newPosition)
     }, ScreenSpaceEventType.MOUSE_MOVE)
 
-    handler.setInputAction(function (event) {
+    handler.setInputAction(function (event: any) {
       self.terminateShape(drawMode, option)
       handler.destroy()
       stoped && stoped()

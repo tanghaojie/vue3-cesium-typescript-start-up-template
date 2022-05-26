@@ -41,17 +41,12 @@ type MeasureShapeOptionBase = {
   measureMode: MeasureMode
 }
 
-type MeasureShapeOption = MeasureShapeOptionBase &
-  MeasurePolylineOption &
-  MeasurePolygonOption
+type MeasureShapeOption = MeasureShapeOptionBase & MeasurePolylineOption & MeasurePolygonOption
 
 class Measure {
-  private static MEASURED_POINTS_DATASOURCE_NAME =
-    '_MEASURED_POINTS_DATASOURCE_NAME'
-  private static MEASURED_POLYLINES_DATASOURCE_NAME =
-    '_MEASURED_POLYLINES_DATASOURCE_NAME'
-  private static MEASURED_POLYGONS_DATASOURCE_NAME =
-    '_MEASURED_POLYGONS_DATASOURCE_NAME'
+  private static MEASURED_POINTS_DATASOURCE_NAME = '_MEASURED_POINTS_DATASOURCE_NAME'
+  private static MEASURED_POLYLINES_DATASOURCE_NAME = '_MEASURED_POLYLINES_DATASOURCE_NAME'
+  private static MEASURED_POLYGONS_DATASOURCE_NAME = '_MEASURED_POLYGONS_DATASOURCE_NAME'
 
   protected viewer: Viewer
 
@@ -103,9 +98,7 @@ class Measure {
   }
 
   private measurePointText(lon = 0, lat = 0, height = 0): string {
-    return `经度:${lon.toFixed(6)}°\n纬度:${lat.toFixed(
-      6
-    )}°\n高度:${height.toFixed(3)}m`
+    return `经度:${lon.toFixed(6)}°\n纬度:${lat.toFixed(6)}°\n高度:${height.toFixed(3)}m`
   }
 
   private setPointProperty(
@@ -129,7 +122,7 @@ class Measure {
     const hasDepthTest = this.viewer.scene.globe.depthTestAgainstTerrain
     const handler = new ScreenSpaceEventHandler(scene.canvas)
     const self = this
-    handler.setInputAction(function (e) {
+    handler.setInputAction(function (e: any) {
       let position
       if (hasDepthTest) {
         position = self.viewer.scene.pickPosition(e.endPosition)
@@ -150,18 +143,14 @@ class Measure {
       const lat = Math.toDegrees(cartographic.latitude)
       const hei = cartographic.height || 0
 
-      self.setPointProperty(
-        self.currentPoint,
-        position,
-        self.measurePointText(lon, lat, hei)
-      )
+      self.setPointProperty(self.currentPoint, position, self.measurePointText(lon, lat, hei))
     }, ScreenSpaceEventType.MOUSE_MOVE)
 
-    handler.setInputAction(function (e) {
+    handler.setInputAction(function (e: any) {
       self.currentPoint = undefined
     }, ScreenSpaceEventType.LEFT_CLICK)
 
-    handler.setInputAction(function (movement) {
+    handler.setInputAction(function (movement: any) {
       if (self.currentPoint) {
         pds.entities.remove(self.currentPoint)
         self.currentPoint = undefined
@@ -274,10 +263,7 @@ class Measure {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  private buildShapeLabelPoint(
-    measureMode: MeasureMode,
-    position: any
-  ): Entity {
+  private buildShapeLabelPoint(measureMode: MeasureMode, position: any): Entity {
     let entity: Entity
     if (measureMode === MeasureMode.Polyline) {
       entity = this.createLabelPoint(this.datasource(measureMode), position)
@@ -338,15 +324,12 @@ class Measure {
     const hasDepthTest = scene.globe.depthTestAgainstTerrain
     const handler = new ScreenSpaceEventHandler(scene.canvas)
     const self = this
-    handler.setInputAction(function (event) {
+    handler.setInputAction(function (event: any) {
       let position: Cartesian3 | undefined
       if (hasDepthTest) {
         position = scene.pickPosition(event.position)
       } else {
-        position = scene.camera.pickEllipsoid(
-          event.position,
-          scene.globe.ellipsoid
-        )
+        position = scene.camera.pickEllipsoid(event.position, scene.globe.ellipsoid)
       }
       if (!position || !defined(position)) {
         return
@@ -377,8 +360,8 @@ class Measure {
         if (self.activeShapePoints.length > 2 && self.preMousePoint) {
           if (self.preMousePoint.position && lp.position) {
             const dis = Cartesian3.distance(
-              self.preMousePoint.position.getValue(jd),
-              lp.position.getValue(jd)
+              self.preMousePoint.position.getValue(jd)!,
+              lp.position.getValue(jd)!
             )
             self.sumLength += dis
             self.setPointProperty(lp, undefined, `${dis.toFixed(3)}m`)
@@ -395,37 +378,27 @@ class Measure {
       }
     }, ScreenSpaceEventType.LEFT_CLICK)
 
-    handler.setInputAction(function (event) {
+    handler.setInputAction(function (event: any) {
       let newPosition: Cartesian3 | undefined
       if (hasDepthTest) {
         newPosition = scene.pickPosition(event.endPosition)
       } else {
-        newPosition = scene.camera.pickEllipsoid(
-          event.endPosition,
-          scene.globe.ellipsoid
-        )
+        newPosition = scene.camera.pickEllipsoid(event.endPosition, scene.globe.ellipsoid)
       }
-      if (
-        !newPosition ||
-        !self.mousePoint ||
-        !defined(self.mousePoint) ||
-        !defined(newPosition)
-      ) {
+      if (!newPosition || !self.mousePoint || !defined(self.mousePoint) || !defined(newPosition)) {
         return
       }
       if (measureMode === MeasureMode.Polyline) {
         //   setLabelPoint(mousePoint, newPosition, '123')
       } else {
         self.mousePoint.position &&
-          (self.mousePoint.position as ConstantPositionProperty).setValue(
-            newPosition
-          )
+          (self.mousePoint.position as ConstantPositionProperty).setValue(newPosition)
       }
       self.activeShapePoints.pop()
       self.activeShapePoints.push(newPosition)
     }, ScreenSpaceEventType.MOUSE_MOVE)
 
-    handler.setInputAction(function (event) {
+    handler.setInputAction(function (event: any) {
       self.terminateShape(measureMode)
       handler.destroy()
       stoped && stoped()

@@ -27,15 +27,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  computed,
-  ref,
-  shallowRef,
-  inject,
-  onMounted,
-} from 'vue'
+import { defineComponent, PropType, computed, ref, shallowRef, inject, onMounted } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { mapActions } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -106,13 +98,10 @@ export default defineComponent({
         componentName: item.dropdown.componentName,
         iconEl: icon.value! as HTMLElement,
       }
-      store.dispatch(
-        `jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`,
-        val
-      )
+      store.dispatch(`jtCesiumVue/toolbar/${ToolbarActionTypes.SET_DROP_DOWN}`, val)
     }
 
-    const itemClicked = (e: PointerEvent) => {
+    const itemClicked = (e: MouseEvent) => {
       const { item } = props
       const { viewer } = cesiumRef || {}
       if (!viewer) {

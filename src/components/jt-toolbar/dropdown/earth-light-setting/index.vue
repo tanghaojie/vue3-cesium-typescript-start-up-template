@@ -11,15 +11,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  watch,
-  onMounted,
-  inject,
-} from 'vue'
+import { defineComponent, ref, reactive, computed, watch, onMounted, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElRadioGroup, ElRadioButton } from 'element-plus'
 import Light from '@/libs/cesium/libs/light/Light'
@@ -94,7 +86,7 @@ export default defineComponent({
       scene.globe.dynamicAtmosphereLightingFromSun = false
     }
 
-    const lightTypeChange = (val: string): void => {
+    const lightTypeChange = (val: string | number | boolean): void => {
       lightTypes.forEach((lightType) => {
         if (lightType.name === val) {
           lightType.set && lightType.set()

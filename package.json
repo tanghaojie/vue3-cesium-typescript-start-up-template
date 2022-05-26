@@ -1,59 +1,46 @@
 {
   "name": "vue3-cesium-typescript-start-up-template",
-  "version": "0.4.0",
-  "private": true,
+  "version": "0.5.0",
   "scripts": {
-    "serve": "node ./scripts/cesium-fix.js && vue-cli-service serve",
-    "build": "node ./scripts/cesium-fix.js && vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "vite": "node ./scripts/cesium-fix.js && vite",
+    "build": "node ./scripts/cesium-fix.js && vite build"
   },
   "dependencies": {
-    "autoprefixer": "^9",
+    "@element-plus/icons-vue": "2.0.0-beta.0",
     "cesium": "^1.90.0",
     "core-js": "^3.19.3",
     "echarts": "^5.2.2",
-    "element-plus": "^2.0.1",
-    "postcss": "^7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
+    "element-plus": "^2.2.2",
     "vue": "^3.2.30",
-    "vue-i18n": "^9.2.0-beta.30",
+    "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.12",
-    "vuex": "^4.0.0",
-    "webpack": "^5.69.1"
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@open-wc/webpack-import-meta-loader": "^0.4.7",
-    "@tailwindcss/postcss7-compat": "^2.2.17",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
-    "@vue/cli-plugin-babel": "^5.0.0",
-    "@vue/cli-plugin-eslint": "^5.0.0",
-    "@vue/cli-plugin-router": "^5.0.0",
-    "@vue/cli-plugin-typescript": "^5.0.0",
-    "@vue/cli-plugin-vuex": "^5.0.0",
-    "@vue/cli-service": "^5.0.1",
-    "@vue/compiler-sfc": "^3.2.24",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^9.1.0",
-    "babel-plugin-import": "^1.13.3",
-    "copy-webpack-plugin": "^6.4.1",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/runtime-core": "^3.2.36",
+    "autoprefixer": "^10.4.7",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.4.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.2.0",
-    "postcss-loader": "^6.2.1",
-    "prettier": "^2.5.1",
-    "sass": "^1.44.0",
-    "sass-loader": "^8.0.2",
-    "svg-sprite-loader": "^6.0.11",
+    "postcss": "^8.4.14",
+    "sass": "^1.52.1",
+    "tailwindcss": "^3.0.24",
     "typescript": "^4.5.5",
-    "unplugin-auto-import": "^0.5.11",
-    "unplugin-vue-components": "^0.17.18",
-    "vue-cli-plugin-tailwind": "~2.2.18"
+    "unplugin-auto-import": "^0.8.5",
+    "unplugin-vue-components": "^0.19.5",
+    "vite": "^2.9.9",
+    "vite-plugin-cesium": "^1.2.19",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vue-tsc": "^0.34.16"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
 }

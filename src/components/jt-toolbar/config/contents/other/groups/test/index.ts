@@ -21,9 +21,7 @@ const view: Group = {
           return
         }
 
-        viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
-          movement
-        ) {
+        viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(movement: any) {
           // If a feature was previously highlighted, undo the highlight
           if (highlighted.feature && Cesium.defined(highlighted.feature)) {
             ;(highlighted.feature as any).color = highlighted.originalColor
@@ -40,8 +38,7 @@ const view: Group = {
           highlighted.feature = pickedFeature
           Cesium.Color.clone(pickedFeature.color, highlighted.originalColor)
           pickedFeature.color = Cesium.Color.YELLOW
-        },
-        Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
       },
     },
   ],

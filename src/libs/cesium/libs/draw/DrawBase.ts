@@ -41,10 +41,7 @@ abstract class DrawBase {
     this.viewer = viewer
   }
 
-  public createMousePositionShape(
-    position: any,
-    option?: DrawBaseOption
-  ): Entity {
+  public createMousePositionShape(position: any, option?: DrawBaseOption): Entity {
     const {
       mousePosColor = Color.YELLOW,
       mousePosPixelSize = 10,
@@ -87,7 +84,7 @@ abstract class DrawBase {
 
     const self = this
 
-    handler.setInputAction(function (e) {
+    handler.setInputAction(function (e: any) {
       let position: Cartesian3 | undefined
       if (hasDepthTest) {
         position = scene.pickPosition(e.position)
@@ -106,15 +103,12 @@ abstract class DrawBase {
     }, addingEventType)
 
     if (movingPosition) {
-      handler.setInputAction(function (e) {
+      handler.setInputAction(function (e: any) {
         let position: Cartesian3 | undefined
         if (hasDepthTest) {
           position = scene.pickPosition(e.endPosition)
         } else {
-          position = scene.camera.pickEllipsoid(
-            e.endPosition,
-            scene.globe.ellipsoid
-          )
+          position = scene.camera.pickEllipsoid(e.endPosition, scene.globe.ellipsoid)
         }
         if (!position || !defined(position)) {
           return
@@ -122,19 +116,13 @@ abstract class DrawBase {
 
         movingPosition(position)
 
-        if (
-          showMousePosition &&
-          self.mousePositionShape &&
-          self.mousePositionShape.position
-        ) {
-          ;(
-            self.mousePositionShape.position as ConstantPositionProperty
-          ).setValue(position)
+        if (showMousePosition && self.mousePositionShape && self.mousePositionShape.position) {
+          ;(self.mousePositionShape.position as ConstantPositionProperty).setValue(position)
         }
       }, ScreenSpaceEventType.MOUSE_MOVE)
     }
 
-    handler.setInputAction(function (e) {
+    handler.setInputAction(function (e: any) {
       if (self.mousePositionShape) {
         viewer.entities.remove(self.mousePositionShape)
       }

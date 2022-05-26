@@ -92,7 +92,7 @@ class Highlight {
 
     const self = this
     const handler = new ScreenSpaceEventHandler(scene.canvas)
-    handler.setInputAction(function (movement) {
+    handler.setInputAction(function (movement: any) {
       if (scene.pickPositionSupported) {
         const cartesian = scene.pickPosition(movement.endPosition)
         if (cartesian && defined(cartesian)) {

@@ -14,16 +14,13 @@ function logMousePositionMixin(
     throw new Cesium.DeveloperError('viewer is required.')
   }
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
-  handler.setInputAction(function (e) {
+  handler.setInputAction(function (e: any) {
     let position: Cesium.Cartesian3 | undefined
     if (options.withHeight) {
       viewer.scene.globe.depthTestAgainstTerrain = true
       position = viewer.scene.pickPosition(e.position)
     } else {
-      position = viewer.scene.camera.pickEllipsoid(
-        e.position,
-        viewer.scene.globe.ellipsoid
-      )
+      position = viewer.scene.camera.pickEllipsoid(e.position, viewer.scene.globe.ellipsoid)
     }
     if (!position) {
       return

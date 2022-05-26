@@ -11,15 +11,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  watch,
-  onMounted,
-  inject,
-} from 'vue'
+import { defineComponent, ref, reactive, computed, watch, onMounted, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import { ElRadioGroup, ElRadioButton } from 'element-plus'
 import changeSceneMode from '@/libs/cesium/libs/scene-mode/index'
@@ -56,7 +48,7 @@ export default defineComponent({
       },
     ])
 
-    const sceneModeChange = (val: string): void => {
+    const sceneModeChange = (val: string | number | boolean): void => {
       sceneModeTypes.forEach((sceneMode) => {
         if (sceneMode.name === val) {
           changeSceneMode(viewer, sceneMode.mode, 0.5)

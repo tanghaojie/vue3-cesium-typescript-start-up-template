@@ -71,7 +71,7 @@ class Classification {
     const { scene } = this.viewer
     const self = this
     const handler = new ScreenSpaceEventHandler(scene.canvas)
-    handler.setInputAction(function (movement) {
+    handler.setInputAction(function (movement: any) {
       const pickedObject = scene.pick(movement.endPosition)
       if (pickedObject && defined(pickedObject) && defined(pickedObject.id)) {
         if (pickedObject.id === self.classified.id) {
@@ -117,7 +117,7 @@ class Classification {
     const { scene } = this.viewer
     const self = this
     const handler = new ScreenSpaceEventHandler(scene.canvas)
-    handler.setInputAction(function (movement) {
+    handler.setInputAction(function (movement: any) {
       const pickedObject = scene.pick(movement.position)
       if (
         pickedObject &&

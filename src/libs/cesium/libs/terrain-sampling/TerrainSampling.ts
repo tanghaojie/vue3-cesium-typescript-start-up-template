@@ -70,11 +70,8 @@ class TerrainSampling {
 
     return new Promise((resolve, reject) => {
       const handler = new ScreenSpaceEventHandler(scene.canvas)
-      handler.setInputAction(function (event) {
-        const position = scene.camera.pickEllipsoid(
-          event.position,
-          scene.globe.ellipsoid
-        )
+      handler.setInputAction(function (event: any) {
+        const position = scene.camera.pickEllipsoid(event.position, scene.globe.ellipsoid)
         if (!position || !defined(position)) {
           return
         }
@@ -113,11 +110,8 @@ class TerrainSampling {
         self.createPoint(position)
       }, ScreenSpaceEventType.LEFT_CLICK)
 
-      handler.setInputAction(function (event) {
-        const newPosition = scene.camera.pickEllipsoid(
-          event.endPosition,
-          scene.globe.ellipsoid
-        )
+      handler.setInputAction(function (event: any) {
+        const newPosition = scene.camera.pickEllipsoid(event.endPosition, scene.globe.ellipsoid)
         if (
           !self.mousePoint ||
           !newPosition ||
@@ -131,7 +125,7 @@ class TerrainSampling {
         self.activeShapePoints.push(newPosition)
       }, ScreenSpaceEventType.MOUSE_MOVE)
 
-      handler.setInputAction(function (event) {
+      handler.setInputAction(function (event: any) {
         self.removeAll()
         handler.destroy()
       }, ScreenSpaceEventType.RIGHT_CLICK)
@@ -146,31 +140,23 @@ class TerrainSampling {
     const count = 99
     for (let i = 1; i < count; i++) {
       positions.push(
-        Cartographic.fromCartesian(
-          Cartesian3.lerp(start, end, i / count, new Cartesian3())
-        )
+        Cartographic.fromCartesian(Cartesian3.lerp(start, end, i / count, new Cartesian3()))
       )
     }
     positions.push(Cartographic.fromCartesian(end))
-    const promise = sampleTerrainMostDetailed(
-      this.viewer.terrainProvider,
-      positions
-    )
+    const promise = sampleTerrainMostDetailed(this.viewer.terrainProvider, positions)
 
     return new Promise((resolve, reject) => {
-      ;(Cesium as any).when(
-        promise,
-        function (updatedPositions: Cartographic[]) {
-          const datas: sampleData[] = []
-          for (let i = 0; i < updatedPositions.length; i++) {
-            datas.push({
-              index: i,
-              height: parseFloat(updatedPositions[i].height.toFixed(2)),
-            })
-          }
-          resolve(datas)
+      ;(Cesium as any).when(promise, function (updatedPositions: Cartographic[]) {
+        const datas: sampleData[] = []
+        for (let i = 0; i < updatedPositions.length; i++) {
+          datas.push({
+            index: i,
+            height: parseFloat(updatedPositions[i].height.toFixed(2)),
+          })
         }
-      )
+        resolve(datas)
+      })
     })
   }
 

@@ -18,11 +18,7 @@
 </template>
 
 <script lang="ts">
-function addEvent(
-  el: HTMLElement | Window | undefined,
-  event: string,
-  handler: any
-) {
+function addEvent(el: HTMLElement | Window | undefined, event: string, handler: any) {
   if (!el) {
     return
   }
@@ -35,11 +31,7 @@ function addEvent(
   }
 }
 
-function removeEvent(
-  el: HTMLElement | Window | undefined,
-  event: string,
-  handler: any
-) {
+function removeEvent(el: HTMLElement | Window | undefined, event: string, handler: any) {
   if (!el) {
     return
   }
@@ -54,27 +46,16 @@ function removeEvent(
 
 function getComputedSize(el: HTMLElement) {
   const style = window.getComputedStyle(el)
-  return [
-    parseFloat(style.getPropertyValue('width')),
-    parseFloat(style.getPropertyValue('height')),
-  ]
+  return [parseFloat(style.getPropertyValue('width')), parseFloat(style.getPropertyValue('height'))]
 }
 
-function snapToGrid(
-  grid: number[],
-  pendingX: number,
-  pendingY: number
-): number[] {
+function snapToGrid(grid: number[], pendingX: number, pendingY: number): number[] {
   const x = Math.round(pendingX / grid[0]) * grid[0]
   const y = Math.round(pendingY / grid[1]) * grid[1]
   return [x, y]
 }
 
-function restrictToBounds(
-  value: number,
-  min: number | null,
-  max: number | null
-) {
+function restrictToBounds(value: number, min: number | null, max: number | null) {
   if (min !== null && value < min) {
     return min
   }
@@ -84,34 +65,19 @@ function restrictToBounds(
   return value
 }
 
-function computeWidth(
-  parentWidth: number,
-  left: number,
-  right: number
-): number {
+function computeWidth(parentWidth: number, left: number, right: number): number {
   return parentWidth - left - right
 }
 
-function computeHeight(
-  parentHeight: number,
-  top: number,
-  bottom: number
-): number {
+function computeHeight(parentHeight: number, top: number, bottom: number): number {
   return parentHeight - top - bottom
 }
 
 function isFunction(func: any): boolean {
-  return (
-    typeof func === 'function' ||
-    Object.prototype.toString.call(func) === '[object Function]'
-  )
+  return typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]'
 }
 
-function matchesSelectorToParentElements(
-  el: HTMLElement,
-  selector: string,
-  baseNode: HTMLElement
-) {
+function matchesSelectorToParentElements(el: HTMLElement, selector: string, baseNode: HTMLElement) {
   let node: Node | null = el
 
   const matchesSelectorFunc = [
@@ -181,10 +147,7 @@ type OnDragStartHandler = (e: MouseEvent | TouchEvent) => boolean
 
 type DragHandler = (left: number, top: number) => boolean
 
-type OnResizeStartHandler = (
-  handle: string,
-  e: MouseEvent | TouchEvent
-) => boolean
+type OnResizeStartHandler = (handle: string, e: MouseEvent | TouchEvent) => boolean
 
 type ResizeHandler = (
   handle: string,
@@ -347,9 +310,7 @@ export default defineComponent({
       type: String,
       default: '',
       validator: (val: string) =>
-        ['', 'tl', 'tm', 'tr', 'ml', 'mm', 'mr', 'bl', 'bm', 'br'].includes(
-          val
-        ),
+        ['', 'tl', 'tm', 'tr', 'ml', 'mm', 'mr', 'bl', 'bm', 'br'].includes(val),
     },
   },
 
@@ -429,10 +390,7 @@ export default defineComponent({
 
     const getParentSize = () => {
       if (el.value && props.parent) {
-        const style = window.getComputedStyle(
-          el.value.parentNode as Element,
-          null
-        )
+        const style = window.getComputedStyle(el.value.parentNode as Element, null)
         return [
           parseInt(style.getPropertyValue('width'), 10),
           parseInt(style.getPropertyValue('height'), 10),
@@ -515,20 +473,14 @@ export default defineComponent({
         }
         if (
           props.dragHandle &&
-          !matchesSelectorToParentElements(
-            target as HTMLElement,
-            props.dragHandle,
-            el.value
-          )
+          !matchesSelectorToParentElements(target as HTMLElement, props.dragHandle, el.value)
         ) {
           dragging.value = false
           return
         }
 
-        mouseClickPosition.mouseX =
-          e instanceof TouchEvent ? e.touches[0].pageX : e.pageX
-        mouseClickPosition.mouseY =
-          e instanceof TouchEvent ? e.touches[0].pageY : e.pageY
+        mouseClickPosition.mouseX = e instanceof TouchEvent ? e.touches[0].pageX : e.pageX
+        mouseClickPosition.mouseY = e instanceof TouchEvent ? e.touches[0].pageY : e.pageY
         mouseClickPosition.left = left.value
         mouseClickPosition.right = right.value
         mouseClickPosition.top = top.value
@@ -546,27 +498,17 @@ export default defineComponent({
       const axis = props.axis
       const tmpDeltaX =
         axis && axis !== 'y'
-          ? mouseClickPosition.mouseX -
-            (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX)
+          ? mouseClickPosition.mouseX - (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX)
           : 0
       const tmpDeltaY =
         axis && axis !== 'x'
-          ? mouseClickPosition.mouseY -
-            (e instanceof MouseEvent ? e.pageY : e.touches[0].pageY)
+          ? mouseClickPosition.mouseY - (e instanceof MouseEvent ? e.pageY : e.touches[0].pageY)
           : 0
 
       const [deltaX, deltaY] = snapToGrid(props.grid, tmpDeltaX, tmpDeltaY)
 
-      const l = restrictToBounds(
-        mouseClickPosition.left - deltaX,
-        bounds.minLeft,
-        bounds.maxLeft
-      )
-      const t = restrictToBounds(
-        mouseClickPosition.top - deltaY,
-        bounds.minTop,
-        bounds.maxTop
-      )
+      const l = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
+      const t = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
       if (!props.onDrag(l, t)) {
         return
       }
@@ -594,25 +536,17 @@ export default defineComponent({
       const grid = props.grid
       bounds.minLeft = left.value % grid[0]
       bounds.maxLeft =
-        Math.floor((parentWidth.value - width.value - left.value) / grid[0]) *
-          grid[0] +
-        left.value
+        Math.floor((parentWidth.value - width.value - left.value) / grid[0]) * grid[0] + left.value
       bounds.minRight = right.value % grid[0]
       bounds.maxRight =
-        Math.floor((parentWidth.value - width.value - right.value) / grid[0]) *
-          grid[0] +
+        Math.floor((parentWidth.value - width.value - right.value) / grid[0]) * grid[0] +
         right.value
       bounds.minTop = top.value % grid[1]
       bounds.maxTop =
-        Math.floor((parentHeight.value - height.value - top.value) / grid[1]) *
-          grid[0] +
-        top.value
+        Math.floor((parentHeight.value - height.value - top.value) / grid[1]) * grid[0] + top.value
       bounds.minBottom = bottom.value % grid[1]
       bounds.maxBottom =
-        Math.floor(
-          (parentHeight.value - height.value - bottom.value) / grid[1]
-        ) *
-          grid[0] +
+        Math.floor((parentHeight.value - height.value - bottom.value) / grid[1]) * grid[0] +
         bottom.value
     }
 
@@ -640,10 +574,8 @@ export default defineComponent({
         handle.value = h
       }
 
-      mouseClickPosition.mouseX =
-        e instanceof MouseEvent ? e.pageX : e.touches[0].pageX
-      mouseClickPosition.mouseY =
-        e instanceof MouseEvent ? e.pageY : e.touches[0].pageY
+      mouseClickPosition.mouseX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX
+      mouseClickPosition.mouseY = e instanceof MouseEvent ? e.pageY : e.touches[0].pageY
       mouseClickPosition.left = left.value
       mouseClickPosition.right = right.value
       mouseClickPosition.top = top.value
@@ -662,11 +594,9 @@ export default defineComponent({
       let b = bottom.value
 
       const tmpDeltaX =
-        mouseClickPosition.mouseX -
-        (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX)
+        mouseClickPosition.mouseX - (e instanceof MouseEvent ? e.pageX : e.touches[0].pageX)
       const tmpDeltaY =
-        mouseClickPosition.mouseY -
-        (e instanceof MouseEvent ? e.pageY : e.touches[0].pageY)
+        mouseClickPosition.mouseY - (e instanceof MouseEvent ? e.pageY : e.touches[0].pageY)
 
       if (!widthTouched.value && tmpDeltaX) {
         widthTouched.value = true
@@ -678,39 +608,23 @@ export default defineComponent({
       const [deltaX, deltaY] = snapToGrid(props.grid, tmpDeltaX, tmpDeltaY)
 
       if (handle.value.includes('b')) {
-        b = restrictToBounds(
-          mouseClickPosition.bottom + deltaY,
-          bounds.minBottom,
-          bounds.maxBottom
-        )
+        b = restrictToBounds(mouseClickPosition.bottom + deltaY, bounds.minBottom, bounds.maxBottom)
         if (props.lockAspectRatio && resizingOnY) {
           r = r - (bottom.value - b) * aspectFactor.value
         }
       } else if (handle.value.includes('t')) {
-        t = restrictToBounds(
-          mouseClickPosition.top - deltaY,
-          bounds.minTop,
-          bounds.maxTop
-        )
+        t = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
         if (props.lockAspectRatio && resizingOnY) {
           l = l - (top.value - t) * aspectFactor.value
         }
       }
       if (handle.value.includes('r')) {
-        r = restrictToBounds(
-          mouseClickPosition.right + deltaX,
-          bounds.minRight,
-          bounds.maxRight
-        )
+        r = restrictToBounds(mouseClickPosition.right + deltaX, bounds.minRight, bounds.maxRight)
         if (props.lockAspectRatio && resizingOnX) {
           b = b - (right.value - r) / aspectFactor.value
         }
       } else if (handle.value.includes('l')) {
-        l = restrictToBounds(
-          mouseClickPosition.left - deltaX,
-          bounds.minLeft,
-          bounds.maxLeft
-        )
+        l = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
         if (props.lockAspectRatio && resizingOnX) {
           t = t - (left.value - l) / aspectFactor.value
         }
@@ -785,33 +699,18 @@ export default defineComponent({
         bounds.minBottom = b % gridY
         bounds.maxBottom = b + Math.floor((h - minH) / gridY) * gridY
         if (maxW) {
-          bounds.minLeft = Math.max(
-            bounds.minLeft,
-            parentWidth.value - r - maxW
-          )
-          bounds.minRight = Math.max(
-            bounds.minRight,
-            parentWidth.value - l - maxW
-          )
+          bounds.minLeft = Math.max(bounds.minLeft, parentWidth.value - r - maxW)
+          bounds.minRight = Math.max(bounds.minRight, parentWidth.value - l - maxW)
         }
         if (maxH) {
           bounds.minTop = Math.max(bounds.minTop, parentHeight.value - b - maxH)
-          bounds.minBottom = Math.max(
-            bounds.minBottom,
-            parentHeight.value - t - maxH
-          )
+          bounds.minBottom = Math.max(bounds.minBottom, parentHeight.value - t - maxH)
         }
         if (props.lockAspectRatio) {
           bounds.minLeft = Math.max(bounds.minLeft, l - t * aspectFactor.value)
           bounds.minTop = Math.max(bounds.minTop, t - l / aspectFactor.value)
-          bounds.minRight = Math.max(
-            bounds.minRight,
-            r - b * aspectFactor.value
-          )
-          bounds.minBottom = Math.max(
-            bounds.minBottom,
-            b - r / aspectFactor.value
-          )
+          bounds.minRight = Math.max(bounds.minRight, r - b * aspectFactor.value)
+          bounds.minBottom = Math.max(bounds.minBottom, b - r / aspectFactor.value)
         }
       } else {
         bounds.minLeft = null
@@ -845,9 +744,7 @@ export default defineComponent({
         transform: `translate(${left.value}px, ${top.value}px)`,
         width: computedWidth.value,
         height: computedHeight.value,
-        ...(dragging.value && props.disableUserSelect
-          ? userSelectNone
-          : userSelectAuto),
+        ...(dragging.value && props.disableUserSelect ? userSelectNone : userSelectAuto),
         '--resize-area-size': `${props.resizeAreaSize}px`,
       }
     })
@@ -874,17 +771,11 @@ export default defineComponent({
     })
 
     const resizingOnX = computed(() => {
-      return (
-        handle.value &&
-        (handle.value.includes('l') || handle.value.includes('r'))
-      )
+      return handle.value && (handle.value.includes('l') || handle.value.includes('r'))
     })
 
     const resizingOnY = computed(() => {
-      return (
-        handle.value &&
-        (handle.value.includes('t') || handle.value.includes('b'))
-      )
+      return handle.value && (handle.value.includes('t') || handle.value.includes('b'))
     })
 
     // watch
@@ -929,9 +820,7 @@ export default defineComponent({
       () => props.minWidth,
       (val) => {
         if (val < 0 && val > width.value) {
-          console.warn(
-            'Invalid prop: minWidth cannot be greater than width or negative'
-          )
+          console.warn('Invalid prop: minWidth cannot be greater than width or negative')
         }
       }
     )
@@ -940,9 +829,7 @@ export default defineComponent({
       () => props.minHeight,
       (val) => {
         if (val < 0 && val > height.value) {
-          console.warn(
-            'Invalid prop: minHeight cannot be greater than height or negative'
-          )
+          console.warn('Invalid prop: minHeight cannot be greater than height or negative')
         }
       }
     )
