@@ -105,30 +105,24 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const contourDistanceChange = (val: number): void => {
+    const contourDistanceChange = (val: number | undefined): void => {
       const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      if (
-        !viewer.scene.globe.material ||
-        viewer.scene.globe.material.type !== 'ElevationContour'
-      ) {
+      if (!viewer.scene.globe.material || viewer.scene.globe.material.type !== 'ElevationContour') {
         return
       }
       const uniforms = viewer.scene.globe.material.uniforms
       uniforms.spacing = contourDistance.value
     }
 
-    const contourWidthChange = (val: number): void => {
+    const contourWidthChange = (val: number | undefined): void => {
       const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
       }
-      if (
-        !viewer.scene.globe.material ||
-        viewer.scene.globe.material.type !== 'ElevationContour'
-      ) {
+      if (!viewer.scene.globe.material || viewer.scene.globe.material.type !== 'ElevationContour') {
         return
       }
       const uniforms = viewer.scene.globe.material.uniforms
@@ -140,10 +134,7 @@ export default defineComponent({
       if (!val || !viewer) {
         return
       }
-      if (
-        !viewer.scene.globe.material ||
-        viewer.scene.globe.material.type !== 'ElevationContour'
-      ) {
+      if (!viewer.scene.globe.material || viewer.scene.globe.material.type !== 'ElevationContour') {
         return
       }
       const { red, green, blue, alpha } = rgbaStringToStruct(val)

@@ -19,12 +19,7 @@
           class="w-full"
           @change="selectChange"
         >
-          <el-option
-            v-for="t in terrains"
-            :key="t.name"
-            :label="t.name"
-            :value="t.name"
-          >
+          <el-option v-for="t in terrains" :key="t.name" :label="t.name" :value="t.name">
           </el-option>
         </el-select>
       </div>
@@ -43,7 +38,7 @@ import { defineComponent, reactive, ref, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import sampleData from '@/resources/sample-data'
-import terrainSetting from '../terrain/terrain-setting.vue'
+import terrainSetting from './terrain-setting.vue'
 import { ElSelect, ElOption, ElDialog, ElSlider } from 'element-plus'
 import { Setting } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
@@ -122,9 +117,7 @@ export default defineComponent({
       if (terrain.terrainProvider) {
         ;(viewer.terrainProvider as any) = terrain.terrainProvider
       } else if (terrain.terrainProviderName) {
-        const provider: Cesium.TerrainProvider = new (Cesium as any)[
-          terrain.terrainProviderName
-        ]({
+        const provider: Cesium.TerrainProvider = new (Cesium as any)[terrain.terrainProviderName]({
           ...terrain.options,
         })
         if (terrain.afterReady) {

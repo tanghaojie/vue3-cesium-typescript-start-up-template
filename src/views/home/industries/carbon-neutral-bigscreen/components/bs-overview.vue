@@ -39,10 +39,5 @@ import { defineComponent, ref, reactive, computed, watch, onMounted } from 'vue'
 
 export default defineComponent({
   name: 'bs-overview',
-  components: {},
-  props: {},
-  setup(props, context) {},
 })
 </script>
-
-<style scoped lang="scss"></style>

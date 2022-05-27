@@ -11,10 +11,7 @@
       <template v-slot:title>
         {{ t('browserPanel.terrain.terrainSetting', '地形设置') }}
       </template>
-      <div
-        class="w-96 p-3 flex flex-row flex-wrap bg-gray-800 bg-opacity-70"
-        @click.stop
-      >
+      <div class="w-96 p-3 flex flex-row flex-wrap bg-gray-800 bg-opacity-70" @click.stop>
         <div class="text-gray-100">
           {{ t('browserPanel.terrain.terrainScale', '地形缩放') }}
         </div>
@@ -38,15 +35,7 @@
 const UPDATE_MODEL_EVENT = 'update:modelValue'
 const CHANGE = 'change'
 
-import {
-  defineComponent,
-  ref,
-  onMounted,
-  computed,
-  watch,
-  watchEffect,
-  PropType,
-} from 'vue'
+import { defineComponent, ref, onMounted, computed, watch, watchEffect, PropType } from 'vue'
 import { ElSlider } from 'element-plus'
 import overlay from '@/components/jt-overlay/index.vue'
 import { useStore } from '@/store'
@@ -102,13 +91,8 @@ export default defineComponent({
     }
   },
   emits: {
-    [UPDATE_MODEL_EVENT](val: boolean) {
-      return true
-    },
-
-    [CHANGE](val: number) {
-      return true
-    },
+    [UPDATE_MODEL_EVENT]: null,
+    [CHANGE]: null,
   },
 })
 </script>

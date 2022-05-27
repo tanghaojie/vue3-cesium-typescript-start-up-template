@@ -37,7 +37,7 @@ export default defineComponent({
   components: { jtGroup, jtItems },
   props: {
     groups: {
-      type: Object as PropType<Array<Group>[]>,
+      type: Object as PropType<Array<Group>>,
       required: true,
     },
   },

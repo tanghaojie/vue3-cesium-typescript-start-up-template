@@ -30,7 +30,7 @@ export default defineComponent({
   components: { jtItem },
   props: {
     items: {
-      type: Object as PropType<Array<Item>[]>,
+      type: Object as PropType<Array<Item>>,
       required: true,
     },
   },

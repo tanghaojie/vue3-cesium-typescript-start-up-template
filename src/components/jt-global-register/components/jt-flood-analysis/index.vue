@@ -169,20 +169,12 @@ export default defineComponent({
       if (!floodAnalysis) {
         return
       }
-      maxInput.enable =
-        minInput.enable =
-        currentInput.enable =
-        animate.enable =
-          false
+      maxInput.enable = minInput.enable = currentInput.enable = animate.enable = false
       floodAnalysis.drawFloodArea({
         stoped: () => {
           maxInput.h = Math.round((floodAnalysis.maxHeight * 10000) / 10000)
           minInput.h = Math.round((floodAnalysis.minHeight * 10000) / 10000)
-          maxInput.enable =
-            minInput.enable =
-            currentInput.enable =
-            animate.enable =
-              true
+          maxInput.enable = minInput.enable = currentInput.enable = animate.enable = true
         },
       })
     }
@@ -205,7 +197,10 @@ export default defineComponent({
       })
     }
 
-    const handleMaxHeightChange = (val: number) => {
+    const handleMaxHeightChange = (val: number | undefined) => {
+      if (!val) {
+        return
+      }
       const fa = cesiumRef?.viewer?.jt?.floodAnalysis
       if (!fa) {
         return
@@ -213,7 +208,10 @@ export default defineComponent({
       fa.maxHeight = val
       fa.setCurrentHeight(val, false)
     }
-    const handleMinHeightChange = (val: number) => {
+    const handleMinHeightChange = (val: number | undefined) => {
+      if (!val) {
+        return
+      }
       const fa = cesiumRef?.viewer?.jt?.floodAnalysis
       if (!fa) {
         return

@@ -5,21 +5,11 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  watch,
-  onMounted,
-  shallowRef,
-} from 'vue'
+import { defineComponent, ref, reactive, computed, watch, onMounted, shallowRef } from 'vue'
 import * as echarts from 'echarts'
 
 export default defineComponent({
   name: 'bs-coal-pollution',
-  components: {},
-  props: {},
   setup(props, context) {
     const sampleChart = shallowRef<HTMLElement | null>(null)
     const chart = shallowRef<echarts.ECharts | undefined>(undefined)
@@ -131,5 +121,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped lang="scss"></style>

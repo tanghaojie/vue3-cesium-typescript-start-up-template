@@ -24,13 +24,10 @@
           <el-checkbox
             :size="'default'"
             v-model="imagery.show"
-            @change="(checked, e) => changeImageryShow(index, checked)"
+            @change="(checked) => changeImageryShow(index, checked)"
           >
           </el-checkbox>
-          <div
-            class="mx-3 flex-1 cursor-default"
-            :class="imagery.show ? '' : 'text-gray-400'"
-          >
+          <div class="mx-3 flex-1 cursor-default" :class="imagery.show ? '' : 'text-gray-400'">
             {{ imagery.name }}
           </div>
           <div class="cursor-pointer" @click="settingImagery(index)">
@@ -82,10 +79,7 @@ import imagerySelect from './imagery-select.vue'
 import * as Cesium from 'cesium'
 import overlay from '@/components/jt-overlay/index.vue'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
-import {
-  ImagerySource,
-  Imagery,
-} from '@/libs/cesium/libs/imagery-manager/ImageryManager'
+import { ImagerySource, Imagery } from '@/libs/cesium/libs/imagery-manager/ImageryManager'
 import imagerySourcesList from '@/libs/cesium/libs/imagery-manager/imagery-sources'
 import { useI18n } from 'vue-i18n'
 
@@ -107,8 +101,7 @@ export default defineComponent({
   setup() {
     const imageries: Imagery[] = reactive([])
 
-    const imagerySources: (ImagerySource | ImagerySource[])[] =
-      shallowReactive(imagerySourcesList)
+    const imagerySources: (ImagerySource | ImagerySource[])[] = shallowReactive(imagerySourcesList)
 
     const addImageryDialogVisible = ref(false)
 
@@ -133,26 +126,22 @@ export default defineComponent({
       igs && imageries.push(...igs)
     }
 
-    const changeImageryShow = (index: number, show: boolean): void => {
+    const changeImageryShow = (index: number, show: boolean | string | number): void => {
       const viewer = (cesiumRef || {}).viewer
       const layer = viewer?.jt?.imageryManager.getLayer(index)
       if (!viewer || !layer) {
         return
       }
 
-      viewer.jt!.imageryManager.imageries[index].show = layer.show = show
+      viewer.jt!.imageryManager.imageries[index].show = layer.show = !!show
     }
 
     const plusImageries = (): void => {
       addImageryDialogVisible.value = true
     }
 
-    const addImagery = (
-      item: ImagerySource
-    ): Cesium.ImageryLayer | undefined => {
-      const layer = (cesiumRef || {}).viewer?.jt?.imageryManager.addImagery(
-        item
-      )
+    const addImagery = (item: ImagerySource): Cesium.ImageryLayer | undefined => {
+      const layer = (cesiumRef || {}).viewer?.jt?.imageryManager.addImagery(item)
       syncUIList()
       return layer
     }
@@ -191,9 +180,7 @@ export default defineComponent({
       //   (imagerySources[0] as ImagerySource[])[1]
       // )
 
-      const amapSatellite = im.addImagery(
-        (imagerySources[1] as ImagerySource[])[0]
-      )
+      const amapSatellite = im.addImagery((imagerySources[1] as ImagerySource[])[0])
 
       const amapLabel = im.addImagery((imagerySources[1] as ImagerySource[])[1])
 
@@ -205,9 +192,7 @@ export default defineComponent({
     }
 
     const imageryLayerPropertyChange = (key: string, val: number): void => {
-      const layer = (cesiumRef || {}).viewer?.jt?.imageryManager.getLayer(
-        imageryLayerOperate.index
-      )
+      const layer = (cesiumRef || {}).viewer?.jt?.imageryManager.getLayer(imageryLayerOperate.index)
       if (!layer) {
         return
       }

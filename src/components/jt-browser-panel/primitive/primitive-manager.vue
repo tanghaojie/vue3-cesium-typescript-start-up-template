@@ -23,7 +23,7 @@
           <el-checkbox
             :size="'default'"
             v-model="jPri.show"
-            @change="(checked, e) => changePrimitiveVisible(index, checked)"
+            @change="(checked:any) => changePrimitiveVisible(index, checked)"
           >
           </el-checkbox>
           <div
@@ -155,18 +155,14 @@ export default defineComponent({
     }
 
     const add3DTileset = (option: any): Cesium.Cesium3DTileset | undefined => {
-      const c3Dtileset = (
-        cesiumRef || {}
-      ).viewer?.jt?.primitiveManager.add3DTileset(option)
+      const c3Dtileset = (cesiumRef || {}).viewer?.jt?.primitiveManager.add3DTileset(option)
 
       syncJTPrimitive()
       return c3Dtileset
     }
 
     const addGltf = (option: any): void => {
-      const gltf = (cesiumRef || {}).viewer?.jt?.primitiveManager.addGltf(
-        option
-      )
+      const gltf = (cesiumRef || {}).viewer?.jt?.primitiveManager.addGltf(option)
       syncJTPrimitive()
     }
 
@@ -176,9 +172,9 @@ export default defineComponent({
     }
 
     const primitiveNameDoubleClick = (index: number): void => {
-      const pri = (
-        cesiumRef || {}
-      ).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(index)
+      const pri = (cesiumRef || {}).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(
+        index
+      )
       const location = calculatePrimitiveCenter(pri)
 
       ;(cesiumRef || {}).viewer?.camera.flyTo({
@@ -284,10 +280,7 @@ export default defineComponent({
     const { t } = useI18n()
 
     const add3DTilsetDialogTitle = computed(() => {
-      return t(
-        'browserPanel.primitive.add3DTilePrimitive',
-        '添加 3D Tileset 模型'
-      )
+      return t('browserPanel.primitive.add3DTilePrimitive', '添加 3D Tileset 模型')
     })
 
     return {

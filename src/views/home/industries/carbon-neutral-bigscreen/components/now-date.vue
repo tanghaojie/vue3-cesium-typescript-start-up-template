@@ -6,20 +6,10 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  watch,
-  onMounted,
-  nextTick,
-} from 'vue'
+import { defineComponent, ref, reactive, computed, watch, onMounted, nextTick } from 'vue'
 
 export default defineComponent({
   name: 'now-date',
-  components: {},
-  props: {},
   setup(props, context) {
     const x = '日一二三四五六'
     const date = reactive({

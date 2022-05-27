@@ -116,18 +116,18 @@ const events = {
   },
 }
 
-const userSelectNone = {
+const userSelectNone: StyleValue = {
   userSelect: 'none',
-  MozUserSelect: 'none',
   WebkitUserSelect: 'none',
-  MsUserSelect: 'none',
+  msUserSelect: 'none',
+  MozUserSelect: 'none',
 }
 
-const userSelectAuto = {
+const userSelectAuto: StyleValue = {
   userSelect: 'auto',
-  MozUserSelect: 'auto',
   WebkitUserSelect: 'auto',
-  MsUserSelect: 'auto',
+  msUserSelect: 'inherit',
+  MozUserSelect: 'auto',
 }
 
 let eventsFor = events.mouse
@@ -169,6 +169,8 @@ import {
   computed,
   watch,
   PropType,
+  StyleValue,
+  CSSProperties,
 } from 'vue'
 
 export default defineComponent({
@@ -293,7 +295,7 @@ export default defineComponent({
 
     onResize: {
       type: Function as PropType<ResizeHandler>,
-      default: () => true,
+      default: (handle: string, left: number, top: number, width: number, height: number) => true,
     },
 
     resizeAreaSize: {
@@ -468,7 +470,7 @@ export default defineComponent({
       }
       const target = e.target || e.srcElement
       if (el.value && target && el.value.contains(target as Node)) {
-        if (!props.onDragStart(e)) {
+        if (props.onDragStart && !props.onDragStart(e)) {
           return
         }
         if (
@@ -509,7 +511,7 @@ export default defineComponent({
 
       const l = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
       const t = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
-      if (!props.onDrag(l, t)) {
+      if (props.onDrag && !props.onDrag(l, t)) {
         return
       }
       const r = restrictToBounds(
@@ -560,7 +562,7 @@ export default defineComponent({
       if (
         !props.resizable ||
         (e instanceof MouseEvent && e.which !== 1) ||
-        !props.onResizeStart(h, e)
+        (props.onResizeStart && !props.onResizeStart(h, e))
       ) {
         return
       }
@@ -633,7 +635,7 @@ export default defineComponent({
       const cW = computeWidth(parentWidth.value, l, r)
       const cH = computeHeight(parentHeight.value, t, b)
 
-      if (!props.onResize(handle.value, l, t, cW, cH)) {
+      if (props.onResize && !props.onResize(handle.value, l, t, cW, cH)) {
         return
       }
 
@@ -740,13 +742,14 @@ export default defineComponent({
 
     // Computed
     const style = computed(() => {
-      return {
+      const x: StyleValue = {
         transform: `translate(${left.value}px, ${top.value}px)`,
         width: computedWidth.value,
         height: computedHeight.value,
-        ...(dragging.value && props.disableUserSelect ? userSelectNone : userSelectAuto),
         '--resize-area-size': `${props.resizeAreaSize}px`,
+        ...(dragging.value && props.disableUserSelect ? userSelectNone : userSelectAuto),
       }
+      return x
     })
 
     const computedWidth = computed(() => {

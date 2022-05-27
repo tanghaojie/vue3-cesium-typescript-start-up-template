@@ -5,21 +5,11 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  watch,
-  onMounted,
-  shallowRef,
-} from 'vue'
+import { defineComponent, ref, reactive, computed, watch, onMounted, shallowRef } from 'vue'
 import * as echarts from 'echarts'
 
 export default defineComponent({
   name: 'bs-energy-consumption-percent',
-  components: {},
-  props: {},
   setup(props, context) {
     const sampleChart = shallowRef<HTMLElement | null>(null)
     const chart = shallowRef<echarts.ECharts | undefined>(undefined)
@@ -96,19 +86,13 @@ export default defineComponent({
             name: '煤炭',
             type: 'line',
             symbolSize: 12,
-            data: [
-              40, 41, 42, 41, 38, 36, 36, 35, 34, 33, 32, 31, 30, 28, 26, 25,
-              22,
-            ],
+            data: [40, 41, 42, 41, 38, 36, 36, 35, 34, 33, 32, 31, 30, 28, 26, 25, 22],
           },
           {
             name: '石油',
             type: 'line',
             symbolSize: 12,
-            data: [
-              25, 26, 28, 29, 30, 30, 31, 32, 33, 34, 32, 33, 36, 38, 37, 36,
-              39,
-            ],
+            data: [25, 26, 28, 29, 30, 30, 31, 32, 33, 34, 32, 33, 36, 38, 37, 36, 39],
           },
           {
             name: '天然气',
@@ -120,10 +104,7 @@ export default defineComponent({
             name: '电力',
             type: 'line',
             symbolSize: 12,
-            data: [
-              30, 31, 32, 35, 36, 37, 38, 40, 42, 43, 45, 46, 47, 48, 48, 47,
-              48,
-            ],
+            data: [30, 31, 32, 35, 36, 37, 38, 40, 42, 43, 45, 46, 47, 48, 48, 47, 48],
           },
           {
             name: '热力',
@@ -156,5 +137,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped lang="scss"></style>

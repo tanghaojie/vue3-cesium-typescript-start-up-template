@@ -5,9 +5,7 @@
     <div
       class="header px-6 h-20 flex-grow-0 flex-shrink-0 pointer-events-auto flex flex-row items-center justify-between"
     >
-      <div class="title text-white font-bold text-2xl">
-        XXX市“碳中和”监控指挥平台
-      </div>
+      <div class="title text-white font-bold text-2xl">XXX市“碳中和”监控指挥平台</div>
       <nowDate class="text-white" />
     </div>
     <div class="content flex-grow flex flex-row">
@@ -70,7 +68,6 @@ export default defineComponent({
     bsEnergyConsumptionAveragePerDay,
     bsEnergyConsumptionPerPerson,
   },
-  props: {},
   setup(props, context) {
     const store = useStore()
     const layoutControl = useLayoutControl()

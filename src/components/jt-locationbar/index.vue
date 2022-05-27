@@ -152,14 +152,12 @@ export default defineComponent({
         return
       }
       setViewerPercentageChange()
-      unbindCameraLocation.value = viewer.camera.changed.addEventListener(
-        function () {
-          const pos = viewer.camera.positionCartographic
-          cameraLocation.height = viewer.camera.positionCartographic.height
-          cameraLocation.longitude = Cesium.Math.toDegrees(pos.longitude)
-          cameraLocation.latitude = Cesium.Math.toDegrees(pos.latitude)
-        }
-      )
+      unbindCameraLocation.value = viewer.camera.changed.addEventListener(function () {
+        const pos = viewer.camera.positionCartographic
+        cameraLocation.height = viewer.camera.positionCartographic.height
+        cameraLocation.longitude = Cesium.Math.toDegrees(pos.longitude)
+        cameraLocation.latitude = Cesium.Math.toDegrees(pos.latitude)
+      })
     }
 
     const bindMouseLocation = (): void => {
@@ -169,15 +167,12 @@ export default defineComponent({
       }
       const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
       const hasDepthTest = viewer.scene.globe.depthTestAgainstTerrain
-      handler.setInputAction(function (e) {
+      handler.setInputAction(function (e: any) {
         let position
         if (hasDepthTest) {
           position = viewer.scene.pickPosition(e.endPosition)
         } else {
-          position = viewer.scene.camera.pickEllipsoid(
-            e.endPosition,
-            viewer.scene.globe.ellipsoid
-          )
+          position = viewer.scene.camera.pickEllipsoid(e.endPosition, viewer.scene.globe.ellipsoid)
         }
 
         if (!position || !Cesium.defined(position)) {

@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "scripts": {
     "vite": "node ./scripts/cesium-fix.js && vite",
-    "build": "node ./scripts/cesium-fix.js && vite build"
+    "build": "node ./scripts/cesium-fix.js && vue-tsc --noEmit && vite build"
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.0.0-beta.0",

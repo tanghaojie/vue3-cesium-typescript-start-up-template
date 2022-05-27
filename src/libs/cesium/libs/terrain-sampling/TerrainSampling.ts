@@ -147,7 +147,7 @@ class TerrainSampling {
     const promise = sampleTerrainMostDetailed(this.viewer.terrainProvider, positions)
 
     return new Promise((resolve, reject) => {
-      ;(Cesium as any).when(promise, function (updatedPositions: Cartographic[]) {
+      promise.then(function (updatedPositions: Cartographic[]) {
         const datas: sampleData[] = []
         for (let i = 0; i < updatedPositions.length; i++) {
           datas.push({

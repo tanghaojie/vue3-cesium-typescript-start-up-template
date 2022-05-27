@@ -1,9 +1,7 @@
 <template>
   <div class="tabs">
     <div class="flex flex-row justify-between">
-      <div
-        class="flex m-0 p-0 w-full bg-gray-700 list-none relative select-none"
-      >
+      <div class="flex m-0 p-0 w-full bg-gray-700 list-none relative select-none">
         <template v-for="(content, index) in contents" :key="index">
           <div
             :class="{
@@ -62,7 +60,7 @@ export default defineComponent({
   name: 'jt-menus',
   props: {
     contents: {
-      type: Object as PropType<Array<Content>[]>,
+      type: Object as PropType<Array<Content>>,
       required: true,
     },
   },
