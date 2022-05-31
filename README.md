@@ -14,19 +14,19 @@ _Note that you will need to have [Node.js](https://nodejs.org) installed._
 Fork or clone this repository. then:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Compiles and hot-reloads for development
 
 ```bash
-npm run vite
+pnpm run vite
 ```
 
 ### Compiles and minifies for production
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ## Dependencies
@@ -98,10 +98,6 @@ For better performance, `cesium instance` is not reactive! Different as vue data
 
 **Datas above are the sample data I made after I obtained them through open channels or collected by myself. If use for test can be directly used, if you want to use for commercial purposes, please contact.**
 
-## Next
-
-- [x] Options API -> Composition API
-
 ## Screenshots
 
 ![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot.png)
@@ -128,20 +124,20 @@ _注意：需要先安装[Node.js](https://nodejs.org)环境_
 点击上面的 Fork 到把项目拷贝到你自己的仓库，或者直接`git clone`本仓库，然后:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 开发环境编译和热重载
 
 ```bash
-npm run vite
+pnpm run vite
 
 ```
 
 ### 生产环境编译和压缩
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ## 相关依赖
@@ -222,10 +218,6 @@ setup() {
 - [3D tile point cloud collected with ipad pro lidar](https://sample-data-jt.vercel.app/my-home/3dtile)
 
 **以上数据都是本人通过公开渠道获取或者自己采集后，制作的示例数据。如果用于测试可以直接使用，如果用于商业用途请联系告知。谢谢。**
-
-## 后续计划
-
-- [x] Options API -> Composition API
 
 _注意: 不要使用 1.81.0 - 1.82.1 版本的 cesium, 它包含一个已知的[bug](https://github.com/CesiumGS/cesium/issues/9590)._
 

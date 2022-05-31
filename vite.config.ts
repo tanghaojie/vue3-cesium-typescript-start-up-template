@@ -24,7 +24,9 @@ export default defineConfig(({ command, mode }) => {
         resolvers: [ElementPlusResolver()],
       }),
       createSvgIconsPlugin({
-        iconDirs: [resolve(process.cwd(), 'src/components/jt-global-register/components/jt-icon/svgs')],
+        iconDirs: [
+          resolve(process.cwd(), 'src/components/jt-global-register/components/jt-icon/svgs'),
+        ],
         symbolId: '[name]',
         inject: 'body-last',
         customDomId: '__jt__svg__icons__dom__',

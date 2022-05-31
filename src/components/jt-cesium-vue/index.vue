@@ -7,15 +7,7 @@
 <script lang="ts">
 const LOADED_EVENT = 'loaded'
 
-import {
-  defineComponent,
-  ref,
-  shallowRef,
-  inject,
-  onMounted,
-  onUnmounted,
-  nextTick,
-} from 'vue'
+import { defineComponent, ref, shallowRef, inject, onMounted, onUnmounted, nextTick } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import 'cesium/Source/Widgets/widgets.css'
@@ -111,6 +103,16 @@ export default defineComponent({
       type: Number,
       default: Cesium.ShadowMode.RECEIVE_ONLY,
     },
+    // Fast Approximate Anti-Aliasing
+    fxaaEnable: {
+      type: Boolean,
+      default: true,
+    },
+    // MultiSampling Anti-Aliasing, 1/2/4/8
+    msaa: {
+      type: Number,
+      default: 1,
+    },
   },
   setup(props, context) {
     const jtCesiumVue = shallowRef<HTMLElement | null>(null)
@@ -130,7 +132,7 @@ export default defineComponent({
     }
 
     const initializeCesium = (options: any = {}): Cesium.Viewer => {
-      const DEFAULT_OPT = {
+      const DEFAULT_OPT: Cesium.Viewer.ConstructorOptions = {
         animation: props.animation, // 是否创建动画小器件，左下角仪表
         baseLayerPicker: props.baseLayerPicker, // 是否显示图层选择器
         fullscreenButton: props.fullscreenButton, // 是否显示全屏按钮
@@ -170,6 +172,7 @@ export default defineComponent({
         // dataSources: new Cesium.DataSourceCollection() // 需要进行可视化的数据源的集合
         shadows: props.shadows,
         terrainShadows: props.terrainShadows,
+        msaaSamples: props.msaa,
       }
 
       const el = jtCesiumVue.value as HTMLElement
@@ -178,12 +181,10 @@ export default defineComponent({
         ...options,
       })
       viewer.scene.globe.depthTestAgainstTerrain = props.depthTestAgainstTerrain
+      viewer.resolutionScale = window.devicePixelRatio
+      viewer.scene.postProcessStages.fxaa.enabled = props.fxaaEnable
 
       viewer.scene.primitives.removeAll()
-
-      // 设置完毕后，坑锯齿效果有效
-      viewer.resolutionScale = window.devicePixelRatio
-      viewer.scene.postProcessStages.fxaa.enabled = true
 
       //eslint-disable-next-line
       ;(viewer.cesiumWidget.creditContainer as any).style.display = 'none'

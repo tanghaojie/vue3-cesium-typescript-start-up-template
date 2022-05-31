@@ -81,9 +81,7 @@ export default defineComponent({
     const cesiumLoaded = ref<boolean>(false)
 
     const locationBarShow = computed((): boolean => {
-      return store.getters[
-        `jtCesiumVue/locationbar/${LocationBarGetterTypes.ALL_SHOW}`
-      ]
+      return store.getters[`jtCesiumVue/locationbar/${LocationBarGetterTypes.ALL_SHOW}`]
     })
 
     const browserPanel = ref<ComponentPublicInstance | null>(null)
@@ -92,10 +90,7 @@ export default defineComponent({
         return store.state.jtCesiumVue.layout.showBrowserPanel
       },
       set(val: boolean): void {
-        store.dispatch(
-          `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_BROWSER_PANEL}`,
-          val
-        )
+        store.dispatch(`jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_BROWSER_PANEL}`, val)
       },
     })
 
@@ -105,10 +100,7 @@ export default defineComponent({
         return store.state.jtCesiumVue.layout.showToolbar
       },
       set(val: boolean): void {
-        store.dispatch(
-          `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_TOOLBAR}`,
-          val
-        )
+        store.dispatch(`jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_TOOLBAR}`, val)
       },
     })
     watch(toolbar, () => {
@@ -122,14 +114,10 @@ export default defineComponent({
     const calcToolbarHeight = () => {
       const oldH = store.state.jtCesiumVue.layout.toolbarHeight
       const h = toolbar.value
-        ? ((toolbar.value as ComponentPublicInstance).$el as HTMLElement)
-            .clientHeight
+        ? ((toolbar.value as ComponentPublicInstance).$el as HTMLElement).clientHeight
         : 0
       if (oldH !== h) {
-        store.dispatch(
-          `jtCesiumVue/layout/${LayoutActionTypes.SET_TOOLBAR_HEIGHT}`,
-          h
-        )
+        store.dispatch(`jtCesiumVue/layout/${LayoutActionTypes.SET_TOOLBAR_HEIGHT}`, h)
       }
     }
 
@@ -138,10 +126,7 @@ export default defineComponent({
         return store.state.jtCesiumVue.layout.showSettingButton
       },
       set(val: boolean): void {
-        store.dispatch(
-          `jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_SETTING_BUTTON}`,
-          val
-        )
+        store.dispatch(`jtCesiumVue/layout/${LayoutActionTypes.SET_SHOW_SETTING_BUTTON}`, val)
       },
     })
 
