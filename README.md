@@ -20,7 +20,7 @@ npm install
 ### Compiles and hot-reloads for development
 
 ```bash
-npm run serve
+npm run vite
 ```
 
 ### Compiles and minifies for production
@@ -134,7 +134,8 @@ npm install
 ### 开发环境编译和热重载
 
 ```bash
-npm run serve
+npm run vite
+
 ```
 
 ### 生产环境编译和压缩
