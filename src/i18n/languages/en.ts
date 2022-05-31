@@ -90,7 +90,7 @@ export default {
   browserPanel: {
     imagery: {
       imageryManage: 'Imagery Manage',
-      addImagery: 'Add Imagery',
+      addImagery: 'Add Imagery (Dbclick)',
       alpha: 'Alpha',
       brightness: 'Brightness',
       contrast: 'Contrast',

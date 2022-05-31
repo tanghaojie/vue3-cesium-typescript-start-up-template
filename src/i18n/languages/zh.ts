@@ -90,7 +90,7 @@ export default {
   browserPanel: {
     imagery: {
       imageryManage: '影像管理',
-      addImagery: '添加影像',
+      addImagery: '添加影像（双击）',
       alpha: 'Alpha',
       brightness: '亮度',
       contrast: '对比度',
