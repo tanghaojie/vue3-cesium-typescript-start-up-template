@@ -32,16 +32,14 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const earthSurfaceColorChange = (val: string): void => {
+    const earthSurfaceColorChange = (val: string | null): void => {
+      if (!val) {
+        return
+      }
       const { red, green, blue, alpha } = rgbaStringToStruct(val)
       const { viewer } = cesiumRef || {}
       if (viewer) {
-        viewer.scene.globe.baseColor = new Cesium.Color(
-          red / 255,
-          green / 255,
-          blue / 255,
-          alpha
-        )
+        viewer.scene.globe.baseColor = new Cesium.Color(red / 255, green / 255, blue / 255, alpha)
       }
       const { iconEl } = dropdown.value
       if (iconEl) {
@@ -53,9 +51,7 @@ export default defineComponent({
       const { viewer } = cesiumRef || {}
       if (viewer) {
         const c = viewer.scene.globe.baseColor
-        color.value = `rgba(${c.red * 255},${c.green * 255},${c.blue * 255},${
-          c.alpha
-        })`
+        color.value = `rgba(${c.red * 255},${c.green * 255},${c.blue * 255},${c.alpha})`
       }
       ;(colorPicker.value as any).showPicker = true
     })

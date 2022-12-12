@@ -110,15 +110,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  reactive,
-  ref,
-  inject,
-  watch,
-  onMounted,
-} from 'vue'
+import { defineComponent, computed, reactive, ref, inject, watch, onMounted } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
 import * as Cesium from 'cesium'
 import {
@@ -135,6 +127,7 @@ import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/
 import calculatePrimitiveCenter from '@/libs/cesium/libs/calculate-primitive-center'
 import { JTPrimitiveActionTypes } from '@/store/modules/jt-cesium-vue/modules/cesium-data/modules/jt-primitive/action-types'
 import { useI18n } from 'vue-i18n'
+import { Arrayable } from 'element-plus/es/utils'
 
 type SelectClippingDirection = {
   value: number | undefined
@@ -225,9 +218,7 @@ export default defineComponent({
       },
       set(val: boolean): void {
         cesiumRef?.viewer &&
-          cesiumRef?.viewer?.jt?.clippingPlane.removeAllPrimitiveClippingPlanes(
-            true
-          )
+          cesiumRef?.viewer?.jt?.clippingPlane.removeAllPrimitiveClippingPlanes(true)
         store.dispatch(
           `jtCesiumVue/layout/${LayoutActionTypes.REMOVE_OVERLAY_DYNAMIC_VIEW_BY_NAME}`,
           'jt-primitive-clipping-plane'
@@ -247,9 +238,7 @@ export default defineComponent({
     })
 
     const selectPrimitiveChange = (val: number): void => {
-      const pri = (
-        cesiumRef || {}
-      ).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(val)
+      const pri = (cesiumRef || {}).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(val)
       if (!pri.show) {
         pri.show = true
         syncJTPrimitive()
@@ -275,7 +264,7 @@ export default defineComponent({
       cesiumRef?.viewer?.jt?.clippingPlane.removeAllPrimitiveClippingPlanes()
     }
 
-    const handleCurrectClippingDistanceChange = (val: number): void => {
+    const handleCurrectClippingDistanceChange = (val: Arrayable<number>): void => {
       createOrUpdateClippingPlanes()
     }
 
@@ -288,16 +277,12 @@ export default defineComponent({
         return
       }
 
-      const pri = (
-        cesiumRef || {}
-      ).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(
+      const pri = (cesiumRef || {}).viewer?.jt?.primitiveManager.getPrimitiveByJTPrimitiveIndex(
         selectedPrimitive.value
       )
       if (
         !pri ||
-        !(
-          pri instanceof Cesium.Cesium3DTileset || pri instanceof Cesium.Model
-        ) ||
+        !(pri instanceof Cesium.Cesium3DTileset || pri instanceof Cesium.Model) ||
         selectClippingDirection.value === undefined
       ) {
         return

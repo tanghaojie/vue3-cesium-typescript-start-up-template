@@ -1,5 +1,5 @@
 // @ts-ignore
-import { createI18n } from 'vue-i18n/dist/vue-i18n.cjs.js'
+import { createI18n } from 'vue-i18n'
 import messages from './languages'
 
 const defaultLocale = 'zh'

@@ -8,9 +8,7 @@
     :title="title"
   >
     <div class="my-0">
-      <div class="text-gray-50">
-        {{ t('browserPanel.imagery.alpha', 'Alpha') }}:
-      </div>
+      <div class="text-gray-50">{{ t('browserPanel.imagery.alpha', 'Alpha') }}:</div>
       <el-slider
         v-model="alpha"
         :min="0"
@@ -20,9 +18,7 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">
-        {{ t('browserPanel.imagery.brightness', '亮度') }}:
-      </div>
+      <div class="text-gray-50">{{ t('browserPanel.imagery.brightness', '亮度') }}:</div>
       <el-slider
         v-model="brightness"
         :min="0"
@@ -32,9 +28,7 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">
-        {{ t('browserPanel.imagery.contrast', '对比度') }}:
-      </div>
+      <div class="text-gray-50">{{ t('browserPanel.imagery.contrast', '对比度') }}:</div>
       <el-slider
         v-model="contrast"
         :min="0"
@@ -44,9 +38,7 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">
-        {{ t('browserPanel.imagery.hue', '色调') }}:
-      </div>
+      <div class="text-gray-50">{{ t('browserPanel.imagery.hue', '色调') }}:</div>
       <el-slider
         v-model="hue"
         :min="0"
@@ -56,9 +48,7 @@
       />
     </div>
     <div class="my-0">
-      <div class="text-gray-50">
-        {{ t('browserPanel.imagery.saturation', '饱和度') }}:
-      </div>
+      <div class="text-gray-50">{{ t('browserPanel.imagery.saturation', '饱和度') }}:</div>
       <el-slider
         v-model="saturation"
         :min="0"
@@ -73,11 +63,9 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, watch, watchEffect } from 'vue'
 import { ElSlider } from 'element-plus'
-import {
-  PROPERTY_CHANGE_EVENT,
-  UPDATE_MODEL_EVENT,
-} from '@/libs/utils/vue-const'
+import { PROPERTY_CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@/libs/utils/vue-const'
 import { useI18n } from 'vue-i18n'
+import { Arrayable } from 'element-plus/es/utils'
 
 export default defineComponent({
   name: 'imagery-layer-operate',
@@ -106,7 +94,10 @@ export default defineComponent({
     const visible = ref(props.modelValue)
     const title = ref(`影像配置-${props.imageryLayerName}`)
 
-    const afterChange = (key: string, val: number): void => {
+    const afterChange = (key: string, val: Arrayable<number>): void => {
+      if (Array.isArray(val)) {
+        return
+      }
       context.emit(PROPERTY_CHANGE_EVENT, key, val)
     }
 

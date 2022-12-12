@@ -6,8 +6,11 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import vueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import { fileURLToPath } from 'url'
+
+const x = resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/languages/**')
+console.log(x)
 
 export default defineConfig(({ command, mode }) => {
   const alias = [{ find: '@', replacement: resolve(__dirname, 'src') }]
@@ -17,13 +20,11 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [
+      vueI18nPlugin({
+        include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/languages/**'),
+      }),
       vue(),
       cesium(),
-      VueI18nPlugin({
-        /* options */
-        // locale messages resource pre-compile option
-        include: resolve(dirname(fileURLToPath(import.meta.url)), './path/to/src/locales/**'),
-      }),
       AutoImport({
         resolvers: [ElementPlusResolver()],
       }),

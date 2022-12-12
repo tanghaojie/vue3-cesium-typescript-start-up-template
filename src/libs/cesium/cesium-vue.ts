@@ -17,6 +17,7 @@ export default {
       viewer: undefined,
       viewerContainer: undefined,
     }
+    //@ts-ignore
     app.config.globalProperties.$cesiumRef = cr
     app.provide<CesiumRef>(CESIUM_REF_KEY, cr)
   },

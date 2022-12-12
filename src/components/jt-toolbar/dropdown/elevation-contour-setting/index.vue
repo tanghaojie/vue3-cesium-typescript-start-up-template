@@ -83,6 +83,7 @@ import { ElSlider, ElInputNumber, ElColorPicker } from 'element-plus'
 import { useStore } from '@/store'
 import { rgbaStringToStruct } from '@/libs/utils/rgb'
 import { useI18n } from 'vue-i18n'
+import { Arrayable } from 'element-plus/es/utils'
 
 export default defineComponent({
   name: 'jt-elevation-contour-setting',
@@ -105,7 +106,10 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const contourDistanceChange = (val: number | undefined): void => {
+    const contourDistanceChange = (val: Arrayable<number> | undefined): void => {
+      if (Array.isArray(val)) {
+        return
+      }
       const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
@@ -117,7 +121,10 @@ export default defineComponent({
       uniforms.spacing = contourDistance.value
     }
 
-    const contourWidthChange = (val: number | undefined): void => {
+    const contourWidthChange = (val: Arrayable<number> | undefined): void => {
+      if (Array.isArray(val)) {
+        return
+      }
       const { viewer } = cesiumRef || {}
       if (!viewer) {
         return
@@ -129,7 +136,7 @@ export default defineComponent({
       uniforms.width = contourWidth.value
     }
 
-    const contourColorChange = (val: string): void => {
+    const contourColorChange = (val: string | null): void => {
       const { viewer } = cesiumRef || {}
       if (!val || !viewer) {
         return

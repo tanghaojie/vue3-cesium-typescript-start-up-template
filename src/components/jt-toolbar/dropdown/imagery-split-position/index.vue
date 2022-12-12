@@ -28,6 +28,7 @@ import { ImageryActionTypes } from '@/store/modules/jt-cesium-vue/modules/toolba
 import type { SplitType } from '@/store/modules/jt-cesium-vue/modules/toolbar/modules/imagery/state'
 import { useI18n } from 'vue-i18n'
 import { ElSlider } from 'element-plus'
+import { Arrayable } from 'element-plus/es/utils'
 
 export default defineComponent({
   name: 'imagery-split-position',
@@ -38,7 +39,10 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const afterChange = (val: number) => {
+    const afterChange = (val: Arrayable<number>) => {
+      if (Array.isArray(val)) {
+        return
+      }
       const { viewer } = cesiumRef || {}
       if (viewer) {
         if (store.state.jtCesiumVue.toolbar.imagery.split.enable) {
@@ -47,10 +51,7 @@ export default defineComponent({
             position: val,
           }
           viewer.scene.splitPosition = val
-          store.dispatch(
-            `jtCesiumVue/toolbar/imagery/${ImageryActionTypes.SET_SPLIT}`,
-            split
-          )
+          store.dispatch(`jtCesiumVue/toolbar/imagery/${ImageryActionTypes.SET_SPLIT}`, split)
         }
       }
     }

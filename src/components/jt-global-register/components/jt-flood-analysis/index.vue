@@ -115,6 +115,7 @@ import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import FloodAnalysis from '@/libs/cesium/libs/flood-analysis/FloodAnalysis'
 import { useI18n } from 'vue-i18n'
+import { Arrayable } from 'element-plus/es/utils'
 
 const componentName = 'jt-flood-analysis'
 
@@ -220,7 +221,10 @@ export default defineComponent({
       fa.setCurrentHeight(val, false)
     }
 
-    const handleCurrentHeightChange = (val: number) => {
+    const handleCurrentHeightChange = (val: Arrayable<number>) => {
+      if (Array.isArray(val)) {
+        return
+      }
       const fa = cesiumRef?.viewer?.jt?.floodAnalysis
       if (!fa) {
         return

@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineComponent, computed, reactive, ref, inject, watch, onMounted } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
-import { ElCheckbox, ElCheckboxGroup } from 'element-plus'
+import { CheckboxValueType, ElCheckbox, ElCheckboxGroup } from 'element-plus'
 import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { LayoutActionTypes } from '@/store/modules/jt-cesium-vue/modules/layout/action-types'
@@ -88,7 +88,7 @@ export default defineComponent({
       })
     }
 
-    const correctOffsetChange = (checked: number[]): void => {
+    const correctOffsetChange = (checked: CheckboxValueType[]): void => {
       imageryOffset.imageryList.forEach((item) => {
         if (item.correctOffset === undefined) {
           return

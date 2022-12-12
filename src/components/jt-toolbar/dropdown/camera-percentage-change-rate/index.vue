@@ -22,9 +22,9 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject } from 'vue'
 import { CesiumRef, CESIUM_REF_KEY } from '@/libs/cesium/cesium-vue'
-
 import { ElSlider } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import { Arrayable } from 'element-plus/es/utils'
 
 export default defineComponent({
   name: 'camera-percentage-change-rate',
@@ -34,7 +34,10 @@ export default defineComponent({
 
     const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
 
-    const afterChange = (val: number) => {
+    const afterChange = (val: Arrayable<number>) => {
+      if (Array.isArray(val)) {
+        return
+      }
       cesiumRef?.viewer?.jt?.percentageChange.set(val)
     }
 

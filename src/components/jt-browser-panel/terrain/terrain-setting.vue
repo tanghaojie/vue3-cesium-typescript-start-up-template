@@ -41,6 +41,7 @@ import overlay from '@/components/jt-overlay/index.vue'
 import { useStore } from '@/store'
 import jtDraggableResizable from '@/components/jt-draggable-resizable/index.vue'
 import { useI18n } from 'vue-i18n'
+import { Arrayable } from 'element-plus/es/utils'
 
 export default defineComponent({
   name: 'terrain-setting',
@@ -76,7 +77,10 @@ export default defineComponent({
       context.emit(UPDATE_MODEL_EVENT, val)
     })
 
-    const exaggerationValueChange = (val: number): void => {
+    const exaggerationValueChange = (val: Arrayable<number>): void => {
+      if (Array.isArray(val)) {
+        return
+      }
       context.emit(CHANGE, val)
     }
 
