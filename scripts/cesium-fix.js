@@ -1,3 +1,4 @@
+// 新版cesium解决了这个问题
 // 新版 webpack，会检查 cesium 包里面的 package.json 文件中的 exports 字段，cesium 默认不导出 widgets.css 文件，因此
 // import 'cesium/Source/Widgets/widgets.css' 会报错，没有样式
 // github上此问题的讨论: https://github.com/CesiumGS/cesium/issues/9212
