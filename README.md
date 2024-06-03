@@ -40,7 +40,7 @@ pnpm run build
   - [ECharts](https://echarts.apache.org/)
 
 ## Features
-
+ 
 - View
 - Status bar
 - Natural environment control
