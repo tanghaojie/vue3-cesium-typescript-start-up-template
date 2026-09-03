@@ -1,4 +1,4 @@
-**English | [简体中文](#简介)**
+**English | [简体中文](#新版发布)**
 
 # Vue3 Cesium Typescipt Start up template
 
@@ -7,6 +7,9 @@
 [https://cyber-sight-geo.vercel.app/geo.html](https://cyber-sight-geo.vercel.app/geo.html)
 
 Repo: [https://github.com/tanghaojie/Cyber-Sight](https://github.com/tanghaojie/Cyber-Sight)
+
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-1.jpg)
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-2.jpg)
 
 # Introduction
 
@@ -121,6 +124,9 @@ _Note: do not use cesium versions from 1.81.0 to 1.82.1, it exists a [bug](https
 [https://cyber-sight-geo.vercel.app/geo.html](https://cyber-sight-geo.vercel.app/geo.html)
 
 Repo: [https://github.com/tanghaojie/Cyber-Sight](https://github.com/tanghaojie/Cyber-Sight)
+
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-1.jpg)
+![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-2.jpg)
 
 # 简介
 
