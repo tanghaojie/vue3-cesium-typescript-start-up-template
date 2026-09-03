@@ -2,6 +2,12 @@
 
 # Vue3 Cesium Typescipt Start up template
 
+# New Version Released
+
+[https://cyber-sight-geo.vercel.app/geo.html](https://cyber-sight-geo.vercel.app/geo.html)
+
+Repo: [https://github.com/tanghaojie/Cyber-Sight](https://github.com/tanghaojie/Cyber-Sight)
+
 # Introduction
 
 This is a project template for Vue3 + Cesium + Typescript apps with lots of sample datas. Preview:
