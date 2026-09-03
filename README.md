@@ -116,6 +116,12 @@ _Note: do not use cesium versions from 1.81.0 to 1.82.1, it exists a [bug](https
 
 **[English](#Introduction) | 简体中文**
 
+# 新版发布
+
+[https://cyber-sight-geo.vercel.app/geo.html](https://cyber-sight-geo.vercel.app/geo.html)
+
+Repo: [https://github.com/tanghaojie/Cyber-Sight](https://github.com/tanghaojie/Cyber-Sight)
+
 # 简介
 
 本项目是一个整合了 Vue3 + Cesium + Typescript 的启动模板，同时还包含了各种不同类型的示例数据。在线预览地址：
