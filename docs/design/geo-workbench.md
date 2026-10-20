@@ -8,7 +8,7 @@ updated: 2026-10-20
 
 ## Responsibility and boundaries
 
-This repository owns the standalone frontend Geo application. Its display name is Cesium Workbench; the GitHub slug remains unchanged. Source snapshot: Cyber-Sight 9697230d7278ae88afb3c82c98e3865181847d08. Version 2.0.0-rc.1 introduces a replacement application; the original template remains unchanged on branch/tag 1.0.0.
+This repository owns the standalone frontend Geo application. Its display name is Cesium Workbench; its canonical source repository is tanghaojie/Cesium-Workbench. Source snapshot: Cyber-Sight 9697230d7278ae88afb3c82c98e3865181847d08. Version 2.0.0-rc.1 introduces a replacement application; the original template remains unchanged on branch/tag 1.0.0.
 
 src/modules/geo owns the Viewer runtime, Cesium tools, compile-time plugins, controllers, panels and workspace page. src/app only starts the application and configures its identity. src/shared contains the minimal local localization/icon/brand/style adapters. There is no backend, database, auth, Vuex, global Viewer, remote code loading or plugin marketplace.
 
@@ -28,7 +28,7 @@ Data loads external URLs and the AIModels static catalog. Scene controls quality
 
 Keep Cesium 1.144.0, Mediabunny 1.61.6 and fflate 0.8.3 during the migration. Capture projects retain JSON version 1 and keys cyber-sight:capture:current:v1 / cyber-sight:capture:library:v1. localStorage is origin-scoped; users export JSON at the old origin and import it at a new origin. No automatic cross-origin transfer or resource execution is introduced.
 
-index.html is the default entry; geo.html is a compatibility entry to the same module, built together with one cesiumStatic directory. Deployment initially uses the site root and CESIUM_BASE_URL=/cesiumStatic/. Do not claim arbitrary subpath support. Keep pnpm run vite as an alias for development.
+index.html is the default entry; geo.html is a compatibility entry to the same module, built together with one cesiumStatic directory. Deployment uses the organization site root and CESIUM_BASE_URL=/cesiumStatic/. Source synchronization and Pages workflow boundaries are defined in [organization publication](organization-publication.md). Do not claim arbitrary subpath support. Keep pnpm run vite as an alias for development.
 
 ## Failures and asset boundaries
 

@@ -6,7 +6,7 @@
 
 An open-source 3D geospatial workbench built with Vue 3, TypeScript and CesiumJS. Explore 3D Tiles and glTF, use spatial tools, and create camera-shot exports.
 
-Formerly **vue3-cesium-typescript-start-up-template**. The original implementation is preserved on [branch 1.0.0](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/tree/1.0.0) and [tag 1.0.0](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/releases/tag/1.0.0). GitHub repository rename has not been performed.
+Formerly **vue3-cesium-typescript-start-up-template**. The original implementation is preserved on [branch 1.0.0](https://github.com/tanghaojie/Cesium-Workbench/tree/1.0.0) and [tag 1.0.0](https://github.com/tanghaojie/Cesium-Workbench/releases/tag/1.0.0). The canonical source repository is [tanghaojie/Cesium-Workbench](https://github.com/tanghaojie/Cesium-Workbench).
 
 ## 快速开始 / Quick start
 
@@ -61,6 +61,6 @@ src/shared/        # 独立本地化、图标、品牌与样式
 docs/              # 设计、迁移清单、指南与协作记录
 ```
 
-[设计与文档入口](docs/README.md) · [来源与版权](NOTICE) · [MIT License](LICENSE)
+[组织同步与发布](docs/guides/organization-publication.md) · [设计与文档入口](docs/README.md) · [来源与版权](NOTICE) · [MIT License](LICENSE)
 
 Copyright © 2021 JackieTang; © 2026 JTLab. Geo source: [Cyber-Sight 9697230](https://github.com/tanghaojie/Cyber-Sight/tree/9697230d7278ae88afb3c82c98e3865181847d08).

@@ -1,0 +1,54 @@
+name: Sync source to organization
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-org-source
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == 'tanghaojie/Cesium-Workbench' && github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/verify.yml
+
+  sync:
+    needs: verify
+    if: github.repository == 'tanghaojie/Cesium-Workbench' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout verified source
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Push source to organization
+        shell: bash
+        env:
+          SYNC_TOKEN: ${{ secrets.ORG_SOURCE_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$SYNC_TOKEN" ]; then
+            echo 'Missing ORG_SOURCE_SYNC_TOKEN'
+            exit 1
+          fi
+
+          git fetch origin master
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/master)" ]; then
+            echo 'A newer master commit exists; skip this superseded revision.'
+            exit 0
+          fi
+
+          auth="$(printf 'x-access-token:%s' "$SYNC_TOKEN" | base64 -w0)"
+          echo "::add-mask::$auth"
+
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            push \
+            https://github.com/Cesium-Workbench/cesium-workbench.github.io.git \
+            HEAD:refs/heads/master
