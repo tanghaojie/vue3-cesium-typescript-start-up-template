@@ -1,0 +1,60 @@
+@use 'element-plus/theme-chalk/el-message.css';
+
+html body .el-message {
+  min-width: min(360px, calc(100vw - 32px));
+  max-width: min(520px, calc(100vw - 32px));
+  padding: 12px 15px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--surface), transparent 2%);
+  box-shadow: none;
+  backdrop-filter: blur(16px);
+}
+
+html body .el-message__icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 4px;
+  background: var(--primary-mist);
+  color: var(--primary-deep);
+  font-size: 16px;
+  place-items: center;
+}
+
+html body .el-message__content {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+html body .el-message--error {
+  border-color: color-mix(in srgb, var(--danger), transparent 62%);
+
+  .el-message__icon {
+    background: color-mix(in srgb, var(--danger), var(--surface) 88%);
+    color: var(--danger);
+  }
+}
+
+html body .el-message--success {
+  border-color: color-mix(in srgb, var(--primary-deep), transparent 66%);
+}
+
+html body .el-message__closeBtn {
+  color: var(--muted);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--ink);
+  }
+}
+
+@media (max-width: 480px) {
+  html body .el-message {
+    min-width: min(340px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+  }
+}

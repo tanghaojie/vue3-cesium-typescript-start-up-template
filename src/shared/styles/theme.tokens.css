@@ -1,0 +1,92 @@
+/* PRISM public tokens. Surfaces and semantics are independent of theme hue. */
+:root {
+  --theme-jade-light: #216447;
+  --theme-jade-dark: #76c7a1;
+  --theme-civic-light: #9d3543;
+  --theme-civic-dark: #ed9199;
+  --theme-monochrome-light: #30343a;
+  --theme-monochrome-dark: #e3e2dd;
+  --theme-azure-light: #245c89;
+  --theme-azure-dark: #8cbce5;
+  --theme-violet-light: #69429b;
+  --theme-violet-dark: #ba9bdd;
+  --theme-amber-light: #8d4b12;
+  --theme-amber-dark: #f3ac71;
+  color-scheme: light;
+  --prism-accent-light: var(--theme-jade-light);
+  --prism-accent-dark: var(--theme-jade-dark);
+  --prism-tint-light: #e1eee7;
+  --prism-tint-dark: #1d3028;
+  --prism-accent: var(--prism-accent-light);
+  --prism-on-accent: #ffffff;
+  --prism-tint: var(--prism-tint-light);
+  --prism-canvas: #f3f4f2;
+  --prism-surface: #ffffff;
+  --prism-raised: #e9edeb;
+  --prism-navigation: #f9faf7;
+  --prism-text: #252c30;
+  --prism-secondary: #586560;
+  --prism-muted: #67746e;
+  --prism-line: #cdd3d0;
+  --prism-success: #25634d;
+  --prism-warning: #7b5700;
+  --prism-danger: #a73444;
+  --prism-shadow: 0 16px 48px rgb(15 24 20 / 12%);
+  --prism-font: Inter, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  --prism-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --prism-radius: 6px;
+}
+:root[data-theme='jade'] {
+  --prism-accent-light: var(--theme-jade-light);
+  --prism-accent-dark: var(--theme-jade-dark);
+  --prism-tint-light: #e1eee7;
+  --prism-tint-dark: #1d3028;
+}
+:root[data-theme='civic'] {
+  --prism-accent-light: var(--theme-civic-light);
+  --prism-accent-dark: var(--theme-civic-dark);
+  --prism-tint-light: #f4e4e6;
+  --prism-tint-dark: #34232a;
+}
+:root[data-theme='monochrome'] {
+  --prism-accent-light: var(--theme-monochrome-light);
+  --prism-accent-dark: var(--theme-monochrome-dark);
+  --prism-tint-light: #e4e6e7;
+  --prism-tint-dark: #303236;
+}
+:root[data-theme='azure'] {
+  --prism-accent-light: var(--theme-azure-light);
+  --prism-accent-dark: var(--theme-azure-dark);
+  --prism-tint-light: #e3edf5;
+  --prism-tint-dark: #202d3a;
+}
+:root[data-theme='violet'] {
+  --prism-accent-light: var(--theme-violet-light);
+  --prism-accent-dark: var(--theme-violet-dark);
+  --prism-tint-light: #ece5f4;
+  --prism-tint-dark: #2e263b;
+}
+:root[data-theme='amber'] {
+  --prism-accent-light: var(--theme-amber-light);
+  --prism-accent-dark: var(--theme-amber-dark);
+  --prism-tint-light: #f3e9dd;
+  --prism-tint-dark: #322820;
+}
+html:root.dark {
+  color-scheme: dark;
+  --prism-accent: var(--prism-accent-dark);
+  --prism-on-accent: #111518;
+  --prism-tint: var(--prism-tint-dark);
+  --prism-canvas: #0e1115;
+  --prism-surface: #15191f;
+  --prism-raised: #1c222a;
+  --prism-navigation: #0b0d10;
+  --prism-text: #f3f1ec;
+  --prism-secondary: #a5adb8;
+  --prism-muted: #919ca9;
+  --prism-line: #2c333d;
+  --prism-success: #8bc9ad;
+  --prism-warning: #e4c76e;
+  --prism-danger: #f29598;
+  --prism-shadow: 0 20px 60px rgb(0 0 0 / 32%);
+}

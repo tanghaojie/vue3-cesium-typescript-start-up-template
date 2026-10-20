@@ -1,242 +1,66 @@
-**English | [简体中文](#新版发布)**
+# Cesium Workbench
 
-# Vue3 Cesium Typescipt Start up template
+**基于 Vue 3、TypeScript 与 CesiumJS 的开源三维地球工作台。**
 
-# New Version Released
+加载 GeoJSON、glTF/GLB 与 3D Tiles，操作图层、地形、绘制和测量工具，编排相机镜头并输出视频或图片序列。当前版本 2.0.0-rc.1 是从 Cyber-Sight Geo 提取的独立前端。
 
-[https://cyber-sight-geo.vercel.app/geo.html](https://cyber-sight-geo.vercel.app/geo.html)
+An open-source 3D geospatial workbench built with Vue 3, TypeScript and CesiumJS. Explore 3D Tiles and glTF, use spatial tools, and create camera-shot exports.
 
-Repo: [https://github.com/tanghaojie/Cyber-Sight](https://github.com/tanghaojie/Cyber-Sight)
+Formerly **vue3-cesium-typescript-start-up-template**. The original implementation is preserved on [branch 1.0.0](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/tree/1.0.0) and [tag 1.0.0](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/releases/tag/1.0.0). GitHub repository rename has not been performed.
 
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-1.jpg)
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-2.jpg)
+## 快速开始 / Quick start
 
-# Introduction
+需要 Node.js 22.12+（当前验证环境见迁移记录）与 pnpm 11.22.0。
 
-This is a project template for Vue3 + Cesium + Typescript apps with lots of sample datas. Preview:
-[https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
-
-## How to use
-
-_Note that you will need to have [Node.js](https://nodejs.org) installed._
-
-Fork or clone this repository. then:
-
-```bash
-pnpm install
+```sh
+corepack enable
+corepack prepare pnpm@11.22.0 --activate
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-### Compiles and hot-reloads for development
+访问 http://localhost:3333/；/geo.html 为兼容入口。pnpm run vite 仍可使用。英文入口使用 /?lang=en-US。
 
-```bash
-pnpm run vite
+```sh
+pnpm format:check
+pnpm lint
+pnpm build
+pnpm preview
 ```
 
-### Compiles and minifies for production
+build 包含 Vue/TypeScript 与 Vite 配置类型检查。产物位于 dist，一次构建生成两个 HTML 入口及唯一 cesiumStatic。初始仅支持部署在站点根路径。
 
-```bash
-pnpm run build
+## 功能 / Features
+
+- Data：影像、地形、GeoJSON、glTF/GLB、3D Tiles 与 AIModels 静态目录。
+- View / Scene / Time：相机、场景模式、质量/光照、时间轴与唯一仿真时钟。
+- Flight：模拟航线可视化；不是实时航班服务。
+- Drawing / Measurement / Model / Terrain / Compare：标绘、测量、模型工具、地形分析与对比。
+- Capture：镜头模板、机位编辑、工程 JSON/本机保存、净画面和逐帧 MP4/PNG 输出路径。
+
+插件是编译期源码模块；没有远程代码插件市场、通用 npm SDK、后台账户或数据库。当前支持桌面横向工作台，最低交互验收基线 1280×720；竖屏视频输出不表示手机布局支持。
+
+## 配置与数据 / Configuration and data
+
+将 .env.example 复制为 .env.local 后按需填写；默认无需自建后端。VITE_GEO_TIANDITU_TOKEN 仅用于公开浏览器客户端令牌，VITE_GEO_AI_MODELS_CATALOG_URL 可替换静态模型目录。所有 VITE_* 值都可能进入浏览器，禁止填入服务器秘密。
+
+默认演示使用远程影像、地形与 sample-data-jt / AIModels 资产；网络和 CORS 会影响加载。原示例数据测试用途可按原说明使用，商业用途请联系维护者确认；代码 MIT 不等于远程素材的无限再分发授权。
+
+## 迁移与验收 / Migration and acceptance
+
+[迁移说明](docs/migration.md)覆盖旧功能映射、工程跨域导入、部署和人工验收。[拍摄指南](docs/guides/geo-capture.md)说明相机、动画与导出行为。
+
+本次只执行工程静态门禁；交互、跨域资源、GPU 和浏览器编码由维护者人工验收。MP4/4K 支持取决于实际浏览器/编码器/设备；PNG 为备选输出路径。现有线上演示仍属于此前部署，不应视为本候选版本已上线。
+
+## 结构 / Structure
+
+```text
+src/app/           # 启动与应用配置
+src/modules/geo/   # core / tools / plugins / components / pages
+src/shared/        # 独立本地化、图标、品牌与样式
+docs/              # 设计、迁移清单、指南与协作记录
 ```
 
-## Dependencies
+[设计与文档入口](docs/README.md) · [来源与版权](NOTICE) · [MIT License](LICENSE)
 
-- [Vue3](https://v3.vuejs.org/)
-- [cesium](https://cesium.com/)
-- [typescript](https://www.typescriptlang.org/)
-- option
-  - [Element plus](https://element-plus.org/) for convenient components
-  - [tailwindcss](https://tailwindcss.com/) for rapid UI development.
-  - [ECharts](https://echarts.apache.org/)
-
-## Features
- 
-- View
-- Status bar
-- Natural environment control
-- Earth setting
-- 3D tile operate
-- Draw
-- Measure
-- Sampling
-- Contour
-- Settings
-- Offset correct
-- more is coming ...
-
-## Guide
-
-### Cesium vue
-
-Cesium mounted on both global properties and `provide/inject` on main vue instance, for both composition or options API use.
-you can get cesium anywhere in vue instance:
-
-```typescript
-import { CesiumRef, CESIUM_REF_KEY} from '@/libs/cesium/cesium-vue'
-// global property
-const { viewer, viewerContainer } = this.$cesiumRef // type CesiumRef
-
-// provide/inject
-// Options API
-export default defineComponent({
-  inject: [CESIUM_REF_KEY],
-  mounted() {
-    console.log(this.cesiumRef)
-  },
-})
-// or Composition API
-setup() {
-  const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
-    onMounted(() => {
-      console.log(cesiumRef?.viewer)
-    })
-}
-```
-
-If you want other properties, you can add anything to `CesiumRef` _(src/@types/shims-cesium-ref.d.ts)_
-
-### Not React
-
-For better performance, `cesium instance` is not reactive! Different as vue data, Even Vue3 use `proxy` instead of `Object.defineProperty` got a lot of performance improvements. Cesium will lose too much FPS, if react cesium.
-
-## Sample Datas
-
-- [Tiled satellite data](https://sample-data-satellite.vercel.app/)
-- [Tiled terrain data](https://sample-data-terrain.vercel.app/)
-- [3D tile buildings](https://sample-data-jt.vercel.app/cd-buildings/3dtile)
-- [3D tile point cloud collected with ipad pro lidar](https://sample-data-jt.vercel.app/my-home/3dtile)
-
-**Datas above are the sample data I made after I obtained them through open channels or collected by myself. If use for test can be directly used, if you want to use for commercial purposes, please contact.**
-
-## Screenshots
-
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot.png)
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot2_compressed.png)
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot3_compressed.png)
-
-_Note: do not use cesium versions from 1.81.0 to 1.82.1, it exists a [bug](https://github.com/CesiumGS/cesium/issues/9590)._
-
----
-
-**[English](#Introduction) | 简体中文**
-
-# 新版发布
-
-[https://cyber-sight-geo.vercel.app/geo.html](https://cyber-sight-geo.vercel.app/geo.html)
-
-Repo: [https://github.com/tanghaojie/Cyber-Sight](https://github.com/tanghaojie/Cyber-Sight)
-
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-1.jpg)
-![](https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/blob/master/public/static/imgs/screenshot-new-version-2.jpg)
-
-# 简介
-
-本项目是一个整合了 Vue3 + Cesium + Typescript 的启动模板，同时还包含了各种不同类型的示例数据。在线预览地址：
-[https://vue3-cesium-typescript-start-up-template.vercel.app/](https://vue3-cesium-typescript-start-up-template.vercel.app/)
-
-_可能需要跨过[墙]才能访问_
-
-## 用法说明
-
-_注意：需要先安装[Node.js](https://nodejs.org)环境_
-
-点击上面的 Fork 到把项目拷贝到你自己的仓库，或者直接`git clone`本仓库，然后:
-
-```bash
-pnpm install
-```
-
-### 开发环境编译和热重载
-
-```bash
-pnpm run vite
-
-```
-
-### 生产环境编译和压缩
-
-```bash
-pnpm run build
-```
-
-## 相关依赖
-
-- [Vue3](https://v3.vuejs.org/)
-- [cesium](https://cesium.com/)
-- [typescript](https://www.typescriptlang.org/)
-- 可选的
-  - [Element plus](https://element-plus.org/) 使用了部分组件以方便开发。
-  - [tailwindcss](https://tailwindcss.com/) 快速 UI 样式。
-  - [ECharts](https://echarts.apache.org/)
-
-## 功能列表
-
-- 视图切换
-- 状态栏
-- 环境控制
-- 地球控制
-- 3D tile 操作
-- 绘图
-- 测量
-- 地形采样
-- 等高线
-- 设置
-- 分屏
-- 偏移纠正
-- 持续加入中...
-
-## 指南
-
-### Cesium vue
-
-Cesium 实例同时挂载在 vue 实例的全局属性上（vue3 支持多个 vue 实例，你可以自定义选择）和`provide/inject`，以方便 Composition 或者 Options API 语法都可以方便使用，然后就可以在 vue 实例中的任何地方拿到 cesium：
-
-```typescript
-import { CesiumRef, CESIUM_REF_KEY} from '@/libs/cesium/cesium-vue'
-// global property
-const { viewer, viewerContainer } = this.$cesiumRef // type CesiumRef
-
-// provide/inject
-// Options API
-export default defineComponent({
-  inject: [CESIUM_REF_KEY],
-  mounted() {
-    console.log(this.cesiumRef)
-  },
-})
-// or Composition API
-setup() {
-  const cesiumRef = inject<CesiumRef>(CESIUM_REF_KEY)
-    onMounted(() => {
-      console.log(cesiumRef?.viewer)
-    })
-}
-```
-
-如果需要附件一些其他的属性，可以添加到`CesiumRef` _(src/@types/shims-cesium-ref.d.ts)_ 上来扩展。
-
-### 非响应式
-
-为了更好的性能, `cesium instance`cesium 实例是非响应式的！
-
-和 Vue 中的 data 等不同，即使 Vue3 使用 `proxy` 代替 `Object.defineProperty` 获得了很大的性能提升，代理所有的 cesium 属性以实现响应式，还是会极大的丢失性能和降低 FPS。
-
-如何取舍：
-
-- 如果只需要使用 cesium 的基础功能，例如只做一些基础的可视化、简单交互、数据加载展示等等这些比较常规的操作，其实可以使用其他的一些用 vue 对 cesium 进行了封装的库，这样可以很大程度上提升项目的构建速度。唯一需要注意的问题是，所需的功能是否已经实现。
-
-- 但如果你要深层的进入 cesium 内部，例如自定义 shader、高级空间分析、复杂的交互操作等等，把这些功能点和 vue 绑定就是一件不合算，也不合理的事情了。
-
-- 另一种情况，当项目很庞大，需要用到 cesium 各个模块时，随着用 vue 封装 cesium 的组件越来越多以后，你会发现，其本质上又回到了代理整个 cesium 实例来实现响应式的模式，这个时候，性能又是不得不考虑的问题。
-
-## 示例数据
-
-- [Tiled satellite data](https://sample-data-satellite.vercel.app/)
-- [Tiled terrain data](https://sample-data-terrain.vercel.app/)
-- [3D tile buildings](https://sample-data-jt.vercel.app/cd-buildings/3dtile)
-- [3D tile point cloud collected with ipad pro lidar](https://sample-data-jt.vercel.app/my-home/3dtile)
-
-**以上数据都是本人通过公开渠道获取或者自己采集后，制作的示例数据。如果用于测试可以直接使用，如果用于商业用途请联系告知。谢谢。**
-
-_注意: 不要使用 1.81.0 - 1.82.1 版本的 cesium, 它包含一个已知的[bug](https://github.com/CesiumGS/cesium/issues/9590)._
-
----
+Copyright © 2021 JackieTang; © 2026 JTLab. Geo source: [Cyber-Sight 9697230](https://github.com/tanghaojie/Cyber-Sight/tree/9697230d7278ae88afb3c82c98e3865181847d08).

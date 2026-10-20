@@ -1,0 +1,16 @@
+The standalone Geo workbench is extracted from Cyber-Sight.
+Source repository: https://github.com/tanghaojie/Cyber-Sight
+Source commit: 9697230d7278ae88afb3c82c98e3865181847d08
+Copyright (c) 2026 JTLab. MIT license: licenses/Cyber-Sight-MIT.txt
+
+The original template is preserved on branch and annotated tag 1.0.0:
+fcea9e53485f356f96fb64cf6cd692f77513d6bd
+Copyright (c) 2021 JackieTang.
+
+Geo tools, plugins, localization resources, SVG icons, the source brand mark,
+PRISM theme token snapshot and Element Plus style adapters are retained or
+adapted from that source. docs/migration-manifest.json records Geo paths.
+
+Third-party dependencies and remotely hosted sample data retain their own
+licenses, attributions and service terms. No blanket redistribution grant for
+remote imagery, terrain or models is implied by this repository's MIT license.

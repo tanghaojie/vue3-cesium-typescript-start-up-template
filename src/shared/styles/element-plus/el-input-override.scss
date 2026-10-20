@@ -1,0 +1,18 @@
+html body .el-input__wrapper,
+html body .el-textarea__inner {
+  min-height: 42px;
+  border-radius: 5px;
+  background: var(--canvas);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  font-size: 14px;
+}
+html body .el-input__wrapper.is-focus,
+html body .el-textarea__inner:focus {
+  box-shadow: 0 0 0 2px var(--primary) inset;
+}
+html body .el-input--large .el-input__wrapper {
+  min-height: 46px;
+}
+html body .el-input.is-disabled .el-input__wrapper {
+  background: var(--surface-muted);
+}

@@ -1,0 +1,26 @@
+html body .el-dialog {
+  --el-dialog-margin-top: 5vh;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+html body .el-dialog__header {
+  margin: 0;
+  padding: 24px;
+  border-bottom: 1px solid var(--line);
+}
+html body .el-dialog__title {
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--ink);
+}
+html body .el-dialog__body {
+  padding: 24px;
+  color: var(--ink-soft);
+}
+html body .el-dialog__footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--line);
+}
