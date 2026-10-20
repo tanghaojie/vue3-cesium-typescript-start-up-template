@@ -1,6 +1,6 @@
 ---
 title: Standalone Geo migration
-status: active
+status: completed
 date: 2026-10-20
 ---
 
@@ -16,6 +16,8 @@ Validation on Windows / Node v24.19.0 / pnpm 11.22.0: pnpm install --frozen-lock
 
 No frontend or browser automation was created or run. No real tokens, production data or credentials are recorded. Human interaction, external-origin CORS, GPU/model visuals, local project import and video encoding remain pending. No new deployment, source deletion or GitHub rename has been performed.
 
-The implementation commit and later record-close commit are identified by Git history. The migration branch is prepared for a draft PR; manual acceptance remains an explicit release gate.
+The implementation commit and later record-close commit are identified by Git history. The migration branch is published as draft PR #8 (https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template/pull/8); manual acceptance remains an explicit release gate.
 
-[Design](../design/geo-workbench.md), [Plan](../plans/active/2026-10-20-geo-migration.md).
+[Design](../../design/geo-workbench.md), [Plan](../plans/2026-10-20-geo-migration.md).
+
+Implementation commit: 8d5f710edccadd47a4a2e7270429214f48c5c858. Record close-out commit is found through this file Git history. The PR remains draft until human acceptance; no claim of deployed or manually accepted behavior is made.
