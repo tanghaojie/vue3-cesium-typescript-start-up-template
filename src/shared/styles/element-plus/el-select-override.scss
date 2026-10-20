@@ -1,0 +1,13 @@
+html body .el-select__wrapper {
+  min-height: 42px;
+  border-radius: 5px;
+  background: var(--canvas);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  font-size: 14px;
+}
+html body .el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 2px var(--primary) inset;
+}
+html body .el-select-dropdown__item.is-selected {
+  color: var(--primary);
+}

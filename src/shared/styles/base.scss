@@ -1,0 +1,111 @@
+@use './theme.tokens.css';
+:root {
+  font-family: var(--prism-font);
+  color: var(--ink);
+  background: var(--canvas);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --font-display: var(--prism-font);
+  --font-mono: var(--prism-mono);
+  --app-shell-header-height: 80px;
+  --tag-view-height: 44px;
+  --primary: var(--prism-accent);
+  --primary-deep: var(--prism-accent);
+  --primary-dark: color-mix(in srgb, var(--primary), var(--ink) 14%);
+  --primary-foreground: var(--prism-on-accent);
+  --primary-soft: color-mix(in srgb, var(--primary), var(--surface) 74%);
+  --primary-mist: var(--prism-tint);
+  --signal: var(--primary);
+  --canvas: var(--prism-canvas);
+  --surface: var(--prism-surface);
+  --surface-muted: var(--prism-raised);
+  --ink: var(--prism-text);
+  --ink-soft: var(--prism-secondary);
+  --muted: var(--prism-muted);
+  --line: var(--prism-line);
+  --success: var(--prism-success);
+  --warning: var(--prism-warning);
+  --danger: var(--prism-danger);
+  --danger-foreground: var(--surface);
+  --sidebar-surface: var(--prism-navigation);
+  --sidebar-surface-deep: var(--prism-navigation);
+  --sidebar-text: var(--ink);
+  --sidebar-muted: var(--ink-soft);
+  --sidebar-faint: var(--muted);
+  --sidebar-line: var(--line);
+  --sidebar-surface-soft: var(--surface-muted);
+  --sidebar-surface-hover: var(--primary-mist);
+  --brand-accent: var(--prism-accent-dark);
+  --brand-accent-foreground: #111518;
+  --brand-node: var(--brand-accent);
+  --brand-surface-start: #0b0d10;
+  --brand-surface-end: #0b0d10;
+  --hero-start: #0b0d10;
+  --hero-end: #0b0d10;
+  --hero-foreground: #f3f1ec;
+  --hero-muted: #a5adb8;
+  --hero-meta: #919ca9;
+  --shadow: var(--prism-shadow);
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--canvas);
+  font-size: 14px;
+  line-height: 1.6;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.font-display {
+  font-family: var(--font-display);
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

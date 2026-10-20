@@ -1,0 +1,120 @@
+@use 'element-plus/theme-chalk/el-message-box.css';
+
+html body .el-overlay.is-message-box {
+  background: color-mix(in srgb, var(--sidebar-surface-deep), transparent 36%);
+  backdrop-filter: blur(3px);
+}
+
+html body .el-message-box {
+  width: min(calc(100vw - 32px), 440px);
+  max-width: 440px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+  box-shadow: none;
+}
+
+html body .el-message-box__header {
+  padding-bottom: 18px;
+}
+
+html body .el-message-box__title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+}
+
+html body .el-message-box__headerbtn {
+  top: 10px;
+  right: 10px;
+  border-radius: 4px;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--primary-mist);
+  }
+}
+
+html body .el-message-box__container {
+  align-items: flex-start;
+  gap: 14px;
+}
+
+html body .el-message-box__status {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--danger), var(--surface) 88%);
+  color: var(--danger);
+  place-items: center;
+
+  &.el-message-box-icon--warning {
+    color: var(--danger);
+  }
+}
+
+html body .el-message-box__message {
+  padding-top: 7px;
+  color: var(--ink-soft);
+  font-size: 14px;
+
+  p {
+    line-height: 1.65;
+  }
+}
+
+html body .el-message-box__btns {
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding-top: 24px;
+
+  .el-button {
+    min-width: 84px;
+    margin-left: 0;
+    font-weight: 500;
+  }
+
+  .el-button.el-button--primary {
+    --el-button-text-color: var(--danger-foreground);
+    --el-button-hover-text-color: var(--danger-foreground);
+    --el-button-active-text-color: var(--danger-foreground);
+    color: var(--danger-foreground);
+    border-color: var(--danger);
+    background: var(--danger);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--danger-foreground);
+      border-color: color-mix(in srgb, var(--danger), #000 12%);
+      background: color-mix(in srgb, var(--danger), #000 12%);
+    }
+
+    &:active {
+      color: var(--danger-foreground);
+      border-color: color-mix(in srgb, var(--danger), #000 20%);
+      background: color-mix(in srgb, var(--danger), #000 20%);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  html body .el-message-box {
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  html body .el-message-box__title {
+    font-size: 18px;
+  }
+
+  html body .el-message-box__btns .el-button {
+    flex: 1;
+    min-width: 0;
+  }
+}

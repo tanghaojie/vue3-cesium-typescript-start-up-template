@@ -1,0 +1,42 @@
+html body .el-button {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: none;
+  transition:
+    background 0.16s,
+    border-color 0.16s;
+}
+html body .el-button--large {
+  height: 46px;
+}
+html body .el-button--small {
+  height: 32px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+html body .el-button--primary:not(.is-text):not(.is-link):not(.is-plain) {
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+html body .el-button--primary:not(.is-disabled):hover {
+  filter: brightness(0.96);
+}
+html body .el-button.is-circle {
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+}
+html body .el-button.is-text {
+  border: 0;
+  background: transparent;
+}
+
+@each $tone in success, warning, danger, info {
+  html body .el-button--#{$tone}:not(.is-text):not(.is-link):not(.is-plain) {
+    color: var(--primary-foreground);
+  }
+}

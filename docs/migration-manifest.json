@@ -1,0 +1,700 @@
+{
+  "sourceRepository": "https://github.com/tanghaojie/Cyber-Sight",
+  "sourceCommit": "9697230d7278ae88afb3c82c98e3865181847d08",
+  "legacyCommit": "fcea9e53485f356f96fb64cf6cd692f77513d6bd",
+  "legacyBranch": "1.0.0",
+  "legacyTag": "1.0.0",
+  "entries": [
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/preview/AssemblyPreview.vue",
+      "target": "src/modules/geo/components/preview/AssemblyPreview.vue",
+      "sourceSha256": "6265d09ec80729967d4e527fc5bec7027c019e683a72a6e82dc3fd1f7449fbeb",
+      "adapted": false,
+      "targetSha256": "6265d09ec80729967d4e527fc5bec7027c019e683a72a6e82dc3fd1f7449fbeb"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoInspectorFrame.vue",
+      "target": "src/modules/geo/components/shell/GeoInspectorFrame.vue",
+      "sourceSha256": "e71d461e93a856d8cd9f2b2e6870540237de144b83a266e2a8e9d55c4875bcfe",
+      "adapted": false,
+      "targetSha256": "e71d461e93a856d8cd9f2b2e6870540237de144b83a266e2a8e9d55c4875bcfe"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoLoadState.vue",
+      "target": "src/modules/geo/components/shell/GeoLoadState.vue",
+      "sourceSha256": "e1f0cac77b164199d93558f3d0112564585dbf656338ca97743c2be09f3938e4",
+      "adapted": true,
+      "targetSha256": "e81822dc5d51164b937abc023839a0ed0f6f7efb36d269bfff081f3936f9fc0e"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoMapControls.vue",
+      "target": "src/modules/geo/components/shell/GeoMapControls.vue",
+      "sourceSha256": "141b9f7f643290402b2855c55543b31e0ef71b17aeb032f1a0725805b84117d6",
+      "adapted": true,
+      "targetSha256": "9b333f9684f9c625b038cd875d12a51921d44a93dc2da8e11995c1ae2cdae7f8"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoPanelFrame.vue",
+      "target": "src/modules/geo/components/shell/GeoPanelFrame.vue",
+      "sourceSha256": "3e45cf4d8196a4a4df5652c9d7a64b5dd55491083778e722e567d8f4039b39a8",
+      "adapted": true,
+      "targetSha256": "96030035dc03296e31065f67caa7a1d7e019f9b9f1cea3205cfe7adcca9bb94b"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoPluginErrors.vue",
+      "target": "src/modules/geo/components/shell/GeoPluginErrors.vue",
+      "sourceSha256": "08b7cc6b845859ec35d0c202843ca011251f03557db064240912a9e4b4c215b4",
+      "adapted": false,
+      "targetSha256": "08b7cc6b845859ec35d0c202843ca011251f03557db064240912a9e4b4c215b4"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoStatusBar.vue",
+      "target": "src/modules/geo/components/shell/GeoStatusBar.vue",
+      "sourceSha256": "619353beaf66e59b25d304c74642817251ff420b6e02ebb41e5e07e1e41c3bb4",
+      "adapted": true,
+      "targetSha256": "aa118d878dbeb950737babe7ed131cfd2414c006a94b620bfccb6d9d0d0a0c99"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoTaskOverview.vue",
+      "target": "src/modules/geo/components/shell/GeoTaskOverview.vue",
+      "sourceSha256": "5a762843343a2584aa5fc0003fb05dab3e09fd9469fa41fe2a15f3104468a511",
+      "adapted": true,
+      "targetSha256": "642bc16054920f5d78b7b8b674438ae66f9c32af1a85984f510935deb4b2209b"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/components/shell/GeoToolRail.vue",
+      "target": "src/modules/geo/components/shell/GeoToolRail.vue",
+      "sourceSha256": "b14570f0f37e13849724aef8f6502a18d080ce1922cc4766f8964384ec80df94",
+      "adapted": true,
+      "targetSha256": "cbcfbe48c6bef0a3eb297ec0405c508d1670a4134001b8b4b3eaa29584102134"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/capability-registry.ts",
+      "target": "src/modules/geo/core/capability-registry.ts",
+      "sourceSha256": "86b5f7497e156ea95a051bb54e7008118317cab4e73bac1223d6a297e14b404e",
+      "adapted": false,
+      "targetSha256": "86b5f7497e156ea95a051bb54e7008118317cab4e73bac1223d6a297e14b404e"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/disposable.ts",
+      "target": "src/modules/geo/core/disposable.ts",
+      "sourceSha256": "012b6c0d6c0dbe207df7c9d7c00f987d2059d4f3336a9d9c01800183ff860211",
+      "adapted": false,
+      "targetSha256": "012b6c0d6c0dbe207df7c9d7c00f987d2059d4f3336a9d9c01800183ff860211"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/event-bus.ts",
+      "target": "src/modules/geo/core/event-bus.ts",
+      "sourceSha256": "fd80fa33c73730844419239714d481599ceb2bea4efb659bebab514c9912328c",
+      "adapted": false,
+      "targetSha256": "fd80fa33c73730844419239714d481599ceb2bea4efb659bebab514c9912328c"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/geo-context.ts",
+      "target": "src/modules/geo/core/geo-context.ts",
+      "sourceSha256": "7ea3d4987ac0c4dbe613e6302d3c7698fc459d4e7c7c91238f5ecb9f93168813",
+      "adapted": false,
+      "targetSha256": "7ea3d4987ac0c4dbe613e6302d3c7698fc459d4e7c7c91238f5ecb9f93168813"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/geo-plugin.ts",
+      "target": "src/modules/geo/core/geo-plugin.ts",
+      "sourceSha256": "6e7424c16bec7f906ec198056d48dd4b97754bebd8166f9c5e3585d766683311",
+      "adapted": false,
+      "targetSha256": "6e7424c16bec7f906ec198056d48dd4b97754bebd8166f9c5e3585d766683311"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/geo-runtime.ts",
+      "target": "src/modules/geo/core/geo-runtime.ts",
+      "sourceSha256": "7b44d7441562eef5f4b7af246b43d3286bf59516b39dac5f3d1d1780f7f5e950",
+      "adapted": false,
+      "targetSha256": "7b44d7441562eef5f4b7af246b43d3286bf59516b39dac5f3d1d1780f7f5e950"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/interaction-manager.ts",
+      "target": "src/modules/geo/core/interaction-manager.ts",
+      "sourceSha256": "59a0d8a16c9329b980cc4458d0d4246b55942527706351c0e9055ae902e2524d",
+      "adapted": false,
+      "targetSha256": "59a0d8a16c9329b980cc4458d0d4246b55942527706351c0e9055ae902e2524d"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/plugin-registry.ts",
+      "target": "src/modules/geo/core/plugin-registry.ts",
+      "sourceSha256": "3f7394e4b49722242ec6ccaba6c3ba19bd345488360531ab61739065289b0a85",
+      "adapted": false,
+      "targetSha256": "3f7394e4b49722242ec6ccaba6c3ba19bd345488360531ab61739065289b0a85"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/render-performance.ts",
+      "target": "src/modules/geo/core/render-performance.ts",
+      "sourceSha256": "40602cb40dd9bcebcbb34f95d1ea9eaac7089863377590617dbf4d34a6b4c762",
+      "adapted": false,
+      "targetSha256": "40602cb40dd9bcebcbb34f95d1ea9eaac7089863377590617dbf4d34a6b4c762"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/viewer-access.ts",
+      "target": "src/modules/geo/core/viewer-access.ts",
+      "sourceSha256": "3f60c8a05e988d98fae1e164e33b3eda6f7a5afeb99da2b0f0830e84d9a06309",
+      "adapted": false,
+      "targetSha256": "3f60c8a05e988d98fae1e164e33b3eda6f7a5afeb99da2b0f0830e84d9a06309"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/core/workspace-presentation.ts",
+      "target": "src/modules/geo/core/workspace-presentation.ts",
+      "sourceSha256": "41ef77fd1e9382a664a86d952f943882fe2e1d26b67ca9a032277ca892953184",
+      "adapted": false,
+      "targetSha256": "41ef77fd1e9382a664a86d952f943882fe2e1d26b67ca9a032277ca892953184"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/geo.locales.ts",
+      "target": "src/modules/geo/geo.locales.ts",
+      "sourceSha256": "79e371ffc2e7617202dc691c87c5928b974bbcfec2cddff8f6249aea6e54d1b2",
+      "adapted": true,
+      "targetSha256": "47ca3c427362b98041625c636194014524c1837871774666e761f8f20e29b98a"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/geo.plugins.ts",
+      "target": "src/modules/geo/geo.plugins.ts",
+      "sourceSha256": "29050e95c043df1e058f47dc80f15a44130e871a5337f1080694a4b7ae2bf857",
+      "adapted": false,
+      "targetSha256": "29050e95c043df1e058f47dc80f15a44130e871a5337f1080694a4b7ae2bf857"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/pages/GeoWorkspacePage.vue",
+      "target": "src/modules/geo/pages/GeoWorkspacePage.vue",
+      "sourceSha256": "b771da02bd409a5ce36fdebda8ae37c1d262c2435cf66c6146b198761a5ac395",
+      "adapted": true,
+      "targetSha256": "66b8679fd78be6e7f9c8fb4c636542d0bee1e7b591e140faaf06862f8388714e"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/capture/CaptureOverlay.vue",
+      "target": "src/modules/geo/plugins/capture/CaptureOverlay.vue",
+      "sourceSha256": "754fbc5f3d962c59c8168b5fd0344f5218669c87709aa09f161441973475318f",
+      "adapted": false,
+      "targetSha256": "754fbc5f3d962c59c8168b5fd0344f5218669c87709aa09f161441973475318f"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/capture/CapturePanel.vue",
+      "target": "src/modules/geo/plugins/capture/CapturePanel.vue",
+      "sourceSha256": "6fb97a4dba5cd7af98c791932c9b31041306cfb7339db52d1a4754463279cf76",
+      "adapted": false,
+      "targetSha256": "6fb97a4dba5cd7af98c791932c9b31041306cfb7339db52d1a4754463279cf76"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/capture/CaptureShotEditor.vue",
+      "target": "src/modules/geo/plugins/capture/CaptureShotEditor.vue",
+      "sourceSha256": "64a043b7f0a071fc33b9bf44c26d5f4f7d45e87cb8828d2e5c1ef4b1d016c467",
+      "adapted": false,
+      "targetSha256": "64a043b7f0a071fc33b9bf44c26d5f4f7d45e87cb8828d2e5c1ef4b1d016c467"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/capture/capture.controller.ts",
+      "target": "src/modules/geo/plugins/capture/capture.controller.ts",
+      "sourceSha256": "f83ae04a6e1cbf98ea8f3ad0bd593906dae6d944849f7616241136846e758544",
+      "adapted": false,
+      "targetSha256": "f83ae04a6e1cbf98ea8f3ad0bd593906dae6d944849f7616241136846e758544"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/capture/capture.plugin.ts",
+      "target": "src/modules/geo/plugins/capture/capture.plugin.ts",
+      "sourceSha256": "36a9428d471fb940670c22b388c51a9c13a9d660eea4e44b90a8e388ccf5f35f",
+      "adapted": false,
+      "targetSha256": "36a9428d471fb940670c22b388c51a9c13a9d660eea4e44b90a8e388ccf5f35f"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/compare/ComparePanel.vue",
+      "target": "src/modules/geo/plugins/compare/ComparePanel.vue",
+      "sourceSha256": "78a0efe1bbebedecad01223a496c06060f96518f00d0c8136e055e7cd299e300",
+      "adapted": false,
+      "targetSha256": "78a0efe1bbebedecad01223a496c06060f96518f00d0c8136e055e7cd299e300"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/compare/compare.controller.ts",
+      "target": "src/modules/geo/plugins/compare/compare.controller.ts",
+      "sourceSha256": "7c6f61f098e9d36734bd41d50787150fcc986638bc6c5303df9c5e4bc5e503a6",
+      "adapted": false,
+      "targetSha256": "7c6f61f098e9d36734bd41d50787150fcc986638bc6c5303df9c5e4bc5e503a6"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/compare/compare.plugin.ts",
+      "target": "src/modules/geo/plugins/compare/compare.plugin.ts",
+      "sourceSha256": "22cf193202358ed6e08c041c65e02627db6e53376fde38ae2c383505f7cff061",
+      "adapted": false,
+      "targetSha256": "22cf193202358ed6e08c041c65e02627db6e53376fde38ae2c383505f7cff061"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/AiModelCatalog.vue",
+      "target": "src/modules/geo/plugins/data/AiModelCatalog.vue",
+      "sourceSha256": "ee250c62778993990e26aa36f9a3f31687a05b73ed61e0369ff73a2883f22a61",
+      "adapted": true,
+      "targetSha256": "b316cb389fca8228184648c4d674254939cfb31fb101e8d7a9c3e518ff5171d9"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/DataPanel.vue",
+      "target": "src/modules/geo/plugins/data/DataPanel.vue",
+      "sourceSha256": "eeacb9345f4da508e9e0c8dcd1edee73595c19d8b2958ccb105aa3d4822eed02",
+      "adapted": false,
+      "targetSha256": "eeacb9345f4da508e9e0c8dcd1edee73595c19d8b2958ccb105aa3d4822eed02"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/ExternalDataPanel.vue",
+      "target": "src/modules/geo/plugins/data/ExternalDataPanel.vue",
+      "sourceSha256": "c67f430bc2dbe431778983cc4054362cf1d7234ac11016293189d973618e935b",
+      "adapted": true,
+      "targetSha256": "bd82574a688cb0537affa987fd12baf0b0643d4db8144454daf969b932db8e5d"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/ModelAnimationControls.vue",
+      "target": "src/modules/geo/plugins/data/ModelAnimationControls.vue",
+      "sourceSha256": "7d99cd2a5fb9665315d51f00eab8e09dc41aa9d318181b37a91067df02f017a1",
+      "adapted": false,
+      "targetSha256": "7d99cd2a5fb9665315d51f00eab8e09dc41aa9d318181b37a91067df02f017a1"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/ModelCoordinateDialog.vue",
+      "target": "src/modules/geo/plugins/data/ModelCoordinateDialog.vue",
+      "sourceSha256": "4c1d6865c46d5e983ee37e3a47562f36623278e38254808f95a47329074f48d9",
+      "adapted": false,
+      "targetSha256": "4c1d6865c46d5e983ee37e3a47562f36623278e38254808f95a47329074f48d9"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/data.capabilities.ts",
+      "target": "src/modules/geo/plugins/data/data.capabilities.ts",
+      "sourceSha256": "2b8372d51b4385409f4be446b1aca680a9c69e424ba3f66170cae102cc4dc279",
+      "adapted": false,
+      "targetSha256": "2b8372d51b4385409f4be446b1aca680a9c69e424ba3f66170cae102cc4dc279"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/data.controller.ts",
+      "target": "src/modules/geo/plugins/data/data.controller.ts",
+      "sourceSha256": "2d9dc02de4a73e453b51ce44dbb18ae64cca3e0b0124e8b8ec2ccf94be0d7c54",
+      "adapted": false,
+      "targetSha256": "2d9dc02de4a73e453b51ce44dbb18ae64cca3e0b0124e8b8ec2ccf94be0d7c54"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/data/data.plugin.ts",
+      "target": "src/modules/geo/plugins/data/data.plugin.ts",
+      "sourceSha256": "dd89eb7989637674d34d824374b45e502f52dbf82484035143483866f43d09d5",
+      "adapted": false,
+      "targetSha256": "dd89eb7989637674d34d824374b45e502f52dbf82484035143483866f43d09d5"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/drawing/DrawingPanel.vue",
+      "target": "src/modules/geo/plugins/drawing/DrawingPanel.vue",
+      "sourceSha256": "f009de2bcc3e78ffd62e3901fd1d3fba391608f160ba57989e9642a52d7e6de3",
+      "adapted": false,
+      "targetSha256": "f009de2bcc3e78ffd62e3901fd1d3fba391608f160ba57989e9642a52d7e6de3"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/drawing/drawing.controller.ts",
+      "target": "src/modules/geo/plugins/drawing/drawing.controller.ts",
+      "sourceSha256": "496f823b47dd8d9a41320cd509681ac2c573b63c717d01fbda3c8bdd6ebe7f1c",
+      "adapted": false,
+      "targetSha256": "496f823b47dd8d9a41320cd509681ac2c573b63c717d01fbda3c8bdd6ebe7f1c"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/drawing/drawing.plugin.ts",
+      "target": "src/modules/geo/plugins/drawing/drawing.plugin.ts",
+      "sourceSha256": "ef03d5e77a183f5135c00ae73fd29dca550318c7988b870cb73ad0bd3d21f04b",
+      "adapted": false,
+      "targetSha256": "ef03d5e77a183f5135c00ae73fd29dca550318c7988b870cb73ad0bd3d21f04b"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/flight/FlightPanel.vue",
+      "target": "src/modules/geo/plugins/flight/FlightPanel.vue",
+      "sourceSha256": "4a104997f653c19a9ee6f4a39e8c5e884be01027ec931d87ec93cb85978674a2",
+      "adapted": true,
+      "targetSha256": "9d576f897b7948efc8a05600f963850e2cea36523c17e6c07d3ed5874ce69fd1"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/flight/flight.controller.ts",
+      "target": "src/modules/geo/plugins/flight/flight.controller.ts",
+      "sourceSha256": "3eb09fabe6506080cca8da9c618f20773c2762a78b792255b2e48c61cfc54434",
+      "adapted": false,
+      "targetSha256": "3eb09fabe6506080cca8da9c618f20773c2762a78b792255b2e48c61cfc54434"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/flight/flight.plugin.ts",
+      "target": "src/modules/geo/plugins/flight/flight.plugin.ts",
+      "sourceSha256": "351594897b4a4d121bc1d3b2c6250a77a05a9a01b6968ffb1d64ac732089b0bb",
+      "adapted": false,
+      "targetSha256": "351594897b4a4d121bc1d3b2c6250a77a05a9a01b6968ffb1d64ac732089b0bb"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/measurement/MeasurementPanel.vue",
+      "target": "src/modules/geo/plugins/measurement/MeasurementPanel.vue",
+      "sourceSha256": "93693f4a7d7a592d861199e14f0f7cd3930e9643483fb77e0dd98bd89e9ed52a",
+      "adapted": true,
+      "targetSha256": "ce3d09ec9b9954c3b0d8740997169c642bc5c477be835db000f76d832656f65a"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/measurement/measurement.controller.ts",
+      "target": "src/modules/geo/plugins/measurement/measurement.controller.ts",
+      "sourceSha256": "8f8603f8b1dcdb9b5b7a99ff0b7922979095c25ef3d156ab24386f7f9f057791",
+      "adapted": false,
+      "targetSha256": "8f8603f8b1dcdb9b5b7a99ff0b7922979095c25ef3d156ab24386f7f9f057791"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/measurement/measurement.plugin.ts",
+      "target": "src/modules/geo/plugins/measurement/measurement.plugin.ts",
+      "sourceSha256": "3da69da20f9fb468e2bab261c2b194b9dcf475618a523a88d48cbc281ef44788",
+      "adapted": false,
+      "targetSha256": "3da69da20f9fb468e2bab261c2b194b9dcf475618a523a88d48cbc281ef44788"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/model/ModelInspector.vue",
+      "target": "src/modules/geo/plugins/model/ModelInspector.vue",
+      "sourceSha256": "7938d3e3820d5ed539643236ffc23f1184dd496e56f7de0419f3046ae46a57e6",
+      "adapted": false,
+      "targetSha256": "7938d3e3820d5ed539643236ffc23f1184dd496e56f7de0419f3046ae46a57e6"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/model/ModelPanel.vue",
+      "target": "src/modules/geo/plugins/model/ModelPanel.vue",
+      "sourceSha256": "bed70a75761bc358e9b08a0eb0dc2c8115fdec0959f8d57a83c6c70955c3d77c",
+      "adapted": false,
+      "targetSha256": "bed70a75761bc358e9b08a0eb0dc2c8115fdec0959f8d57a83c6c70955c3d77c"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/model/model.controller.ts",
+      "target": "src/modules/geo/plugins/model/model.controller.ts",
+      "sourceSha256": "21b70619126173c7fc8edf03a51e8a563be7c4431c5e406e06c0b896ebba19f6",
+      "adapted": false,
+      "targetSha256": "21b70619126173c7fc8edf03a51e8a563be7c4431c5e406e06c0b896ebba19f6"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/model/model.plugin.ts",
+      "target": "src/modules/geo/plugins/model/model.plugin.ts",
+      "sourceSha256": "0e4815b2372fd1d96ce709250bafc90633ff3584cce3a0f58bab8ec9d69ff6a7",
+      "adapted": false,
+      "targetSha256": "0e4815b2372fd1d96ce709250bafc90633ff3584cce3a0f58bab8ec9d69ff6a7"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/scene/ScenePanel.vue",
+      "target": "src/modules/geo/plugins/scene/ScenePanel.vue",
+      "sourceSha256": "3018c7fa9594ba27f4d0d4631076b4754f380efb45d03e22758e84630dd6b11a",
+      "adapted": false,
+      "targetSha256": "3018c7fa9594ba27f4d0d4631076b4754f380efb45d03e22758e84630dd6b11a"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/scene/scene.capabilities.ts",
+      "target": "src/modules/geo/plugins/scene/scene.capabilities.ts",
+      "sourceSha256": "dd057d2c8bbca28d1327fb5c84b62c1c3f38c8bc26ed35ad0b8fa996361dd4d9",
+      "adapted": false,
+      "targetSha256": "dd057d2c8bbca28d1327fb5c84b62c1c3f38c8bc26ed35ad0b8fa996361dd4d9"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/scene/scene.controller.ts",
+      "target": "src/modules/geo/plugins/scene/scene.controller.ts",
+      "sourceSha256": "a53a43ec401e591b606ad64b9f3b5a3d5e63150ef4e8db846fdf9f0a897e7c3f",
+      "adapted": false,
+      "targetSha256": "a53a43ec401e591b606ad64b9f3b5a3d5e63150ef4e8db846fdf9f0a897e7c3f"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/scene/scene.plugin.ts",
+      "target": "src/modules/geo/plugins/scene/scene.plugin.ts",
+      "sourceSha256": "45d7e49cfc8f3629e22aa3fea04c92dd85e98eed4b14f5931d4cd27b8738acab",
+      "adapted": false,
+      "targetSha256": "45d7e49cfc8f3629e22aa3fea04c92dd85e98eed4b14f5931d4cd27b8738acab"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/terrain/TerrainPanel.vue",
+      "target": "src/modules/geo/plugins/terrain/TerrainPanel.vue",
+      "sourceSha256": "cf71f2610d8c6f5196f1a840812019094e97341e78b0fd61017de7747c7dcb3d",
+      "adapted": false,
+      "targetSha256": "cf71f2610d8c6f5196f1a840812019094e97341e78b0fd61017de7747c7dcb3d"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/terrain/terrain.controller.ts",
+      "target": "src/modules/geo/plugins/terrain/terrain.controller.ts",
+      "sourceSha256": "6d519487db4e973027e93fda5c467237c43f71a51503f141129b8160af8f107f",
+      "adapted": false,
+      "targetSha256": "6d519487db4e973027e93fda5c467237c43f71a51503f141129b8160af8f107f"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/terrain/terrain.plugin.ts",
+      "target": "src/modules/geo/plugins/terrain/terrain.plugin.ts",
+      "sourceSha256": "7c3f28a9aabc67b11cb05c48f3df34575c9d25258e107095fb90d7f44e77af4a",
+      "adapted": false,
+      "targetSha256": "7c3f28a9aabc67b11cb05c48f3df34575c9d25258e107095fb90d7f44e77af4a"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/time/TimeDock.vue",
+      "target": "src/modules/geo/plugins/time/TimeDock.vue",
+      "sourceSha256": "7d4c14c77da1384175462345cc8ad7c2204f8e8e0b0097a60591c8684a961f6d",
+      "adapted": true,
+      "targetSha256": "b27aef7af713a674232ac0de62a0b3078fc8a4bf8d8b44944a3d48c44da5bdb5"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/time/time.capabilities.ts",
+      "target": "src/modules/geo/plugins/time/time.capabilities.ts",
+      "sourceSha256": "539b513dddca7d041c7726d3ee95e2859fc58c00e71c5b89e71eefa07a9052cf",
+      "adapted": false,
+      "targetSha256": "539b513dddca7d041c7726d3ee95e2859fc58c00e71c5b89e71eefa07a9052cf"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/time/time.controller.ts",
+      "target": "src/modules/geo/plugins/time/time.controller.ts",
+      "sourceSha256": "94529579929d9a452241f04b93a6f0af430c8bfa21bedcb38d1578e0d88f64f6",
+      "adapted": false,
+      "targetSha256": "94529579929d9a452241f04b93a6f0af430c8bfa21bedcb38d1578e0d88f64f6"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/time/time.plugin.ts",
+      "target": "src/modules/geo/plugins/time/time.plugin.ts",
+      "sourceSha256": "db4e2bc4cc66c0bf2165937a41a52a789cdf64d8110d9057d37365a88ddc8703",
+      "adapted": false,
+      "targetSha256": "db4e2bc4cc66c0bf2165937a41a52a789cdf64d8110d9057d37365a88ddc8703"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/view/ViewPanel.vue",
+      "target": "src/modules/geo/plugins/view/ViewPanel.vue",
+      "sourceSha256": "7376d1ded58a5fe4357c1be9ec669b158010ec19a471227d46cdbb97f3a70600",
+      "adapted": false,
+      "targetSha256": "7376d1ded58a5fe4357c1be9ec669b158010ec19a471227d46cdbb97f3a70600"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/view/view.controller.ts",
+      "target": "src/modules/geo/plugins/view/view.controller.ts",
+      "sourceSha256": "a7a340f1152debdbdd8487609cf11b362646acfe333de4636945bc5cd0b1a3ac",
+      "adapted": false,
+      "targetSha256": "a7a340f1152debdbdd8487609cf11b362646acfe333de4636945bc5cd0b1a3ac"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/plugins/view/view.plugin.ts",
+      "target": "src/modules/geo/plugins/view/view.plugin.ts",
+      "sourceSha256": "6873b1775fb324d3265583164b255ad7ac7a58262fcb5fd11f52b8b1729775d5",
+      "adapted": false,
+      "targetSha256": "6873b1775fb324d3265583164b255ad7ac7a58262fcb5fd11f52b8b1729775d5"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/registerViews.ts",
+      "target": null,
+      "reason": "Sight dynamic menu adapter; standalone app mounts the page directly"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/capture/capture-export.ts",
+      "target": "src/modules/geo/tools/capture/capture-export.ts",
+      "sourceSha256": "688afa997043b9be9917661b38b5ff02d397bcc34deedd562da23aa3341d0e52",
+      "adapted": false,
+      "targetSha256": "688afa997043b9be9917661b38b5ff02d397bcc34deedd562da23aa3341d0e52"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/capture/capture-project.ts",
+      "target": "src/modules/geo/tools/capture/capture-project.ts",
+      "sourceSha256": "de7657506fc91b572950048660b76523d2073b2780d9a28ab8d8a022308dc842",
+      "adapted": false,
+      "targetSha256": "de7657506fc91b572950048660b76523d2073b2780d9a28ab8d8a022308dc842"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/capture/capture-session.ts",
+      "target": "src/modules/geo/tools/capture/capture-session.ts",
+      "sourceSha256": "c098490171e6bcd871a561ddba5bb2ef225221f5c13c53108f0c3dfe5260df7e",
+      "adapted": false,
+      "targetSha256": "c098490171e6bcd871a561ddba5bb2ef225221f5c13c53108f0c3dfe5260df7e"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/compare/scene-compare.ts",
+      "target": "src/modules/geo/tools/compare/scene-compare.ts",
+      "sourceSha256": "cdca3392abbadd7b9efe581ed5c2a71d15678939e8e129661f181cb41c9ebd9b",
+      "adapted": false,
+      "targetSha256": "cdca3392abbadd7b9efe581ed5c2a71d15678939e8e129661f181cb41c9ebd9b"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/ai-model-catalog.ts",
+      "target": "src/modules/geo/tools/data/ai-model-catalog.ts",
+      "sourceSha256": "8e68132bee4e505dceb865d06be6127795435e8752cd0458d7189407691f0394",
+      "adapted": false,
+      "targetSha256": "8e68132bee4e505dceb865d06be6127795435e8752cd0458d7189407691f0394"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/ai-model-loader.ts",
+      "target": "src/modules/geo/tools/data/ai-model-loader.ts",
+      "sourceSha256": "50dbb6304a5846acc5cd2ca949085726f8c860bfa8b8a5a3bdd6035aecdc00e5",
+      "adapted": false,
+      "targetSha256": "50dbb6304a5846acc5cd2ca949085726f8c860bfa8b8a5a3bdd6035aecdc00e5"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/capture-subject.ts",
+      "target": "src/modules/geo/tools/data/capture-subject.ts",
+      "sourceSha256": "6f33d9e360460ed7299fe07961e7a7b8c3b66e59bc1d2165640c8038cd901cea",
+      "adapted": false,
+      "targetSha256": "6f33d9e360460ed7299fe07961e7a7b8c3b66e59bc1d2165640c8038cd901cea"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/coordinate-correction.ts",
+      "target": "src/modules/geo/tools/data/coordinate-correction.ts",
+      "sourceSha256": "c23d7d2ef201a95df77fb5f18ddb4d4d8df3406f5a036f27dac2ed876c201ec9",
+      "adapted": false,
+      "targetSha256": "c23d7d2ef201a95df77fb5f18ddb4d4d8df3406f5a036f27dac2ed876c201ec9"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/data-browser.ts",
+      "target": "src/modules/geo/tools/data/data-browser.ts",
+      "sourceSha256": "2c737c658cf90b8e31648c9ba26d56e85b0b698affbf1486ff5c2a58a628403c",
+      "adapted": false,
+      "targetSha256": "2c737c658cf90b8e31648c9ba26d56e85b0b698affbf1486ff5c2a58a628403c"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/data-presets.ts",
+      "target": "src/modules/geo/tools/data/data-presets.ts",
+      "sourceSha256": "d47a6222f2f88734f9ada378222c0c57ab7b46fb6d738253233136e62e2b9c0e",
+      "adapted": false,
+      "targetSha256": "d47a6222f2f88734f9ada378222c0c57ab7b46fb6d738253233136e62e2b9c0e"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/imagery-layer-manager.ts",
+      "target": "src/modules/geo/tools/data/imagery-layer-manager.ts",
+      "sourceSha256": "c24c3ebe70f1bae2c9068374fb4c287ba3693d9a39ebe43f82386dc480a87413",
+      "adapted": false,
+      "targetSha256": "c24c3ebe70f1bae2c9068374fb4c287ba3693d9a39ebe43f82386dc480a87413"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/imagery-sources.ts",
+      "target": "src/modules/geo/tools/data/imagery-sources.ts",
+      "sourceSha256": "b6b364d8080f7ec505bc69226982b04c7790c0c7bb6457db14613275346a53c9",
+      "adapted": false,
+      "targetSha256": "b6b364d8080f7ec505bc69226982b04c7790c0c7bb6457db14613275346a53c9"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/landmark-scene-loader.ts",
+      "target": "src/modules/geo/tools/data/landmark-scene-loader.ts",
+      "sourceSha256": "f59a4641909151b2cb9dbec907cf55eb54994fa6f54ab21510a212542d03dfd1",
+      "adapted": false,
+      "targetSha256": "f59a4641909151b2cb9dbec907cf55eb54994fa6f54ab21510a212542d03dfd1"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/landmark-scene.ts",
+      "target": "src/modules/geo/tools/data/landmark-scene.ts",
+      "sourceSha256": "80b602cc7dcc787875fb1b3df34dddfc828971e66ec69dd4d4a003e51b1fb394",
+      "adapted": false,
+      "targetSha256": "80b602cc7dcc787875fb1b3df34dddfc828971e66ec69dd4d4a003e51b1fb394"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/model-asset.ts",
+      "target": "src/modules/geo/tools/data/model-asset.ts",
+      "sourceSha256": "bed71240abb0b8a51aa7ed814b7b959a0bc4fbea8007ea8fcdf3ac37e83ccb73",
+      "adapted": false,
+      "targetSha256": "bed71240abb0b8a51aa7ed814b7b959a0bc4fbea8007ea8fcdf3ac37e83ccb73"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/data/tileset-visual-style.ts",
+      "target": "src/modules/geo/tools/data/tileset-visual-style.ts",
+      "sourceSha256": "d1de24ff1a64afeebcb207faee9fb3b4cc98d51af2d7f981f0bbb79f99819f41",
+      "adapted": false,
+      "targetSha256": "d1de24ff1a64afeebcb207faee9fb3b4cc98d51af2d7f981f0bbb79f99819f41"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/drawing/drawing-tool.ts",
+      "target": "src/modules/geo/tools/drawing/drawing-tool.ts",
+      "sourceSha256": "e06c2951663ffa562b9f3e56fda1b942d2fb017950dfbad228091de0c2ea43a7",
+      "adapted": false,
+      "targetSha256": "e06c2951663ffa562b9f3e56fda1b942d2fb017950dfbad228091de0c2ea43a7"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/flight/simulated-flight-layer.ts",
+      "target": "src/modules/geo/tools/flight/simulated-flight-layer.ts",
+      "sourceSha256": "ead6b21c5c867d896fb171247c3cb9af2825670376585b481dc414689fff09d5",
+      "adapted": false,
+      "targetSha256": "ead6b21c5c867d896fb171247c3cb9af2825670376585b481dc414689fff09d5"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/measurement/distance-measurement.ts",
+      "target": "src/modules/geo/tools/measurement/distance-measurement.ts",
+      "sourceSha256": "d56fad214df9c7bb97e3db72ec427298874fbfdc1db88ff2a2154d94b18a001f",
+      "adapted": false,
+      "targetSha256": "d56fad214df9c7bb97e3db72ec427298874fbfdc1db88ff2a2154d94b18a001f"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/measurement/measurement-tools.ts",
+      "target": "src/modules/geo/tools/measurement/measurement-tools.ts",
+      "sourceSha256": "020a952978e75d800670f8c103758ee4a895f7bd2e629049de8cc7c8a8d8d5e1",
+      "adapted": false,
+      "targetSha256": "020a952978e75d800670f8c103758ee4a895f7bd2e629049de8cc7c8a8d8d5e1"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/model/assembly-preview-materials.ts",
+      "target": "src/modules/geo/tools/model/assembly-preview-materials.ts",
+      "sourceSha256": "0683d5eda58c2e61fa2e977d686c49fbf0ccdb16f3b01943bc968919ce01f50d",
+      "adapted": false,
+      "targetSha256": "0683d5eda58c2e61fa2e977d686c49fbf0ccdb16f3b01943bc968919ce01f50d"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/model/assembly-preview.ts",
+      "target": "src/modules/geo/tools/model/assembly-preview.ts",
+      "sourceSha256": "948100bcd2eab36bf0ba2260d6f56e8ffde5ff8c0a2a50039c9288ec8ce250da",
+      "adapted": false,
+      "targetSha256": "948100bcd2eab36bf0ba2260d6f56e8ffde5ff8c0a2a50039c9288ec8ce250da"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/model/model-animation.ts",
+      "target": "src/modules/geo/tools/model/model-animation.ts",
+      "sourceSha256": "7ef46be2f04f05655ab6a02e111170fc981a028777203ef4a2991f8cf88226a7",
+      "adapted": false,
+      "targetSha256": "7ef46be2f04f05655ab6a02e111170fc981a028777203ef4a2991f8cf88226a7"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/model/tileset-tools.ts",
+      "target": "src/modules/geo/tools/model/tileset-tools.ts",
+      "sourceSha256": "a570dd2d8ef781e1cfe0a7c5e53fc332e60fa9e07475d572b4574e4c5b90dd54",
+      "adapted": false,
+      "targetSha256": "a570dd2d8ef781e1cfe0a7c5e53fc332e60fa9e07475d572b4574e4c5b90dd54"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/scene/model-rendering.ts",
+      "target": "src/modules/geo/tools/scene/model-rendering.ts",
+      "sourceSha256": "74c4fdefdd414cdea329f538771a7f673115ee29714c2ec3576f7c4f220a9abd",
+      "adapted": false,
+      "targetSha256": "74c4fdefdd414cdea329f538771a7f673115ee29714c2ec3576f7c4f220a9abd"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/scene/render-quality.ts",
+      "target": "src/modules/geo/tools/scene/render-quality.ts",
+      "sourceSha256": "d60458a219a73ca3175ac20562049f249070516712e8161732f512ba4628ca9d",
+      "adapted": false,
+      "targetSha256": "d60458a219a73ca3175ac20562049f249070516712e8161732f512ba4628ca9d"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/scene/scene-settings.ts",
+      "target": "src/modules/geo/tools/scene/scene-settings.ts",
+      "sourceSha256": "f40d68fd90c09e6601e479bc0f65c46a0c6ef51dc1226c232b2bed9de67e8f15",
+      "adapted": false,
+      "targetSha256": "f40d68fd90c09e6601e479bc0f65c46a0c6ef51dc1226c232b2bed9de67e8f15"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/scene/solar-lighting.ts",
+      "target": "src/modules/geo/tools/scene/solar-lighting.ts",
+      "sourceSha256": "052cd2d6cfb2000b1ab6d944762c8e153f270b05507047eacaaffb956f50d7cc",
+      "adapted": false,
+      "targetSha256": "052cd2d6cfb2000b1ab6d944762c8e153f270b05507047eacaaffb956f50d7cc"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/terrain/terrain-analysis.ts",
+      "target": "src/modules/geo/tools/terrain/terrain-analysis.ts",
+      "sourceSha256": "3cb78db41b12a062801d23827d950442c8addc1b0e348198f6f9fbdd6b800cef",
+      "adapted": false,
+      "targetSha256": "3cb78db41b12a062801d23827d950442c8addc1b0e348198f6f9fbdd6b800cef"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/view/camera-view.ts",
+      "target": "src/modules/geo/tools/view/camera-view.ts",
+      "sourceSha256": "a7c81e6eafd36d301be9c3c07cf6803c77ee617234d539c5029858c8a4cb24cf",
+      "adapted": false,
+      "targetSha256": "a7c81e6eafd36d301be9c3c07cf6803c77ee617234d539c5029858c8a4cb24cf"
+    },
+    {
+      "source": "apps/frontend/src/platform/modules/geo/tools/view/model-camera.ts",
+      "target": "src/modules/geo/tools/view/model-camera.ts",
+      "sourceSha256": "ed5e59b43d71460df51f37439bb94c09f5410c9b3f1111665559eb550fa5ee45",
+      "adapted": false,
+      "targetSha256": "ed5e59b43d71460df51f37439bb94c09f5410c9b3f1111665559eb550fa5ee45"
+    }
+  ],
+  "summary": {
+    "sourceFiles": 98,
+    "importedRuntimeFiles": 97,
+    "sourceOnlyViewAdapters": 1,
+    "unchangedRuntimeFiles": 84,
+    "adaptedRuntimeFiles": 13
+  }
+}

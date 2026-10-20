@@ -1,0 +1,81 @@
+:root,
+html:root {
+  --el-color-primary: var(--primary);
+  --el-color-success: var(--success);
+  --el-color-warning: var(--warning);
+  --el-color-danger: var(--danger);
+  --el-color-error: var(--danger);
+  --el-color-info: var(--muted);
+  --el-color-primary-dark-2: var(--primary-dark);
+  --el-border-color: var(--line);
+  --el-border-color-light: var(--line);
+  --el-border-color-lighter: var(--line);
+  --el-fill-color: var(--surface-muted);
+  --el-fill-color-light: var(--surface-muted);
+  --el-fill-color-lighter: var(--surface-muted);
+  --el-fill-color-blank: var(--surface);
+  --el-bg-color: var(--surface);
+  --el-bg-color-page: var(--canvas);
+  --el-bg-color-overlay: var(--surface);
+  --el-text-color-primary: var(--ink);
+  --el-text-color-regular: var(--ink-soft);
+  --el-text-color-secondary: var(--muted);
+  --el-text-color-placeholder: var(--muted);
+  --el-text-color-disabled: var(--muted);
+  --el-disabled-bg-color: var(--surface-muted);
+  --el-disabled-text-color: var(--muted);
+  --el-border-radius-base: 6px;
+  --el-border-radius-small: 4px;
+  --el-font-size-base: 14px;
+  --el-box-shadow-light: var(--shadow);
+  --el-box-shadow: var(--shadow);
+  --el-mask-color: rgb(0 0 0 / 55%);
+  @each $tone in primary, success, warning, danger, error, info {
+    @each $level in 3, 5, 7, 8, 9 {
+      --el-color-#{$tone}-light-#{$level}: color-mix(
+        in srgb,
+        var(--el-color-#{$tone}),
+        var(--surface) #{$level * 10%}
+      );
+    }
+  }
+}
+html body {
+  .el-tag {
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .el-switch {
+    --el-switch-on-color: var(--primary);
+    --el-switch-off-color: var(--line);
+  }
+  .el-switch.is-checked .el-switch__action {
+    background: var(--primary-foreground);
+  }
+  .el-checkbox__input.is-checked .el-checkbox__inner::after {
+    border-color: var(--primary-foreground);
+  }
+  .el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
+    background: var(--primary-foreground);
+  }
+  .el-pagination.is-background .el-pager li.is-active {
+    color: var(--primary-foreground);
+  }
+  .el-drawer {
+    color: var(--ink);
+    background: var(--surface);
+    border-left: 1px solid var(--line);
+  }
+  .el-drawer__header {
+    padding: 28px 24px 20px;
+    margin: 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .el-drawer__body {
+    padding: 24px;
+  }
+}

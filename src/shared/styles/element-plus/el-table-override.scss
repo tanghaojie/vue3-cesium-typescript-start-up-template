@@ -1,0 +1,23 @@
+html body .el-table {
+  --el-table-border-color: var(--line);
+  --el-table-header-bg-color: var(--surface-muted);
+  --el-table-row-hover-bg-color: var(--primary-mist);
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: var(--canvas);
+  --el-table-fixed-left-column: var(--canvas);
+  --el-table-fixed-right-column: var(--canvas);
+  th.el-table__cell {
+    height: 44px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  td.el-table__cell {
+    height: 66px;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .cell {
+    padding: 0 16px;
+  }
+}
