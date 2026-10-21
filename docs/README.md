@@ -19,4 +19,4 @@ The original template is preserved by branch and annotated tag 1.0.0 at fcea9e53
 - [Completed discovery plan](archive/plans/2026-10-21-search-discovery.md), [AI log](archive/ai-logs/2026-10-21-search-discovery.md): PR #9 merged, source sync and Pages succeeded; production HTTP checks passed.
 
 - [Automatic delivery design](design/automatic-delivery.md): owner-authorized PRs merge after strict verify without mandatory human approval.
-- [Active automatic delivery plan](plans/active/2026-10-21-automatic-delivery.md), [AI log](ai-logs/2026-10-21-automatic-delivery.md).
+- [Completed automatic delivery plan](archive/plans/2026-10-21-automatic-delivery.md), [AI log](archive/ai-logs/2026-10-21-automatic-delivery.md): settings read back; PR #10 waited for verify and merged automatically.
