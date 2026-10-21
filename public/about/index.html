@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cesium Workbench 项目介绍 · Vue 3 / TypeScript / CesiumJS 三维地球工作台</title>
+    <meta
+      name="description"
+      content="Cesium Workbench 是原 vue3-cesium-typescript-start-up-template 升级而来的开源三维地球工作台，支持 3D Tiles、glTF/GLB、GeoJSON、空间工具、相机编排与视频输出。"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <link rel="canonical" href="https://cesium-workbench.github.io/about/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cesium-workbench.github.io/about/" />
+    <link rel="alternate" hreflang="en" href="https://cesium-workbench.github.io/about/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://cesium-workbench.github.io/about/" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cesium Workbench" />
+    <meta
+      property="og:title"
+      content="Cesium Workbench 项目介绍 · Vue 3 / TypeScript / CesiumJS 三维地球工作台"
+    />
+    <meta
+      property="og:description"
+      content="Cesium Workbench 是原 vue3-cesium-typescript-start-up-template 升级而来的开源三维地球工作台，支持 3D Tiles、glTF/GLB、GeoJSON、空间工具、相机编排与视频输出。"
+    />
+    <meta property="og:url" content="https://cesium-workbench.github.io/about/" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://cesium-workbench.github.io/about/social-preview.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Cesium Workbench — Vue 3, TypeScript and CesiumJS 3D geospatial workbench"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Cesium Workbench 项目介绍 · Vue 3 / TypeScript / CesiumJS 三维地球工作台"
+    />
+    <meta
+      name="twitter:description"
+      content="Cesium Workbench 是原 vue3-cesium-typescript-start-up-template 升级而来的开源三维地球工作台，支持 3D Tiles、glTF/GLB、GeoJSON、空间工具、相机编排与视频输出。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://cesium-workbench.github.io/about/social-preview.png"
+    />
+    <meta name="twitter:image:alt" content="Cesium Workbench — 3D geospatial workbench" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://cesium-workbench.github.io/about/#page",
+            "url": "https://cesium-workbench.github.io/about/",
+            "name": "Cesium Workbench 项目介绍 · Vue 3 / TypeScript / CesiumJS 三维地球工作台",
+            "description": "Cesium Workbench 是原 vue3-cesium-typescript-start-up-template 升级而来的开源三维地球工作台，支持 3D Tiles、glTF/GLB、GeoJSON、空间工具、相机编排与视频输出。",
+            "inLanguage": "zh-CN",
+            "about": {
+              "@id": "https://cesium-workbench.github.io/#application"
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://cesium-workbench.github.io/#application",
+            "name": "Cesium Workbench",
+            "alternateName": ["vue3-cesium-typescript-start-up-template", "Cesium-Workbench"],
+            "url": "https://cesium-workbench.github.io/",
+            "description": "Cesium Workbench 是原 vue3-cesium-typescript-start-up-template 升级而来的开源三维地球工作台，支持 3D Tiles、glTF/GLB、GeoJSON、空间工具、相机编排与视频输出。",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web browser",
+            "browserRequirements": "JavaScript, WebGL, desktop viewport of at least 1280 × 720",
+            "softwareVersion": "2.0.0-rc.1",
+            "inLanguage": ["zh-CN", "en-US"],
+            "license": "https://github.com/tanghaojie/Cesium-Workbench/blob/master/LICENSE",
+            "featureList": ["数据与三维内容", "空间观察与分析", "相机编排与输出"],
+            "subjectOf": {
+              "@id": "https://cesium-workbench.github.io/#source"
+            }
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://cesium-workbench.github.io/#source",
+            "name": "Cesium Workbench",
+            "alternateName": "vue3-cesium-typescript-start-up-template",
+            "codeRepository": "https://github.com/tanghaojie/Cesium-Workbench",
+            "programmingLanguage": ["TypeScript", "JavaScript"],
+            "runtimePlatform": "Vue 3; CesiumJS",
+            "version": "2.0.0-rc.1",
+            "license": "https://github.com/tanghaojie/Cesium-Workbench/blob/master/LICENSE",
+            "sameAs": ["https://github.com/Cesium-Workbench/cesium-workbench.github.io"]
+          }
+        ]
+      }
+    </script>
+    <link rel="stylesheet" href="/about/about.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <header class="masthead">
+      <a class="brand" href="/" aria-label="Cesium Workbench"
+        ><span class="brand-mark" aria-hidden="true">CW</span><span>CESIUM<br />WORKBENCH</span></a
+      >
+      <nav aria-label="站点导航">
+        <a href="#capabilities">能力</a><a href="#start">开始使用</a><a href="#faq">常见问题</a>
+        <a class="language" href="/about/en/" lang="en" hreflang="en">English</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">OPEN SOURCE / 3D GEOSPATIAL</p>
+          <h1 id="project-title">Cesium Workbench</h1>
+          <p class="hero-line">三维地球，<br />也是你的创作工作台。</p>
+          <p class="summary">
+            加载地理数据与三维模型，探索空间关系，编排相机镜头。在一个基于 Vue 3、TypeScript 和
+            CesiumJS 的浏览器工作台里，完成从观察到输出的过程。
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/">打开工作台 <span aria-hidden="true">↗</span></a
+            ><a class="button secondary" href="https://github.com/tanghaojie/Cesium-Workbench"
+              >查看源码 <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+        <figure class="atlas">
+          <img
+            src="/about/globe.svg"
+            width="580"
+            height="580"
+            alt="由经线与纬线构成的抽象地球示意图"
+          />
+          <figcaption>经纬网示意 · 非产品截图</figcaption>
+        </figure>
+      </section>
+      <aside class="rename" aria-label="项目沿革">
+        <span class="eyebrow">SAME PROJECT. NEXT CHAPTER.</span>
+        <p>
+          原 <code>vue3-cesium-typescript-start-up-template</code>，现在是
+          <strong>Cesium Workbench</strong>。
+        </p>
+      </aside>
+      <dl class="facts">
+        <div>
+          <dt>当前版本</dt>
+          <dd>2.0.0-rc.1</dd>
+        </div>
+        <div>
+          <dt>技术栈</dt>
+          <dd>Vue 3 · TypeScript · CesiumJS</dd>
+        </div>
+        <div>
+          <dt>代码许可</dt>
+          <dd>MIT</dd>
+        </div>
+        <div>
+          <dt>运行方式</dt>
+          <dd>独立前端 · 无需自建后端</dd>
+        </div>
+      </dl>
+      <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+        <div class="section-heading">
+          <p class="eyebrow">01 / CAPABILITIES</p>
+          <h2 id="capabilities-title">从数据，到场景，再到镜头。</h2>
+          <p>既可以直接在线探索，也可以克隆源码，把已有空间能力作为二次开发的起点。</p>
+        </div>
+        <div class="feature-list">
+          <article class="feature">
+            <span class="number" aria-hidden="true">01</span>
+            <h3>数据与三维内容</h3>
+            <p>
+              加载 GeoJSON、glTF/GLB、3D Tiles，配置影像与地形，通过 URL 或 AIModels
+              静态模型目录组织场景。
+            </p>
+          </article>
+          <article class="feature">
+            <span class="number" aria-hidden="true">02</span>
+            <h3>空间观察与分析</h3>
+            <p>
+              使用绘制、距离与面积测量、模型工具、地形分析和对比视图；调整场景模式、质量、光照与时间。
+            </p>
+          </article>
+          <article class="feature">
+            <span class="number" aria-hidden="true">03</span>
+            <h3>相机编排与输出</h3>
+            <p>
+              编辑机位与镜头，使用仿真时间轴预览运镜，逐帧输出 MP4 或 PNG 序列，并以 JSON
+              保存、导入拍摄工程。
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="section start-section" id="start" aria-labelledby="start-title">
+        <div class="section-heading">
+          <p class="eyebrow">02 / GET STARTED</p>
+          <h2 id="start-title">先打开，再动手。</h2>
+          <p>
+            在线工作台默认进入中文，英文可使用 ?lang=en-US。交互建议使用启用 WebGL
+            与硬件加速的桌面浏览器，最低布局验收基线为 1280 × 720。
+          </p>
+          <a class="text-link" href="/">打开工作台 ↗</a>
+        </div>
+        <div class="terminal">
+          <div class="terminal-heading">
+            <span>本地开发</span><span aria-hidden="true">~/cesium-workbench</span>
+          </div>
+          <pre><code>git clone https://github.com/tanghaojie/Cesium-Workbench.git
+cd Cesium-Workbench
+corepack enable
+corepack prepare pnpm@11.22.0 --activate
+pnpm install --frozen-lockfile
+pnpm dev</code></pre>
+          <p>需要 Node.js 22.12+ 与 pnpm 11.22.0。构建输出为 dist，部署在站点根路径。</p>
+        </div>
+      </section>
+      <section class="section" id="faq" aria-labelledby="faq-title">
+        <div class="section-heading">
+          <p class="eyebrow">03 / PROJECT FACTS</p>
+          <h2 id="faq-title">关于这个项目，先了解这些。</h2>
+        </div>
+        <div class="questions">
+          <article class="question">
+            <h3>旧模板去哪了？</h3>
+            <p>
+              GitHub 仓库已从 vue3-cesium-typescript-start-up-template 更名为
+              Cesium-Workbench。旧名称指向同一项目，原模板实现保存在
+              <a href="https://github.com/tanghaojie/Cesium-Workbench/tree/1.0.0">1.0.0 分支</a>和
+              <a href="https://github.com/tanghaojie/Cesium-Workbench/releases/tag/1.0.0"
+                >1.0.0 标签</a
+              >。当前 2.0.0-rc.1 是从 Cyber-Sight Geo 提取的独立工作台。
+            </p>
+          </article>
+          <article class="question">
+            <h3>适合用来做什么？</h3>
+            <p>
+              适合三维地理数据浏览、模型与场景演示、空间工具实验，以及相机镜头和可视化视频的制作。开发者也可以把它作为
+              Vue 3 + TypeScript + CesiumJS 项目的起点。
+            </p>
+          </article>
+          <article class="question">
+            <h3>AIModels 会生成三维模型吗？</h3>
+            <p>
+              AIModels
+              是可加载资产的静态模型目录；本应用没有内置三维模型生成服务。航班示例使用模拟数据。
+            </p>
+          </article>
+          <article class="question">
+            <h3>可以直接商用或在手机上使用吗？</h3>
+            <p>
+              源码采用 MIT
+              许可，远程示例模型、影像和地形各有自己的使用条款。工作台主要面向桌面横向布局；浏览器、设备、编码器、网络与资源
+              CORS 会影响加载和视频输出。
+            </p>
+          </article>
+          <article class="question">
+            <h3>源码应该提交到哪里？</h3>
+            <p>
+              开发与问题反馈使用
+              <a href="https://github.com/tanghaojie/Cesium-Workbench">个人源仓库</a
+              >；组织仓库用于同步源码和发布官网。两者属于同一个项目的开发与发布流程。
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="resources" aria-labelledby="resources-title">
+        <h2 id="resources-title">项目事实与文档</h2>
+        <div>
+          <a href="https://github.com/tanghaojie/Cesium-Workbench/blob/master/docs/migration.md"
+            >迁移与兼容说明 ↗</a
+          ><a
+            href="https://github.com/tanghaojie/Cesium-Workbench/blob/master/docs/guides/geo-capture.md"
+            >拍摄与导出指南 ↗</a
+          ><a
+            href="https://github.com/tanghaojie/Cesium-Workbench/blob/master/docs/design/geo-workbench.md"
+            >架构与模块边界 ↗</a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>Cesium Workbench · 源码 MIT · 示例数据按各自许可使用</p>
+      <p>
+        <a href="https://github.com/tanghaojie/Cesium-Workbench/blob/master/docs/README.md"
+          >文档入口</a
+        ><span>内容更新：2026-10-21</span>
+      </p>
+    </footer>
+  </body>
+</html>

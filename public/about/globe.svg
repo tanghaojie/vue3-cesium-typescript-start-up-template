@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="580" viewBox="0 0 580 580">
+<title>Cesium Workbench graticule illustration</title>
+<defs><clipPath id="globe"><circle cx="290" cy="275" r="207"/></clipPath><pattern id="grid" width="29" height="29" patternUnits="userSpaceOnUse"><path d="M29 0H0V29" fill="none" stroke="#d9ddce" stroke-width=".6"/></pattern></defs>
+<path d="M0 0h580v580H0z" fill="url(#grid)"/>
+<circle cx="290" cy="275" r="244" fill="none" stroke="#a3b09b" stroke-dasharray="2 7"/>
+<circle cx="290" cy="275" r="207" fill="#d7ed94" stroke="#18382e" stroke-width="1.5"/>
+<g clip-path="url(#globe)" fill="none" stroke="#587654" stroke-width=".9">
+<ellipse cx="290" cy="275" rx="155" ry="207"/><ellipse cx="290" cy="275" rx="80" ry="207"/><path d="M290 68v414M83 275h414"/>
+<ellipse cx="290" cy="175" rx="207" ry="53"/><ellipse cx="290" cy="275" rx="207" ry="70"/><ellipse cx="290" cy="375" rx="207" ry="53"/>
+<path d="M130 200c56 17 68-65 119-45s26 56 50 66 37-16 55 4-20 51-14 71 38 5 45 38-15 61-42 66-47-34-60-55-49-3-57-38 16-52-13-62-44 4-59-17-30-30-24-28Z" stroke="#18382e" stroke-width="1.5"/>
+</g>
+<ellipse cx="290" cy="275" rx="268" ry="87" transform="rotate(-32 290 275)" fill="none" stroke="#18382e" stroke-width="1.6"/>
+<circle cx="461" cy="121" r="5" fill="#18382e"/>
+<path d="M462 121h62M290 12v22M290 516v22M24 275h22M534 275h22" stroke="#18382e"/>
+<g font-family="Consolas,monospace" font-size="10" fill="#50665c"><text x="283" y="23">N</text><text x="283" y="558">S</text><text x="456" y="107">CAMERA / 01</text><text x="48" y="532">VUE 3 × CESIUMJS</text><text x="397" y="532">3D / WEBGL</text></g>
+</svg>

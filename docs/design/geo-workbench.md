@@ -14,13 +14,13 @@ src/modules/geo owns the Viewer runtime, Cesium tools, compile-time plugins, con
 
 ## Public interfaces and dependencies
 
-The app mounts modules/geo/pages/GeoWorkspacePage.vue directly. No router is installed; source-only registerViews.ts is excluded. Geo plugins are assembled by geo.plugins.ts; plugins collaborate through core capability/event/disposable contracts. Tools receive real Cesium objects as explicit parameters and do not import the app or UI adapters.
+The app mounts modules/geo/pages/GeoWorkspacePage.vue directly. The page accepts an optional projectInfoUrl from app assembly; its localized native information link hides with clean/framed capture presentation. Static project information and search metadata are owned by [search discovery](search-discovery.md). No router is installed; source-only registerViews.ts is excluded. Geo plugins are assembled by geo.plugins.ts; plugins collaborate through core capability/event/disposable contracts. Tools receive real Cesium objects as explicit parameters and do not import the app or UI adapters.
 
 Geo depends on shared/localization/localization and localization.resource, shared/components/AppIcon.vue and AppLogo.vue. Those shared adapters do not import Geo; bootstrap registers the Geo localization resource. Theme and icon assets are local snapshots, with source attribution. There are no workspace:* dependencies or imports into Cyber-Sight.
 
 ## Data flow and lifecycle
 
-main.ts installs localization and the Geo resource, applies document identity and mounts the workspace. The page creates one GeoRuntime and disposes it on unmount. The runtime creates one Viewer, installs the 11 plugins, owns the unique viewer.clock and releases listeners/resources on disposal. Asynchronous operations honor AbortSignal.
+main.ts installs localization and the Geo resource and mounts the workspace. The default title comes from HTML search metadata; an explicit VITE_APP_NAME still overrides it. The page creates one GeoRuntime and disposes it on unmount. The runtime creates one Viewer, installs the 11 plugins, owns the unique viewer.clock and releases listeners/resources on disposal. Asynchronous operations honor AbortSignal.
 
 Data loads external URLs and the AIModels static catalog. Scene controls quality, lighting and model rendering. Time and simulated flights use the same Viewer clock. Capture leases camera, time, model animation and render resolution through existing capabilities, then restores their state on finish, cancel or error. Compile-time plugins are Data, View, Scene, Time, Capture, Flight, Drawing, Measurement, Model, Terrain and Compare.
 

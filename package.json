@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tanghaojie/vue3-cesium-typescript-start-up-template.git"
+    "url": "https://github.com/tanghaojie/Cesium-Workbench.git"
   },
   "scripts": {
     "dev": "vite --host",
@@ -49,5 +49,25 @@
     "vite-plugin-static-copy": "3.1.4",
     "vite-plugin-svg-icons": "2.0.1",
     "vue-tsc": "2.2.12"
-  }
+  },
+  "homepage": "https://cesium-workbench.github.io/",
+  "bugs": {
+    "url": "https://github.com/tanghaojie/Cesium-Workbench/issues"
+  },
+  "keywords": [
+    "cesium-workbench",
+    "vue3-cesium-typescript-start-up-template",
+    "cesium",
+    "cesiumjs",
+    "vue3",
+    "typescript",
+    "geospatial",
+    "gis",
+    "3d-tiles",
+    "gltf",
+    "geojson",
+    "webgl",
+    "camera-animation",
+    "video-export"
+  ]
 }

@@ -10,7 +10,7 @@ updated: 2026-10-20
 
 The canonical development repository is tanghaojie/Cesium-Workbench, with master as its default branch. Cesium-Workbench/cesium-workbench.github.io is an independent public publication repository. Changes flow in one direction: personal master -> verified source synchronization -> organization master -> GitHub Pages. Developers submit changes to the personal repository; organization-only source commits would cause the ordinary synchronization push to fail.
 
-The organization site is https://cesium-workbench.github.io/. Vite builds dist at the site root, with index.html, the geo.html compatibility entry and /cesiumStatic/. A project-subpath deployment is outside this design. Branch and tag 1.0.0 stay preserved in the personal repository; source synchronization does not copy all branches, tags, GitHub Releases, issues or repository settings.
+The organization site is https://cesium-workbench.github.io/. Vite builds dist at the site root, with index.html, the geo.html compatibility entry, static Chinese/English /about/ pages, crawler files and /cesiumStatic/. The canonical website is the GitHub Pages origin, as confirmed by the owner; discovery metadata is defined in [search discovery](search-discovery.md). A project-subpath deployment is outside this design. Branch and tag 1.0.0 stay preserved in the personal repository; source synchronization does not copy all branches, tags, GitHub Releases, issues or repository settings.
 
 ## Workflow interfaces
 

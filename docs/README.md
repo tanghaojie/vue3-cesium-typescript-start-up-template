@@ -13,3 +13,7 @@ The original template is preserved by branch and annotated tag 1.0.0 at fcea9e53
 - [Organization publication design](design/organization-publication.md): personal source, guarded synchronization, credentials and organization-only Pages deployment.
 - [Organization publication guide](guides/organization-publication.md): workflow setup, first sync, owner-operated Pages enablement and troubleshooting.
 - [Completed publication plan](archive/plans/2026-10-20-organization-publication.md), [AI log](archive/ai-logs/2026-10-20-organization-publication.md).
+
+- [Search and AI discovery design](design/search-discovery.md): canonical identity, bilingual static product pages, truthful metadata and verification boundaries.
+- [Search discovery maintenance](guides/search-discovery.md): old-name continuity, repository metadata and owner-operated sitemap/indexing setup.
+- [Active discovery delivery plan](plans/active/2026-10-21-search-discovery.md), [AI log](ai-logs/2026-10-21-search-discovery.md): implementation checked; PR #9 awaits the required review and merge.

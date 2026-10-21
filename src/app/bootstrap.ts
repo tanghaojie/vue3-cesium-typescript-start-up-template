@@ -6,6 +6,8 @@ import { appConfig } from './app.config'
 
 export function startApplication(): void {
   registerLocalizationResources({ geo: { localizationResource } })
-  document.title = appConfig.fullName
-  createApp(GeoWorkspacePage).use(localization).mount('#app')
+  if (import.meta.env.VITE_APP_NAME) {
+    document.title = appConfig.fullName
+  }
+  createApp(GeoWorkspacePage, { projectInfoUrl: '/about/' }).use(localization).mount('#app')
 }
