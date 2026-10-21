@@ -1,6 +1,7 @@
 ---
 title: Repository and website search discovery
-status: completed
+status: active
+delivery_status: waiting-review
 date: 2026-10-21
 change_type: feat
 ---
@@ -35,6 +36,14 @@ Existing Sass legacy API and bundle-size advisories remain. No frontend unit, co
 
 ## Delivery and verification limits
 
-Associated implementation commit: feat(discovery): improve repository and website search visibility, with GPT-6 co-author trailer. This log is archived in that commit before publishing the PR; real CI, merge, organization synchronization, Pages deployment and deployed HTTP responses are inspected in delivery and reported to the owner. No pre-push success for those systems is implied.
+Associated implementation commit: feat(discovery): improve repository and website search visibility, with GPT-6 co-author trailer. This log was initially included with the implementation and is kept active after detecting the review gate; real CI, merge, organization synchronization, Pages deployment and deployed HTTP responses are inspected in delivery and reported to the owner. No pre-push success for those systems is implied.
 
 Owner account actions remain: Search Console/Bing ownership, sitemap submission and indexing requests. No search analytics, rankings, generated-answer citations or traffic gains were measured or guaranteed. Primary guidance links are recorded in the current discovery design.
+
+## Actual PR delivery state
+
+Implementation commit f65f374a733cb3b8fe80a88fb2d8fe8bacd74bed is published in [PR #9](https://github.com/tanghaojie/Cesium-Workbench/pull/9). Both [push CI](https://github.com/tanghaojie/Cesium-Workbench/actions/runs/39548465909) and [PR CI](https://github.com/tanghaojie/Cesium-Workbench/actions/runs/39548492024) passed, as did both Vercel preview status contexts. This is build/status evidence, not browser acceptance.
+
+Main-branch protection requires one approving review and reports REVIEW_REQUIRED. The attempt to enable review-gated auto-merge was rejected by GitHub because auto-merge is disabled for this repository. No protection setting or review requirement was changed, and no admin bypass was used.
+
+Repository metadata updates are already live. Merging PR #9, automatic master source synchronization, production Pages deployment and deployed-content verification remain pending the required review/merge. Keep this plan/log active; archive after delivery is completed. Search-account actions and manual browser acceptance remain owner-operated.
