@@ -43,3 +43,13 @@
 格式、Lint、类型与构建不代替人工验收。维护者需检查新域名下的外部资源 CORS、图层和插件交互、相机时间、模型、工程 JSON 导入及浏览器编码输出。本流程不新增或运行前端自动化测试。
 
 设计与权限边界见 [发布设计](../design/organization-publication.md)。GitHub 设置参考 [自定义 Pages 工作流](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
+
+## PR 自动合并
+
+维护者于 2026-10-21 选择了“保留 PR 和 CI，取消必需人工批准”。个人仓库已开启 Allow auto-merge；master 要求最新基线上的 GitHub Actions verify（格式、Lint、类型和构建）通过，必需人工批准数为 0。
+
+每个 PR 仍需单独启用自动合并。AI 交付已获授权的任务时，应创建 PR，然后使用 gh pr merge --auto --merge 并绑定目标 head SHA。合并标题遵守 Conventional Commit，合并正文文件保留真实 AI 模型 trailer。当前任务或未来任务若明确要求只审阅、草稿或暂不合并，按该要求处理。
+
+流程为：PR -> verify 成功 -> GitHub 自动合并 -> 个人 master 校验与同步 -> 组织构建发布。CI 失败、分支落后或冲突时先修复；不使用管理员绕过、强推或直接推送受保护 master。外部贡献者 PR 不会仅因仓库开启自动合并就被自动采用。
+
+参考：[长期设计](../design/automatic-delivery.md)、[GitHub 自动合并说明](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/automatically-merging-a-pull-request)。

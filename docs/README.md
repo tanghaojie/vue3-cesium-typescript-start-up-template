@@ -16,4 +16,7 @@ The original template is preserved by branch and annotated tag 1.0.0 at fcea9e53
 
 - [Search and AI discovery design](design/search-discovery.md): canonical identity, bilingual static product pages, truthful metadata and verification boundaries.
 - [Search discovery maintenance](guides/search-discovery.md): old-name continuity, repository metadata and owner-operated sitemap/indexing setup.
-- [Active discovery delivery plan](plans/active/2026-10-21-search-discovery.md), [AI log](ai-logs/2026-10-21-search-discovery.md): implementation checked; PR #9 awaits the required review and merge.
+- [Completed discovery plan](archive/plans/2026-10-21-search-discovery.md), [AI log](archive/ai-logs/2026-10-21-search-discovery.md): PR #9 merged, source sync and Pages succeeded; production HTTP checks passed.
+
+- [Automatic delivery design](design/automatic-delivery.md): owner-authorized PRs merge after strict verify without mandatory human approval.
+- [Active automatic delivery plan](plans/active/2026-10-21-automatic-delivery.md), [AI log](ai-logs/2026-10-21-automatic-delivery.md).
