@@ -1,7 +1,7 @@
 ---
 title: Repository and website SEO/GEO
-status: active
-delivery_status: waiting-review
+status: completed
+delivery_status: published
 date: 2026-10-21
 ---
 
@@ -43,3 +43,9 @@ Implementation commit f65f374a733cb3b8fe80a88fb2d8fe8bacd74bed is published in [
 Main-branch protection requires one approving review and reports REVIEW_REQUIRED. The attempt to enable review-gated auto-merge was rejected by GitHub because auto-merge is disabled for this repository. No protection setting or review requirement was changed, and no admin bypass was used.
 
 Repository metadata updates are already live. Merging PR #9, automatic master source synchronization, production Pages deployment and deployed-content verification remain pending the required review/merge. Keep this plan/log active; archive after delivery is completed. Search-account actions and manual browser acceptance remain owner-operated.
+
+## Completed production delivery
+
+The owner manually merged PR #9 as 7ab0d47a31af5659a34c5b51a78c97de5240ec49. [Personal source synchronization](https://github.com/tanghaojie/Cesium-Workbench/actions/runs/39548965722) and [organization Pages deployment](https://github.com/Cesium-Workbench/cesium-workbench.github.io/actions/runs/39549051468) succeeded. Direct production HTTP checks returned 200 for /, /about/, /about/en/, /robots.txt and /sitemap.xml; all three HTML canonicals point to the chosen GitHub Pages URLs. No browser or search-index outcome is implied by these checks.
+
+The earlier review blocker was resolved by the owner. Afterward, the owner separately authorized CI-gated automatic merging for future work; current policy is docs/design/automatic-delivery.md. This discovery task is complete and archived. Search-account ownership/submission and manual browser acceptance remain owner actions.

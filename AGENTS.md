@@ -8,3 +8,7 @@
 - Keep one Cesium Viewer clock per runtime; preserve capability boundaries, abort/dispose behavior and capture JSON version/storage compatibility.
 - Use conventional commits. Every AI commit ends with a blank line and Co-Authored-By: -AI- followed by the actual model name and <ai@scaffold-proj.com>.
 - This standalone repository has no Foundation/Platform ownership scopes or Forge synchronization/ledger. Do not import those roles from the source repository.
+
+- For a completed implementation task authorized by the owner, publish a topic-branch PR and enable CI-gated auto-merge; do not leave routine merging to the owner. Respect an explicit request for a draft, review-only work or no merge.
+- Personal master requires an up-to-date GitHub Actions verify check and a PR, with zero mandatory human approvals. Repository auto-merge is enabled. Use the authenticated maintainer CLI to opt each delivery PR into auto-merge, match the intended head SHA, and provide a conventional merge title plus the actual AI-model trailer in its body. See docs/design/automatic-delivery.md.
+- Wait for required CI and normal merge/sync/Pages delivery, repair in-scope failures, and report real results. A repository auto-merge setting alone does not opt future PRs in. Do not use administrator bypass, direct protected-master pushes, force push, fake approval or disabled checks to work around a gate.
