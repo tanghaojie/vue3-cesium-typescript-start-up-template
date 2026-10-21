@@ -23,6 +23,16 @@
       aria-hidden="true"
     />
 
+    <a
+      v-if="projectInfoUrl"
+      v-show="!runtime.presentation.state.clean && !runtime.presentation.state.aspectRatio"
+      class="geo-project-info"
+      :href="projectInfoUrl"
+      target="_blank"
+      rel="noopener"
+      >{{ t('geo.workspace.projectInfo') }} <span aria-hidden="true">↗</span></a
+    >
+
     <template v-if="runtime.state.status === 'ready'">
       <component
         :is="assemblyPreviewComponent"
@@ -173,6 +183,8 @@ import type {
 } from '../core/geo-plugin'
 import { createGeoRuntime } from '../core/geo-runtime'
 import { geoPlugins } from '../geo.plugins'
+
+defineProps<{ projectInfoUrl?: string }>()
 
 interface GeoTaskItem extends GeoTaskRailItem {
   description: string
@@ -466,6 +478,33 @@ onBeforeUnmount(function disposeGeoPage() {
 </script>
 
 <style scoped>
+.geo-project-info {
+  position: absolute;
+  z-index: 20;
+  top: 22px;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  transform: translateX(-50%);
+  border: 1px solid var(--geo-line);
+  border-radius: 10px;
+  color: var(--geo-text);
+  background: var(--geo-surface-strong);
+  font-size: 12px;
+  backdrop-filter: blur(18px);
+}
+
+.geo-project-info:hover {
+  color: var(--geo-accent);
+}
+
+.geo-project-info:focus-visible {
+  outline: 2px solid var(--geo-accent);
+  outline-offset: 3px;
+}
+
 .geo-workspace {
   --geo-accent: #49c9ff;
   --geo-accent-deep: #268fd9;

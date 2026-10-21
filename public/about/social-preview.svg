@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<title>Cesium Workbench — 3D geospatial workbench</title>
+<rect width="1200" height="630" fill="#f5f3ea"/>
+<path d="M60 94h1080M60 547h1080" stroke="#cbd0bf"/>
+<text x="60" y="63" fill="#18382e" font-family="Consolas,monospace" font-size="16" letter-spacing="3">OPEN SOURCE / 3D GEOSPATIAL</text>
+<text x="60" y="232" fill="#18382e" font-family="Georgia,serif" font-size="75">Cesium</text>
+<text x="60" y="315" fill="#18382e" font-family="Georgia,serif" font-size="75">Workbench</text>
+<text x="64" y="372" fill="#50665c" font-family="Georgia,serif" font-size="25">Explore spatial data. Create camera shots.</text>
+<rect x="62" y="418" width="470" height="43" fill="#18382e"/>
+<text x="81" y="446" fill="#f5f3ea" font-family="Consolas,monospace" font-size="18">Vue 3 + TypeScript + CesiumJS</text>
+<circle cx="894" cy="294" r="186" fill="#d7ed94" stroke="#18382e" stroke-width="2"/>
+<g fill="none" stroke="#587654" stroke-width="1.2"><ellipse cx="894" cy="294" rx="131" ry="186"/><ellipse cx="894" cy="294" rx="64" ry="186"/><ellipse cx="894" cy="294" rx="186" ry="60"/><path d="M894 108v372M708 294h372"/><ellipse cx="894" cy="220" rx="170" ry="42"/><ellipse cx="894" cy="368" rx="170" ry="42"/></g>
+<ellipse cx="894" cy="294" rx="245" ry="75" transform="rotate(-30 894 294)" fill="none" stroke="#18382e" stroke-width="2"/>
+<circle cx="1068" cy="170" r="6" fill="#18382e"/>
+<text x="60" y="584" fill="#50665c" font-family="Consolas,monospace" font-size="15">Formerly vue3-cesium-typescript-start-up-template</text>
+<text x="840" y="584" fill="#18382e" font-family="Consolas,monospace" font-size="16">cesium-workbench.github.io</text>
+</svg>

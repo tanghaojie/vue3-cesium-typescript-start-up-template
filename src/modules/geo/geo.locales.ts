@@ -3,6 +3,7 @@ import { defineLocalizationResource } from '@/shared/localization/localization.r
 export const localizationResource = defineLocalizationResource('geo', {
   'zh-CN': {
     'views.workspace': 'Geo 空间工作台',
+    'workspace.projectInfo': '项目介绍',
     'workspace.loading': '正在初始化三维场景',
     'workspace.loadingDetail': '正在准备 Viewer、影像与交互环境',
     'workspace.failed': '三维场景初始化失败',
@@ -93,6 +94,7 @@ export const localizationResource = defineLocalizationResource('geo', {
     'flight.researchNotice': '仅用于功能演示：位置、航线和时间均为前端模拟数据，不代表真实航班。',
   },
   'en-US': {
+    'workspace.projectInfo': 'Project overview',
     'views.workspace': 'Geo workspace',
     'workspace.loading': 'Initializing the 3D scene',
     'workspace.loadingDetail': 'Preparing the viewer, imagery, and interaction environment',
